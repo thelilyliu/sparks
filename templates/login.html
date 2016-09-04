@@ -1,0 +1,114 @@
+{{define "my-template"}}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    {{template "head" .}}
+    
+    <body>
+        
+        <section id="login">
+            <div class="container">
+                <h1>Login</h1>
+                <div class="row">
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button id="login-button" class="btn btn-default">Login</button>
+                                <a class="forgot-password">Forgot Password?</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </section>
+        
+        {{template "script" .}}
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                eventHandler();
+                
+                page('/login', login);
+                page('*', notFound);
+                page();
+            });
+            
+            function login(ctx) {
+                console.log('page: login');
+            }
+            
+            function notFound() {
+                console.log('not found');
+            }
+            
+            function eventHandler() {
+                $('.form-horizontal').on('click', '#login-button', function(e) {
+                    e.preventDefault();
+                    checkLoginInfo();
+                });
+                
+                $('.form-horizontal').keydown(function(e) {
+                    if (e.keyCode == 13) { // if user pressed enter
+                        e.preventDefault();    
+                        checkLoginInfo();
+                    }
+                });
+                
+                $('.form-horizontal').on('click', '.forgot-password', function() {
+                    console.log('forgot password');
+                });
+            }
+            
+            function checkLoginInfo() {
+                var loginInfo = {
+                    email: $('#inputEmail3').val(),
+                    password: $('#inputPassword3').val()
+                };
+                        
+                var JSONData = JSON.stringify(loginInfo);
+                checkLoginInfoJSON(JSONData);
+            }
+            
+            function checkLoginInfoJSON(JSONData) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkLoginInfoJSON',
+                    data: JSONData,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    cache: false
+                }).done(function(json, textStatus, jqXHr) {
+                    if (json != '-1') { // password is correct
+                        window.location.href = '/user/resumes';
+                    }
+                    else {
+                        displayAlertMessage('Wrong password. Try again.');
+                        $('input[type="password"]').select();
+                    }
+                }).fail(function(jqXHr, textStatus, errorThrown) {
+                    handleAjaxError(jqXHr, textStatus);
+                }).always(function() {});
+            }
+        </script>
+        
+    </body>
+
+</html>
+
+{{end}}
