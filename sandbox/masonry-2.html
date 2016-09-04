@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Sparks</title>
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../assets/stylesheets/masonry-style.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <div id="page-content-wrapper"></div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+        
+        <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js" type="text/javascript"></script>
+        <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function () {
+                loadHTML();
+                initializeMasonry();
+            });
+            
+            function loadHTML() {
+                var myHTML = '\
+                    <div id="main-container">\
+                        <section id="resumes">\
+                            <div class="container">\
+                                <div class="grid"> \
+                                    <div class="grid-sizer"></div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-cover">\
+                                                <img src="/images/stocksnap/3J7DMT7754.jpg">\
+                                                <div class="card-actions fill-div">\
+                                                    <div class="card-action-item-wrapper">\
+                                                        <div class="card-action-item share">\
+                                                            <i class="fa fa-share-square-o"></i>\
+                                                        </div>\
+                                                        <div class="card-action-item delete">\
+                                                            <i class="fa fa-trash-o"></i>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="card-footer">\
+                                                <h3 class="title">Your man on the road he doing promo. Driving through the gated residentials.</h3>\
+                                                <h5 class="date">Date</h5>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-cover">\
+                                                <img src="/images/stocksnap/3J7DMT7754.jpg">\
+                                                <div class="card-actions fill-div">\
+                                                    <div class="card-action-item-wrapper">\
+                                                        <div class="card-action-item share">\
+                                                            <i class="fa fa-share-square-o"></i>\
+                                                        </div>\
+                                                        <div class="card-action-item delete">\
+                                                            <i class="fa fa-trash-o"></i>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="card-footer">\
+                                                <h3 class="title">Title</h3>\
+                                                <h5 class="date">Date</h5>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-cover">\
+                                                <img src="/images/stocksnap/3J7DMT7754.jpg">\
+                                                <div class="card-actions fill-div">\
+                                                    <div class="card-action-item-wrapper">\
+                                                        <div class="card-action-item share">\
+                                                            <i class="fa fa-share-square-o"></i>\
+                                                        </div>\
+                                                        <div class="card-action-item delete">\
+                                                            <i class="fa fa-trash-o"></i>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="card-footer">\
+                                                <h3 class="title">Title</h3>\
+                                                <h5 class="date">Date</h5>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-cover">\
+                                                <img src="/images/stocksnap/3J7DMT7754.jpg">\
+                                                <div class="card-actions fill-div">\
+                                                    <div class="card-action-item-wrapper">\
+                                                        <div class="card-action-item share">\
+                                                            <i class="fa fa-share-square-o"></i>\
+                                                        </div>\
+                                                        <div class="card-action-item delete">\
+                                                            <i class="fa fa-trash-o"></i>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="card-footer">\
+                                                <h3 class="title">I only love you when you touch me, not feel me. When Im fucked up, thats the real me.</h3>\
+                                                <h5 class="date">Date</h5>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-cover">\
+                                                <img src="/images/stocksnap/3J7DMT7754.jpg">\
+                                                <div class="card-actions fill-div">\
+                                                    <div class="card-action-item-wrapper">\
+                                                        <div class="card-action-item share">\
+                                                            <i class="fa fa-share-square-o"></i>\
+                                                        </div>\
+                                                        <div class="card-action-item delete">\
+                                                            <i class="fa fa-trash-o"></i>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="card-footer">\
+                                                <h3 class="title">Title</h3>\
+                                                <h5 class="date">Date</h5>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-cover">\
+                                                <img src="/images/stocksnap/3J7DMT7754.jpg">\
+                                                <div class="card-actions fill-div">\
+                                                    <div class="card-action-item-wrapper">\
+                                                        <div class="card-action-item share">\
+                                                            <i class="fa fa-share-square-o"></i>\
+                                                        </div>\
+                                                        <div class="card-action-item delete">\
+                                                            <i class="fa fa-trash-o"></i>\
+                                                        </div>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="card-footer">\
+                                                <h3 class="title">Title</h3>\
+                                                <h5 class="date">Date</h5>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </section>\
+                    </div>';
+                
+                $('#page-content-wrapper').append(myHTML);
+            }
+            
+            // http://masonry.desandro.com/methods.html#destroy
+            function initializeMasonry() {
+                console.log('init masonry');
+
+                $('.grid').imagesLoaded().done(function() {
+                    console.log('all images successfully loaded');
+
+                    $('.grid').masonry({
+                        itemSelector: '.grid-item',
+                        columnWidth: '.grid-sizer',
+                        percentPosition: true
+                    });
+                }).fail(function() {
+                    console.log('all images loaded, at least one is broken');
+                }).always(function() {});
+            }
+        </script>
+
+    </body>
+    
+</html>

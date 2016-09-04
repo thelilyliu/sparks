@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">		
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">		
+  <title>Summernote</title>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script> 
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+  <link href="../assets/static/summernote/summernote.css" rel="stylesheet">
+  <script src="../assets/static/summernote/summernote.min.js"></script>
+</head>
+<body>
+  <div id="summernote"><p>Hello Summernote</p></div>
+  <script>
+      $(document).ready(function () {
+          $('#summernote').summernote({
+              lang: 'en-US',
+              //height: 300,               // if you don’t set the height, editable area’s height will change according to contents.
+              minHeight: 200,             // set minimum height of editor
+              maxHeight: null,             // set maximum height of editor
+              focus: false,                // set focus to editable area after initializing summernote
+              //placeholder: 'write here...',
+              dialogsInBody: true,
+              disableDragAndDrop: true,
+              toolbar: [
+                    ['para', ['paragraph', 'ul', 'ol']],
+                    ['style', ['bold']]
+                    , ['insert', ['codeview']] // add 'codeview' for testing
+                ]  
+          });
+        
+          var markupStr = '<ul><li><br></li></ul>';
+          $('#summernote').summernote('code', markupStr);
+          //var markupStr = $('#summernote').summernote('code');
+      });
+  </script>
+</body>
+</html>

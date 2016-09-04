@@ -1,0 +1,41 @@
+function loadBlankResume() {
+    // set resume general
+
+    var resumeGeneral = {
+        userID: globalUserID,
+        job: '',
+        title: ''
+    };
+
+    var resumeGeneralJSON = JSON.stringify(resumeGeneral);
+    $('#general .form-horizontal').data('JSONData', resumeGeneralJSON);
+
+    // set resume summary
+
+    var resumeSummary = {
+        headline: '',
+        summary: ''
+        // background
+    };
+
+    var resumeSummaryJSON = JSON.stringify(resumeSummary);
+    $('#summary .form-horizontal').data('JSONData', resumeSummaryJSON);
+
+    // set resume contact info
+
+    var resumeContactInfo = {
+        homePhone: '',
+        mobilePhone: '',
+        workPhone: '',
+        // extension: extension,
+        email: '',
+        website: ''
+        // facebook: facebook,
+        // twitter: twitter,
+        // linkedIn: linkedIn,
+        // background
+    };
+
+    var resumeContactInfoJSON = JSON.stringify(resumeContactInfo);
+    $('#contact-info .form-horizontal').data('JSONData', resumeContactInfoJSON);
+}

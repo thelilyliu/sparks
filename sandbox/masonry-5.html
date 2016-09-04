@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Sparks</title>
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <style>
+        * { box-sizing: border-box; }
+
+        body { font-family: sans-serif; }
+
+        /* ---- grid ---- */
+
+        .grid {
+          background: #EEE;
+          max-width: 1200px;
+        }
+
+        /* clearfix */
+        .grid:after {
+          content: '';
+          display: block;
+          clear: both;
+        }
+
+        /* ---- grid-item ---- */
+
+        .grid-item {
+          width: 160px;
+          height: 120px;
+          float: left;
+          background: #D26;
+          border: 2px solid #333;
+          border-color: hsla(0, 0%, 0%, 0.5);
+          border-radius: 5px;
+        }
+
+        .grid-item--width2 { width: 320px; }
+        .grid-item--width3 { width: 480px; }
+        .grid-item--width4 { width: 640px; }
+
+        .grid-item--height2 { height: 200px; }
+        .grid-item--height3 { height: 260px; }
+        .grid-item--height4 { height: 360px; }
+
+        button {
+          font-size: 20px;
+        }
+    </style>
+
+    <body>
+        <h1>Masonry - appended</h1>
+        
+        <div class="grid">
+          <!-- <div class="grid-item grid-item--width3"></div>
+          <div class="grid-item grid-item--height3"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item grid-item--height2"></div> -->
+        </div>
+        
+        <p><button class="append-button">Append new items</button></p>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+
+        <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js" type="text/javascript"></script>
+        <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            // external js: masonry.pkgd.js
+
+            var $grid = $('.grid').masonry({
+              columnWidth: 160,
+              itemSelector: '.grid-item'
+            });
+
+            $('.append-button').on( 'click', function() {
+              var elems = [ getItemElement(), getItemElement(), getItemElement() ];
+              // make jQuery object
+              var $elems = $( elems );
+              $grid.append( $elems ).masonry( 'appended', $elems );
+            });
+
+            // create <div class="grid-item"></div>
+            function getItemElement() {
+              var elem = document.createElement('div');
+              var wRand = Math.random();
+              var hRand = Math.random();
+              var widthClass = wRand > 0.8 ? 'grid-item--width3' : wRand > 0.6 ? 'grid-item--width2' : '';
+              var heightClass = hRand > 0.85 ? 'grid-item--height4' : hRand > 0.6 ? 'grid-item--height3' : hRand > 0.35 ? 'grid-item--height2' : '';
+              elem.className = 'grid-item ' + widthClass + ' ' + heightClass;
+              return elem;
+            }
+        </script>
+
+    </body>
+
+</html>

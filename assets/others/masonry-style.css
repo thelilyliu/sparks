@@ -1,0 +1,173 @@
+/*
+  ========================================
+  1. Basic
+  ========================================
+*/
+
+body {
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+}
+html {
+    height: 100%;
+}
+
+/*
+  ========================================
+  2. Typography
+  ========================================
+*/
+
+@font-face {
+    font-style: normal;
+    font-weight: normal;
+}
+body {
+    font-family: Helvetica Neue, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+.wf-active body {
+    font-family: 'Roboto';
+}
+
+/*
+  ========================================
+  3. Container
+  ========================================
+*/
+
+.container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+    #main-container {
+        margin-left: 220px;
+    }
+}
+
+/*
+  ========================================
+  9. Grids
+  ========================================
+*/
+
+.grid-sizer,
+.grid-item {
+    width: 50%;
+}
+.grid {
+    margin: -15px;
+}
+.grid-item {
+    padding: 15px;
+}
+
+@media (max-width: 767px) {
+    .grid-item {
+        width: 100%;
+    }
+}
+
+/*
+  ========================================
+  10. Sections
+  ========================================
+*/
+
+section {
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+}
+    section .container {
+        padding: 50px;
+    }
+
+#resumes {
+    background-image: url('/images/blurred-backgrounds/01.jpg');
+}
+.card {
+    background-color: #7999FF;
+    border-radius: 5px;
+    /* margin: 5px; */
+}
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+ul {
+    padding-left: 25px; /* PROBLEM LINE */
+    margin: 0;
+    list-style: disc;
+}
+/*
+ul ul {
+    padding-left: 25px;
+    list-style: circle;
+}
+ul.default {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+*/
+
+.fill-div {
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
+
+.card-cover {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.card-cover:hover {
+    cursor: pointer;
+}
+    .card-cover img {
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+.card-actions {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.card-action-item-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    padding: 10px;
+    text-align: right;
+}
+.card-action-item {
+    position: relative;
+    z-index: 1s;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #666;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.card-action-item:hover {
+    cursor: pointer;
+    color: #111;
+}
+.card-footer {
+    padding: 10px;
+    cursor: default;
+}

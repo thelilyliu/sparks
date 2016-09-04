@@ -1,0 +1,393 @@
+{{define "my-template"}}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    {{template "head" .}}
+    
+    <body data-spy="scroll" data-target="#myScrollspy">
+        
+        <nav id="sidebar-wrapper" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="sidebar-header">
+                <i class="fa fa-chevron-circle-left" data-uw-action="sidebar-close" data-uw-target="sidebar-wrapper"></i>
+            </div>
+            
+            <ul class="sidebar-nav nav">
+                <li class="nav-resumes">
+                    <a><i class="fa fa-file-text-o"></i>Resumes</a>
+                </li>
+                <li class="nav-portfolios">
+                    <a><i class="fa fa-sellsy"></i>Portfolios</a>
+                </li>
+                <li class="nav-settings">
+                    <a><i class="fa fa-cog"></i>Settings</a>
+                </li>
+                <li class="nav-logout">
+                    <a><i class="fa fa-sign-out"></i>Logout</a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer text-center">
+                <div class="logo">Sparks</div>
+                <div class="copyright">&copy; <a href="https://twitter.com/thelilyliu" target="_blank">Lily Liu</a> 2016</div>
+            </div>
+        </nav>
+
+        <div id="page-content-wrapper"></div>
+        
+        {{template "script" .}}
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                setScreenSize();
+                loadSidebarNavigationLinks();
+                eventHandler();
+                
+                page('/user/resumes', loadDashboardResumes);
+                page('/user/portfolios', loadDashboardPortfolios);
+                page('/user/settings', loadSettings);
+                page('/user/resume/:resumeID', loadResume);
+                page('*', notFound);
+                page();
+            });
+            
+            $(window).resize(function() {
+                setScreenSize();
+                var page = $('body').data('page');
+                loadNavbarTopLayer(page);
+            });
+            
+            /*
+              ========================================
+              Global Variables
+              ========================================
+            */
+            
+            var globalResumeID = '';
+            var globalPortfolioID = '';
+            
+            /*
+              ========================================
+              Basic Functions
+              ========================================
+            */
+            
+            function initialization(page) {
+                // https://css-tricks.com/snippets/jquery/smooth-scrolling/
+                /* $(function() {
+                    $('a[href*=#]:not([href=#])').click(function() {
+                        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                            var target = $(this.hash);
+                                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                                if (target.length) {
+                                $('html,body').animate({
+                                    scrollTop: target.offset().top
+                                }, 1000);
+                                return false;
+                            }
+                        }
+                    });
+                }); */
+                
+                loadNavbarTopLayer(page);
+            }
+            
+            function initializeFullPage() {
+                // https://github.com/alvarotrigo/fullPage.js
+                $('#fullpage').fullpage({
+                    // Navigation
+                    anchors: ['section1', 'section2', 'section3', 'section4'],
+                    navigation: true,
+                    navigationPosition: 'right',
+                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Contact Info'],
+
+                    // Scrolling
+                    scrollOverflow: true,
+                    scrollOverflowOptions: {
+                        scrollbars: true,
+                        mouseWheel: true,
+                        hideScrollbars: false,
+                        fadeScrollbars: false,
+                        disableMouse: true
+                    },
+                    
+                    paddingTop: 50,
+                    recordHistory: false,
+                    sectionSelector: 'section'
+                });
+            }
+            
+            function setScreenSize() {
+                var size = '';
+
+                if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) {
+                    size = 'extra-small';
+                }
+                else if (window.matchMedia && window.matchMedia('(max-width: 991px)').matches) {
+                    size = 'small';
+                }
+                else if (window.matchMedia && window.matchMedia('(max-width: 1199px)').matches) {
+                    size = 'medium';
+                }
+                else {
+                    size = 'large';
+                }
+                
+                $('body').attr('size', size);
+            }
+            
+            function getFormattedDate(date) {
+                // original format: yyyy-mm-dd
+                // new format: month dd, yyyy
+
+                var year = date.substr(0, 4);
+                var month = date.substr(4, 2);
+                var day = date.substr(6, 2);
+
+                switch (month) {
+                    case '01':
+                        month = 'January';
+                        break;
+                    case '02':
+                        month = 'February';
+                        break;
+                    case '03':
+                        month = 'March';
+                        break;
+                    case '04':
+                        month = 'April';
+                        break;
+                    case '05':
+                        month = 'May';
+                        break;
+                    case '06':
+                        month = 'June';
+                        break;
+                    case '07':
+                        month = 'July';
+                        break;
+                    case '08':
+                        month = 'August';
+                        break;
+                    case '09':
+                        month = 'September';
+                        break;
+                    case '10':
+                        month = 'October';
+                        break;
+                    case '11':
+                        month = 'November';
+                        break;
+                    case '12':
+                        month = 'December';
+                        break;
+                }
+
+                return month + ' ' + day + ', ' + year;
+            }
+            
+            function notFound() {
+                console.log('not found');
+            }
+            
+            /*
+              ========================================
+              Event Handlers
+              ========================================
+            */
+            
+            function eventHandler() {
+                $('body').on('click', '[data-uw-action]', function(e) {
+                    e.preventDefault();
+                    
+                    var $this = $(this);
+                    var action = $this.data('uw-action');
+                    var target = $this.data('uw-target');
+
+                    switch (action) {
+                        case 'sidebar-open':
+                            $this.addClass('toggled');
+                            $('#' + target).addClass('toggled');
+                            
+                            var selection = document.querySelector('#dynamic-sidebar-style');
+                            if (!selection) {
+                                $('head').append('<style type="text/css" id="dynamic-sidebar-style"></style>');
+                                selection = document.querySelector('#dynamic-sidebar-style');
+                            }
+                            
+                            var mainHeight = $(window).height() - $('.page-top').outerHeight(true);
+                            selection.textContent = '@media (max-width: 991px) { #page-content-wrapper.toggled { height: ' + mainHeight + 'px; min-height: 0} }';
+                            
+                            $('#page-content-wrapper').addClass('toggled');
+                            $('#page-content-wrapper').append('<div data-uw-action="sidebar-close" data-uw-target="' + target + '" class="sidebar-backdrop" onClick=""></div>');
+                            
+                            break;
+                        case 'sidebar-close':
+                            $('[data-uw-action="sidebar-open"]').removeClass('toggled');
+                            $('#' + target).removeClass('toggled');
+                            
+                            var selection = document.querySelector('#dynamic-sidebar-style');
+                            if (selection) {
+                                selection.textContent = '';
+                            }
+                            
+                            $('#page-content-wrapper').removeClass('toggled');
+                            $('.sidebar-backdrop').remove();
+                            
+                            break;
+                    }
+                });
+                
+                $('#sidebar-wrapper').on('click', '.nav-logout', function() {
+                    logoutJSON();
+                });
+            }
+            
+            /*
+              ========================================
+              Navigation
+              ========================================
+            */
+            
+            function loadNavbarTopLayer(page) {
+                var $body = $('body');
+                var $nav1 = $('#navbar-top-layer-1');
+                var $nav2 = $('#navbar-top-layer-2');
+                var size = $body.attr('size');
+                
+                var nav1HTML = '\
+                    <nav id="navbar-top-layer-1" class="navbar navbar-default navbar-top navbar-fixed-top">\
+                        <ul class="list-inline text-center">\
+                            <li class="toggle-menu first" data-uw-action="sidebar-open" data-uw-target="sidebar-wrapper">\
+                                <a><i class="fa fa-bars"></i></a>\
+                            </li>\
+                            <li class="logo second">\
+                                <a>Sparks</a>\
+                            </li>\
+                            <li class="third">\
+                                <a><i class="fa fa-ellipsis-v"></i></a>\
+                            </li>\
+                        </ul>\
+                    </nav>';
+                
+                var nav2HTML = '\
+                    <nav id="navbar-top-layer-2" class="navbar navbar-default navbar-top navbar-fixed-top">\
+                        <ul class="list-inline text-center">\
+                            <li class="back first">\
+                                <a><i class="fa fa-chevron-left"></i></a>\
+                            </li>\
+                            <li class="title second">\
+                                <a>Title</a>\
+                            </li>\
+                            <li class="preview third">\
+                                <a><i class="fa fa-share"></i></a>\
+                            </li>\
+                        </ul>\
+                    </nav>';
+                
+                switch (page) {
+                    case 'uDashboardResumes':
+                    case 'uDashboardPortfolios':
+                    case 'uSettings':
+                        if (size == 'extra-small' || size == 'small') {
+                            if (!$nav1.length) { // nav 1 does not exist
+                                if ($nav2.length) { // nav 2 exists
+                                    $nav2.replaceWith(nav1HTML);
+                                }
+                                else { // nav 2 does not exist
+                                    $body.prepend(nav1HTML);
+                                }
+                            }
+                        }
+                        else {
+                            if ($nav1.length) { // nav 1 exists
+                                $nav1.remove();
+                            }
+                            else if ($nav2.length) { // nav 2 exists
+                                $nav2.remove();
+                            }
+                        }
+                        
+                        break;
+                    case 'uResume':
+                        if (!$nav2.length) { // nav 2 does not exist
+                            if ($nav1.length) { // nav 1 exists
+                                $nav1.replaceWith(nav2HTML);
+                            }
+                            else { // nav 1 does not exist
+                                $body.prepend(nav2HTML);
+                            }
+                        }
+                        
+                        break;
+                    default:
+                        console.log('Error: load navbar page not matched');
+                }
+            }
+            
+            function loadSidebarNavigationLinks() {
+                var $this = $('#sidebar-wrapper');
+                
+                if (!$this.hasClass('initialized')) {
+                    $this.find('.nav-resumes a').attr('href', '/user/resumes');
+                    $this.find('.nav-portfolios a').attr('href', '/user/portfolios');
+                    $this.find('.nav-settings a').attr('href', '/user/settings');
+                    
+                    $this.addClass('initialized');
+                }
+            }
+            
+            /*
+              ========================================
+              Load Pages
+              ========================================
+            */
+            
+            function loadDashboardResumes(ctx) {
+                initialization('uDashboardResumes');
+                loadURL(ctx.pathname, 'loadDashboardResumes', '');
+            }
+            
+            function loadDashboardPortfolios(ctx) {
+                initialization('uDashboardPortfolios');
+                loadURL(ctx.pathname, 'loadDashboardPortfolios', '');
+            }
+            
+            function loadSettings(ctx) {
+                initialization('uSettings');
+                loadURL(ctx.pathname, 'loadSettings', '');
+            }
+            
+            function loadResume(ctx) {
+                globalResumeID = ctx.params.resumeID;
+                initialization('uResume');
+                
+                if (!$('html').hasClass('fp-enabled')) {
+                    loadURL(ctx.pathname, 'loadResume', globalResumeID);
+                }
+            }
+            
+            function loadPortfolio(ctx) {
+                // **** EDIT ****
+            }
+            
+            function logoutJSON() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/logoutJSON',
+                    dataType: 'json',
+                    cache: false
+                }).done(function(json, textStatus, jqXHr) {
+                    window.location.pathname = '/login';
+                }).fail(function(jqXHr, textStatus, errorThrown) {
+                    handleAjaxError(jqXHr, textStatus);
+                }).always(function() {});
+            }
+        </script>
+        
+    </body>
+
+</html>
+
+{{end}}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Sparks</title>
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    </head>
+    
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #container {
+            background: #DDD;
+            max-width: 1000px;
+        }
+        .item {
+            width: 200px;
+            float: left;
+        }
+        .item img {
+            display: block;
+            width: 100%;
+        }
+        button {
+            font-size: 18px;
+        }
+    </style>
+
+    <body>
+        <h1>Masonry + imagesLoaded, iteratively reveal items</h1>
+        <div id="container"></div>
+        <p><button id="load-images">Load images</button></p>
+        
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+
+        <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js" type="text/javascript"></script>
+        <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js" type="text/javascript"></script>
+
+
+        <script type="text/javascript">
+            $( function() {
+
+              var $container = $('#container').masonry({
+                itemSelector: '.item',
+                columnWidth: 200
+              });
+
+              $('#load-images').click( function() {
+                var $items = getItems();
+                $container.masonryImagesReveal( $items );
+              });
+
+            });
+
+            $.fn.masonryImagesReveal = function( $items ) {
+              var msnry = this.data('masonry');
+              var itemSelector = msnry.options.itemSelector;
+              // hide by default
+              $items.hide();
+              // append to container
+              this.append( $items );
+              $items.imagesLoaded().progress( function( imgLoad, image ) {
+                // get item
+                // image is imagesLoaded class, not <img>, <img> is image.img
+                var $item = $( image.img ).parents( itemSelector );
+                // un-hide item
+                $item.show();
+                // masonry does its thing
+                msnry.appended( $item );
+              });
+
+              return this;
+            };
+
+            function randomInt( min, max ) {
+              return Math.floor( Math.random() * max + min );
+            }
+
+            function getItem() {
+              var width = randomInt( 150, 400 );
+              var height = randomInt( 150, 250 );
+              var item = '<div class="item">'+
+                '<img src="http://lorempixel.com/' + 
+                  width + '/' + height + '/nature" /></div>';
+              return item;
+            }
+
+            function getItems() {
+              var items = '';
+              for ( var i=0; i < 12; i++ ) {
+                items += getItem();
+              }
+              // return jQuery object
+              return $( items );
+            }
+        </script>
+
+    </body>
+
+</html>

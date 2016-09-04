@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Sparks</title>
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../assets/stylesheets/masonry-style.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <div id="page-content-wrapper">
+            
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js" type="text/javascript"></script>
+        
+        
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                loadHTML();
+                initializeMasonry();
+            });
+            
+            function loadHTML() {
+                var myHTML = '\
+                    <div id="main-container">\
+                        <section id="resumes">\
+                            <div class="container">\
+                                <div class="grid"> \
+                                    <div class="grid-sizer"></div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-header">\
+                                                <div class="card-title">1 Assistant to Director</div>\
+                                                <h3 class="card-subtitle">City of Long Beach, Public Works Department\
+                                                <br />\
+                                                July 2007 &mdash; January 2008 (7 months)</h3>\
+                                            </div>\
+                                            \
+                                            <div class="card-content">\
+                                                <ul>\
+                                                    <li>Manage the Community Information Division</li>\
+                                                    <li>Oversee division budget</li>\
+                                                    <li>Work closely with officials and city management</li>\
+                                                    <li>Manage special projects including:</li>\
+                                                    <ul>\
+                                                        <li>Infrastructure Nexus Fee Study</li>\
+                                                        <li>Infrastructure Asset Management</li>\
+                                                        <li>Strategic Communications Plan</li>\
+                                                        <li>Capital Infrastructure Plan</li>\
+                                                        <li>Annual Report</li>\
+                                                    </ul>\
+                                                </ul>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-header">\
+                                                <div class="card-title">2 Assistant to Director</div>\
+                                                <h3 class="card-subtitle">City of New York, Department of Education\
+                                                <br />\
+                                                February 2008 &mdash; June 2009 (1 year 5 months)</h3>\
+                                            </div>\
+                                            \
+                                            <div class="card-content">\
+                                                <ul>\
+                                                    <li>Analyze fiscal and performance data to support the development of fiscal policies</li>\
+                                                    <li>Conduct special studies and management inquiries</li>\
+                                                    <li>Assist in managing the department’s $20 billion budget</li>\
+                                                </ul>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-header">\
+                                                <div class="card-title">3 Senior Analyst</div>\
+                                                <h3 class="card-subtitle">City of New York, Department of Education\
+                                                <br />\
+                                                February 2008 &mdash; June 2009 (1 year 5 months)</h3>\
+                                            </div>\
+                                            \
+                                            <div class="card-content">\
+                                                <ul>\
+                                                    <li>Analyze fiscal and performance data to support the development of fiscal policies</li>\
+                                                    <li>Conduct special studies and management inquiries</li>\
+                                                    <li>Assist in managing the department’s $20 billion budget</li>\
+                                                    <li>Develop fiscal policies and compile management reports</li>\
+                                                </ul>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-header">\
+                                                <div class="card-title">4 Assistant to Director</div>\
+                                                <h3 class="card-subtitle">City of Long Beach, Public Works Department\
+                                                <br />\
+                                                July 2007 &mdash; January 2008 (7 months)</h3>\
+                                            </div>\
+                                            \
+                                            <div class="card-content">\
+                                                <ul>\
+                                                    <li>Manage the Community Information Division</li>\
+                                                    <li>Oversee division budget</li>\
+                                                    <li>Work closely with officials and city management</li>\
+                                                    <li>Manage special projects including:</li>\
+                                                    <ul>\
+                                                        <li>Infrastructure Nexus Fee Study</li>\
+                                                        <li>Infrastructure Asset Management</li>\
+                                                        <li>Strategic Communications Plan</li>\
+                                                        <li>Capital Infrastructure Plan</li>\
+                                                        <li>Annual Report</li>\
+                                                    </ul>\
+                                                </ul>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-header">\
+                                                <div class="card-title">5 Junior Analyst</div>\
+                                                <h3 class="card-subtitle">Pearson Specter, Finance Department\
+                                                <br />\
+                                                September 2005 &mdash; June 2007 (1 year 10 months)</h3>\
+                                            </div>\
+                                            \
+                                            <div class="card-content">\
+                                                <ul>\
+                                                    <li>Analyze fiscal and performance data to support the development of fiscal policies</li>\
+                                                    <li>Conduct special studies and management inquiries</li>\
+                                                    <li>Assist in managing the department’s $20 billion budget</li>\
+                                                    <li>Develop fiscal policies and compile management reports</li>\
+                                                </ul>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    \
+                                    <div class="grid-item card-wrapper">\
+                                        <div class="card">\
+                                            <div class="card-header">\
+                                                <div class="card-title">6 Junior Analyst</div>\
+                                                <h3 class="card-subtitle">Pearson Specter, Finance Department\
+                                                <br />\
+                                                September 2005 &mdash; June 2007 (1 year 10 months)</h3>\
+                                            </div>\
+                                            \
+                                            <div class="card-content">\
+                                                <ul>\
+                                                    <li>Analyze fiscal and performance data to support the development of fiscal policies</li>\
+                                                    <li>Conduct special studies and management inquiries</li>\
+                                                    <li>Assist in managing the department’s $20 billion budget</li>\
+                                                    <li>Develop fiscal policies and compile management reports</li>\
+                                                </ul>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </section>\
+                    </div>';
+                
+                $('#page-content-wrapper').append(myHTML);
+            }
+            
+            // http://masonry.desandro.com/methods.html#destroy
+            function initializeMasonry() {
+                console.log('init masonry');
+
+                $('.grid').masonry({ // initialize
+                    itemSelector: '.grid-item',
+                    columnWidth: '.grid-sizer',
+                    percentPosition: true
+                });
+            }
+        </script>
+
+    </body>
+    
+</html>

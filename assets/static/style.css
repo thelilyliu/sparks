@@ -1,0 +1,848 @@
+/* 
+    Table of Contents
+     1. Basic
+     2. Typography
+     3. Container
+     4. Links
+     5. Lists
+     6. Buttons
+     7. Custom Classes
+     8. Navigation Top
+     9. Navigation Side
+    10. Navigation Right
+    11. Grids
+    12. Sections
+    13. Cards
+    14. Forms
+    15. Alerts
+    16. Login
+    17. User
+    18. Profile
+    19. Experience
+    20. Skills
+    21. Portfolio
+    22. Education
+    23. Contact
+    24. Portfolios
+*/
+
+/*
+  ========================================
+  1. Basic
+  ========================================
+*/
+
+html {
+    min-height: 100%;
+}
+body {
+    position: relative;
+    min-height: 100%;
+    overflow: hidden;
+}
+textarea {
+    resize: none;
+}
+
+/*
+  ========================================
+  2. Typography
+  ========================================
+*/
+
+@font-face {
+    font-style: normal;
+    font-weight: normal;
+}
+body {
+    font-family: "Roboto", Helvetica Neue, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+}
+h1 {
+    text-align: center;
+    margin: 0;
+}
+h2 {
+    margin: 0;
+}
+h3 {
+    margin: 0;
+}
+h4 {
+    margin: 0;
+}
+h5 {
+    margin: 0;
+}
+h6 {
+    margin: 0;
+}
+p {
+    margin: 0;
+    margin-bottom: 18px;
+}
+
+/*
+  ========================================
+  3. Container
+  ========================================
+*/
+
+.container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+section .container {
+    padding: 50px;
+}
+.view #profile .container {
+    position: relative;
+    min-height: 100vh;
+}
+
+@media (min-width: 992px) {
+    #page-content-wrapper #main-container,
+    #page-content-wrapper #fullpage {
+        margin-left: 250px;
+    }
+}
+
+/*
+  ========================================
+  4. Links
+  ========================================
+*/
+
+a,
+a:active,
+a:focus,
+a:hover,
+a:visited {
+    outline: none;
+    text-decoration: none;
+}
+a:hover {
+    cursor: pointer;
+}
+
+/*
+  ========================================
+  5. Lists
+  ========================================
+*/
+
+ul {
+    padding-left: 25px;
+    margin: 0;
+    list-style: disc;
+}
+ul ul {
+    padding-left: 25px;
+    list-style: circle;
+}
+ul.default {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/*
+  ========================================
+  6. Buttons
+  ========================================
+*/
+
+button.default {
+    border: none;
+    outline: none;
+}
+button.default:focus { 
+    outline: none;
+}
+a[type="button"] {
+    cursor: pointer;
+}
+
+/*
+button.close {
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    position: absolute;
+    z-index: 10;
+}
+*/
+.new-button {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 10;
+    right: 50px;
+    bottom: 50px;
+    font-size: 50px;
+    background-color: #9ad3de;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+#new-resume {
+    position: fixed;
+}
+
+/*
+  ========================================
+  7. Custom Classes
+  ========================================
+*/
+
+.absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.absolute-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.absolute-center {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.circle {
+    border-radius: 50%;
+}
+.fill-div {
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
+.fixed-background {
+    background-attachment: fixed;
+    background-position: 50% 50%;
+    background-size: cover;
+    /* min-height: 100vh; */
+}
+.horizontal-align {
+    left: 50%;
+    
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+}
+.vertical-align {
+    top: 50%;
+    
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
+/*
+  ========================================
+  8. Navigation Top
+  ========================================
+*/
+
+.navbar-top {
+    height: 50px;
+    border: none;
+    margin: 0;
+    z-index: 10;
+    background-color: rgba(248, 248, 248, .8); /* **** OPACITY DOESN'T WORK IN DASHBOARD **** */
+}
+.navbar-top li {
+    position: absolute;
+    height: 50px;
+    font-size: 26px;
+    padding: 7px;
+}
+.navbar-top a {
+    color: #335ace;
+}
+.navbar-top a:hover {
+    color: #2d50b7;
+}
+    .navbar-top li.first {
+        width: 40px;
+        left: 10px;
+        z-index: 11; /* **** TEMPORARY HACK **** */
+    }
+    .navbar-top li.second {
+        left: 50px;
+        right: 50px;
+        overflow: hidden;
+    }
+    .navbar-top li.third {
+        width: 40px;
+        right: 10px;
+    }
+@media (min-width: 992px) {
+    #navbar-top-layer-2 {
+        margin-left: 250px;
+    }
+    .navbar-top li.first {
+        left: 50px;
+    }
+    .navbar-top li.second {
+        left: 90px;
+        right: 90px;
+    }
+    .navbar-top li.third {
+        right: 50px;
+    }
+}
+
+/*
+  ========================================
+  9. Navigation Side
+  ========================================
+*/
+
+#sidebar-wrapper {
+    position: absolute;
+    box-shadow: 1px 0 15px rgba(0, 0, 0, .3);
+    height: 100%;
+    width: 250px;
+    border: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    background-color: #fff;
+    z-index: 9;
+}
+#sidebar-wrapper .sidebar-header {
+    display: block;
+    height: 100px;
+    width: 250px;
+    background-image: url("/assets/images/nav-header.png");
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+            background-size: cover;
+    background-position: center;
+}
+#sidebar-wrapper .sidebar-header i {
+    display: none;
+}
+#sidebar-wrapper .sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#sidebar-wrapper .sidebar-footer .logo {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+#sidebar-wrapper .sidebar-footer .copyright {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+#sidebar-wrapper .sidebar-footer .copyright a {
+    color: #7999ff;
+}
+
+@media (max-width: 991px) {
+    #sidebar-wrapper {
+        position: fixed;
+        box-shadow: 0 0 25px rgba(0, 0, 0, .35);
+        height: 100%;
+        width: 250px;
+        z-index: 101;
+        left: -250px; 
+        opacity: 0.3;
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+        -webkit-transition: transform 300ms ease-out, opacity 300ms ease-out;
+                transition: transform 300ms ease-out, opacity 300ms ease-out;
+    }
+    #sidebar-wrapper.toggled {
+        opacity: 1;
+        -webkit-transform: translateX(250px);
+                transform: translateX(250px);
+    }
+    #sidebar-wrapper.toggled + #page-content-wrapper {
+        overflow: hidden !important;
+    }
+    #sidebar-wrapper .sidebar-header i {
+        display: inline-block;
+        position: relative;
+        margin: 25px;
+        font-size: 50px;
+        color: #fff;
+        cursor: pointer;
+    }
+    .sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .1);
+        z-index: 100;
+    }
+}
+
+.sidebar-nav a {
+    color: #555;
+}
+.sidebar-nav a:hover, 
+.sidebar-nav a:focus {
+    color: #000;
+}
+.sidebar-nav > li > a {
+    padding: 10px 25px 10px 45px;
+    border-left: 5px solid transparent;
+}
+.sidebar-nav > li > a:hover {
+    background-color: rgba(33, 33, 33, .1);
+    border-left: 5px solid #3F51B5;
+}
+.sidebar-nav > li > a > i {
+    position: absolute;
+    left: 15px;
+    top: 1px;
+    width: 25px;
+    text-align: center;
+    padding: 12px 0;
+}
+
+.sidebar-nav li.active > a {
+    color: #000;
+}
+.sidebar-nav > li.active > a, 
+.sidebar-nav > li.open > a {
+    border-left: 5px solid #3F51B5;
+}
+.sidebar-nav li > a > .arrow:before {
+    float: right;
+    margin-top: 0;
+    margin-right: 20px;
+    display: inline;
+    font-size: 16px;
+    font-family: FontAwesome;
+    height: auto;
+    content: "\f107";
+    font-weight: normal;
+    text-shadow: none;
+}
+.sidebar-nav li.open > a > .arrow:before {
+    content: "\f106";
+}
+.sidebar-nav li > a > .arrow {
+    float: right;
+    position: absolute;
+    right: 0;
+}
+
+/*
+  ========================================
+  10. Navigation Right
+  ========================================
+*/
+
+#fp-nav .fp-tooltip {
+    color: #fff;
+}
+#fp-nav ul li a span {
+    background: #fff;
+}
+
+/*
+  ========================================
+  11. Grids
+  ========================================
+*/
+
+.grid-sizer,
+.grid-item {
+    width: 50%;
+}
+.grid {
+    margin: -15px;
+}
+.grid-item {
+    padding: 15px;
+}
+
+@media (max-width: 767px) {
+    .grid-item {
+        width: 100%;
+    }
+}
+
+/*
+  ========================================
+  12. Sections
+  ========================================
+*/
+
+section {
+    /* min-height: 100vh; */
+    height: 100vh;
+    overflow-y: scroll;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+}
+    section .fp-tableCell {
+        /* display: block; */
+        vertical-align: top;
+    }
+    section h1 {
+        font-size: 40px;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+@media (max-width: 991px) {
+    #main-container section {
+        margin-top: 50px;
+        padding-bottom: 50px;
+    }
+}
+
+/*
+  ========================================
+  13. Cards
+  ========================================
+*/
+
+.card-wrapper {
+    padding: 15px;
+}
+.card {
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+.card-cover {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.card-cover:hover {
+    cursor: pointer;
+}
+.card-cover:hover .card-actions {
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+    .card-cover img {
+        width: 100%;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+.card-actions {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+    .card-actions .date {
+        margin: 15px;
+    }
+.card-action-item-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    padding: 10px;
+    text-align: right;
+}
+.card-action-item {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    color: #666;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+.card-action-item:hover {
+    cursor: pointer;
+    color: #111;
+}
+.card-footer {
+    padding: 10px;
+    cursor: default;
+}
+    .card-footer .title:hover {
+        cursor: text;
+    }
+
+/*
+  ========================================
+  14. Forms
+  ========================================
+*/
+
+.form-horizontal .control-label {
+    font-weight: 400;
+}
+.form-group:nth-last-child(1) {
+    margin-bottom: 0;
+}
+.note-editor {
+    margin: 0;
+    font-size: 14px;
+}
+
+/*
+  ========================================
+  15. Alerts
+  ========================================
+*/
+
+.alert {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    margin: 0;
+    z-index: 100;
+}
+
+/*
+  ========================================
+  16. Login
+  ========================================
+*/
+
+#login {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/infinite-wooden-floors/01.jpg");
+}
+    #login .container {
+        width: 50%;
+    }
+@media (max-width: 991px) {
+    #login .container {
+        width: 100%;
+    }
+}
+
+/*
+  ========================================
+  17. User
+  ========================================
+*/
+
+#resumes {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/01.jpg");
+}
+    #resumes .card {
+        padding: 0;
+        background-color: #80DED9;
+    }
+
+#portfolios {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/02.jpg");
+}
+    #portfolios .card {
+        padding: 0;
+        background-color: #5E7CE2;
+    }
+
+#settings {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/03.jpg");
+}
+
+/*
+  ========================================
+  18. Profile
+  ========================================
+*/
+
+#profile {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/infinite-wooden-floors/02.jpg");
+}
+    #profile .jumbo {
+        padding: 30px;
+        margin: 0 30px;
+        border-radius: 6px;
+        opacity: 0.9;
+        background-color: rgba(238, 238, 238, .9);
+        color: #333;
+    }
+    #profile .title {
+        color: #252839;
+    }
+    #profile .subtitle {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+@media (max-width: 767px) {
+    #profile .jumbo {
+        padding: 15px;
+        margin: 0 15px;
+    }
+    #profile p {
+        margin-bottom: 10px;
+    }
+}
+@media (min-width: 1200px) {
+    #profile .container {
+        width: 1000px;
+    }
+}
+
+/*
+  ========================================
+  19. Experience
+  ========================================
+*/
+
+#experience {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/01.jpg");
+    /* background-color: rgb(229, 229, 229); */
+}
+    #experience .card {
+        padding: 15px;
+        border: 1px solid #d8d8d8;
+        background-color: #fff;
+    }
+    #experience .title {
+        margin-bottom: 16px;
+        color: #89bdd3;
+    }
+    #experience .subtitle {
+        margin-bottom: 12px;
+        color: #9ad3de;
+    }
+    #experience .date {
+        margin-bottom: 8px;
+        color: #7999FF;
+    }
+    #experience .card-content {
+        display: block;
+        color: #677077;
+    }
+    #experience .experience-group {
+        background-color: rgb(229, 229, 229);
+        padding: 20px;
+        border-radius: 4px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+    }
+    #experience .button-group {
+        position: absolute;
+        z-index: 10;
+    }
+        #experience .button-group button {
+            display: block;
+            height: 30px;
+            width: 30px;
+        }
+        #experience .experience-group:first-child button.up {
+            visibility: hidden;
+        }
+        #experience .experience-group:last-child button.down {
+            visibility: hidden;
+        }
+
+@media (max-width: 767px) {
+    #experience .card-wrapper {
+        padding: 10px 15px;
+    }
+    #experience .card-wrapper:nth-last-child(1) {
+        padding-bottom: 20px;
+    }
+    #experience .button-group {
+        left: 20px;
+    }
+}
+
+/*
+  ========================================
+  20. Skills
+  ========================================
+*/
+
+#skills {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/02.jpg");
+}
+    #skills .card {
+        height: 100px;
+    }
+    #skills .hard-skill,
+    #skills .soft-skill {
+        margin-bottom: 5px;
+    }
+    #skills .level-1 {
+        background-color: rgba(110, 211, 207, .9);
+    }
+    #skills .level-2 {
+        background-color: rgba(187, 196, 239, .9);
+    }
+    #skills .level-3 {
+        background-color: rgba(144, 104, 190, .9);
+    }
+    #skills .level-4 {
+        background-color: rgba(98, 188, 250, .9);
+    }
+    #skills .level-5 {
+        background-color: rgba(101, 52, 255, .9);
+    }
+
+/*
+  ========================================
+  21. Portfolio
+  ========================================
+*/
+
+#portfolio {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/03.jpg");
+}
+
+/*
+  ========================================
+  22. Education
+  ========================================
+*/
+
+#education {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/04.jpg");
+}
+    #education .card {
+        position: relative;
+        background-color: rgba(138, 219, 255, .9);
+    }
+
+/*
+  ========================================
+  23. Contact
+  ========================================
+*/
+
+#contact-info {
+    background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/infinite-wooden-floors/03.jpg");
+}
+    #contact-info .card {
+        height: 150px;
+        color: #fff;
+        background-color: rgba(138, 219, 255, .9);
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+    }
+    #contact-info .card:hover {
+        transform: translateY(-10px);
+    }
+    #contact-info .card-info {
+        margin-top: 16px;
+    }
+
+/*
+  ========================================
+  24. Portfolios
+  ========================================
+*/

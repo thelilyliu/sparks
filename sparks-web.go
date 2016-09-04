@@ -102,6 +102,7 @@ func main() {
     router.Delete("/deleteUserJSON", deleteUserJSON)
     
     // view
+    router.Get("/user/resume/-1", viewUser)
     router.Get("/user/resume/:resumeID", viewUser)
     router.Get("/user/resumes", viewUser)
     router.Get("/user/portfolios", viewUser)
@@ -111,7 +112,7 @@ func main() {
     router.Get("/", viewIndex)
    
     log.Println("Listening...")
-    if err := http.ListenAndServe(":4243", context.ClearHandler(router)); err != nil {
+    if err := http.ListenAndServe(":4242", context.ClearHandler(router)); err != nil {
         log.Println(err)
     }
 }
@@ -482,7 +483,7 @@ func insertResumeJSON(w http.ResponseWriter, r *http.Request) {
         resume := new(Resume)
         resume.UserID = uID.(string)
 
-        categoryStr := vestigo.Param(r, "category") // 1 = general | 2 = profile | 3 = experience | 4 = skills | 5 = portfolios | 6 = otherInfo | 7 = contactInfo
+        categoryStr := vestigo.Param(r, "category") // 1 = general | 2 = profile | 3 = experience | 4 = skills | 5 = portfolio | 6 = otherInfo | 7 = contactInfo
 
         if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
             returnCode = 1
@@ -531,14 +532,17 @@ func updateResumeJSON(w http.ResponseWriter, r *http.Request) {
 
         categoryStr := vestigo.Param(r, "category")
         /*
-        1 = general
-        2 = profile
-        3 = experience
-        4 = experiences
-        5 = skills
-        6 = portfolios
-        7 = otherInfo
-        8 = contactInfo
+        1 = settings
+
+        2 = profileType
+        3 = experienceType
+        4 = skillsType
+        5 = portfolioType
+        6 = otherInfoType
+        7 = contactInfoType
+
+        8 = experiences
+        9 = skills
         */
 
         if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
@@ -601,7 +605,7 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 
             // profile.Background = new(Image)
 
-            err = updateRProfile(resume.ResumeID, resume.UserID, profile)
+            err = updateRProfileType(resume.ResumeID, resume.UserID, profile)
             logErrorMessage(err)
 
             resume.Profile = *profile
@@ -613,16 +617,26 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
             
             // experience.Background = new(Image)
             
-            err = updateRExperience(resume.ResumeID, resume.UserID, experience)
+            err = updateRExperienceType(resume.ResumeID, resume.UserID, experience)
             logErrorMessage(err)
             
             resume.Experience = *experience
         case 4:
-            updateRSkills()
+            skills := new(SkillsType)
+            
+            err = json.NewDecoder(r.Body).Decode(skills)
+            logErrorMessage(err)
+            
+            // skills.Background = new(Image)
+
+            err = updateRSkillsType(resume.ResumeID, resume.UserID, skills)
+            logErrorMessage(err)
+
+            resume.Skills = *skills
         case 5:
-            updateRPortfolios()
+            updateRPortfolioType()
         case 6:
-            updateROtherInfo()
+            updateROtherInfoType()
         case 7:
             contactInfo := new(Contact)
 
@@ -631,7 +645,7 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 
             // contactInfo.Background = new(Image)
 
-            err = updateRContactInfo(resume.ResumeID, resume.UserID, contactInfo)
+            err = updateRContactInfoType(resume.ResumeID, resume.UserID, contactInfo)
             logErrorMessage(err)
 
             resume.ContactInfo = *contactInfo
@@ -651,6 +665,22 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
             logErrorMessage(err)
             
             resume.Experience.Experiences = experiences
+        case 9:
+            var skills []Skill
+            var byteSlice []byte
+
+            // https://golang.org/pkg/io/ioutil/#ReadAll
+            byteSlice, err = ioutil.ReadAll(r.Body)
+            logErrorMessage(err)
+            
+            // https://golang.org/pkg/encoding/json/#Unmarshal
+            err = json.Unmarshal(byteSlice, &skills)
+            logErrorMessage(err)
+            
+            err = updateRSkills(resume.ResumeID, resume.UserID, &skills)
+            logErrorMessage(err)
+            
+            resume.Skills.Skills = skills
         default:
             log.Println("No category selected. Resume not updated.")
     }

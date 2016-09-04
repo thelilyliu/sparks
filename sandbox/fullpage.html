@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Scroll inside sections and slides - fullPage.js</title>
+    
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/jquery.fullPage.css" />
+	<style>
+	    .section {
+          text-align:center;
+          font-size: 3em;
+        }
+        #destroy{
+          position:fixed;
+          z-index:999;
+          font-size: 2em;
+          cursor:pointer;
+          top: 20px;
+          left: 20px;
+        }
+        #create{
+          position:fixed;
+          z-index:999;
+          font-size: 2em;
+          cursor:pointer;
+          top: 20px;
+          left: 220px;
+        }
+	</style>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/vendors/scrolloverflow.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/jquery.fullPage.js"></script>
+
+	<script type="text/javascript">
+	    $(document).on('click', '#destroy', function() {
+	        $.fn.fullpage.destroy('all');
+        });
+
+	    $(document).on('click', '#create', function () {
+	        initFullpage();
+        });
+
+        $(document).ready(function () {
+            initFullpage();
+        });
+
+        function initFullpage() {
+            $('#fullpage').fullpage({
+                anchors: ['firstPage', 'secondPage', 'a3rdPage', 'a4thPage'],
+                sectionsColor: ['yellow', 'orange', '#C0C0C0', '#ADD8E6'],
+                scrollOverflow: true,
+				scrollOverflowOptions: {
+				    scrollbars: true,
+				    mouseWheel: true,
+				    hideScrollbars: false,
+				    fadeScrollbars: false,
+				    disableMouse: true
+				}
+            });
+        }
+	</script>
+</head>
+<body>
+    <button id="destroy">Destroy</button>
+    <button id="create">Create</button>
+    <div id="fullpage">
+        <div class="section">
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            1 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            2 <br />
+            33 <br />
+        </div>
+        <div class="section">
+            <div class="slide" data-anchor="slide1">Two 1a</div>
+            <div class="slide" data-anchor="slide2">Two 2b</div>
+        </div>
+        <div class="section">Three</div>
+        <div class="section">Four</div>
+    </div>
+</body>
+</html>

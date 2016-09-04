@@ -1,0 +1,103 @@
+{{define "my-template"}}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    {{template "head" .}}
+    
+    <body data-spy="scroll" data-target="#myScrollspy">
+        
+        <div id="fullpage" class="view">
+            
+            <section id="profile">
+                <div class="container">
+                    <div class="jumbo absolute-center vertical-align"></div>
+                </div>
+            </section>
+            
+            <section id="experience">
+                <div class="container">
+                    <h1>Experience</h1>
+                    <div class="grid">
+                        <div class="grid-sizer"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills">
+                <div class="container">
+                    <h1>Skills</h1>
+                    <div class="row"></div>
+                </div>
+            </section>
+            
+            <section id="contact-info">
+                <div class="container">
+                    <h1>Contact</h1>
+                    <div class="row"></div>
+                </div>
+            </section>
+            
+        </div>
+        
+        {{template "script" .}}
+        
+        <script src="../assets/static/viewResume.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                eventHandler();
+                
+                page('/resume/:resumeID', viewResume);
+                page('*', notFound);
+                page();
+            });
+            
+            function initializeFullPage() {
+                // https://github.com/alvarotrigo/fullPage.js
+                $('#fullpage').fullpage({
+                    // Navigation
+                    anchors: ['section1', 'section2', 'section3', 'section4'],
+                    navigation: true,
+                    navigationPosition: 'right',
+                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Contact'],
+
+                    // Scrolling
+                    scrollOverflow: true,
+                    scrollOverflowOptions: {
+                        scrollbars: true,
+                        mouseWheel: true,
+                        hideScrollbars: false,
+                        fadeScrollbars: false,
+                        disableMouse: true
+                    },
+                    
+                    // paddingTop: 50,
+                    recordHistory: false,
+                    sectionSelector: 'section'
+                });
+            }
+            
+            function eventHandler() {
+                
+            }
+            
+            function notFound() {
+                console.log('not found');
+            }
+            
+            function viewResume(ctx) {
+                globalResumeID = ctx.params.resumeID;
+                
+                if (!$('html').hasClass('fp-enabled')) {
+                    viewResumeInit();
+                }
+            }
+        </script>
+        
+    </body>
+
+</html>
+
+{{end}}

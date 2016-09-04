@@ -19,15 +19,16 @@ type Resume struct {
     Profile     ProfileType    `json:"profile"`
     Experience  ExperienceType `json:"experience"`
     Skills      SkillsType     `json:"skills"`
-    Portfolios  []Portfolio    `json:"portfolios"`
-    OtherInfo   Others         `json:"otherInfo"`
-    ContactInfo Contact        `json:"contactInfo"`
+    Portfolio   PortfolioType  `json:"portfolio"`
+    Others      OthersType     `json:"others"`
+    Contact     ContactType    `json:"contact"`
 }
 
 type ProfileType struct {
     Headline   string `json:"headline"`
     Subtitle   string `json:"subtitle"`
     Summary    string `json:"summary"`
+    ProfilePic Image  `json:"profilPic"`
     Background Image  `json:"background"`
 }
 
@@ -39,6 +40,11 @@ type ExperienceType struct {
 type SkillsType struct {
     Skills     []Skill `json:"skills"`
     Background Image   `json:"background"`
+}
+
+type PortfolioType struct {
+    Portfolios []Portfolio `json:"portfolios"`
+    Background Image       `json:"image"`
 }
 
 type Experience struct {
@@ -56,7 +62,7 @@ type Skill struct {
     Order int    `json:"order"`
 }
 
-type Others struct {
+type OthersType struct {
     Educations []Education `json:"educations"`
     Awards     []Award     `json:"awards"`
     Hobbies    []Hobby     `json:"hobbies"`
@@ -64,7 +70,7 @@ type Others struct {
     Background Image       `json:"background"`
 }
 
-type Contact struct {
+type ContactType struct {
     HomePhone   string `json:"homePhone"`
     MobilePhone string `json:"mobilePhone"`
     WorkPhone   string `json:"workPhone"`
@@ -180,7 +186,7 @@ func updateRSettings(resumeID, userID string, resume *Resume) error {
     return err
 }
 
-func updateRProfile(resumeID, userID string, profile *ProfileType) error {
+func updateRProfileType(resumeID, userID string, profile *ProfileType) error {
     change := bson.M{"profile": profile}
     
     // find document and update fields
@@ -192,7 +198,7 @@ func updateRProfile(resumeID, userID string, profile *ProfileType) error {
     return err
 }
 
-func updateRExperience(resumeID, userID string, experience *ExperienceType) error {
+func updateRExperienceType(resumeID, userID string, experience *ExperienceType) error {
     change := bson.M{"experience": experience}
     
     // find document and update fields
@@ -204,25 +210,31 @@ func updateRExperience(resumeID, userID string, experience *ExperienceType) erro
     return err
 }
 
-func updateRSkills() {
+func updateRSkillsType(resumeID, userID string, skills *SkillsType) error {
+    change := bson.M{"skills": skills}
+    
+    // find document and update fields
+    selector := bson.M{"resumeid": resumeID, "userid": userID}
+    update := bson.M{"$set": &change}
+    
+    err := updateResumeDB(&selector, &update)
+    
+    return err
+}
+
+func updateRPortfolioType() {
     
     // **** EDIT ****
     
 }
 
-func updateRPortfolios() {
+func updateROtherInfoType() {
     
     // **** EDIT ****
     
 }
 
-func updateROtherInfo() {
-    
-    // **** EDIT ****
-    
-}
-
-func updateRContactInfo(resumeID, userID string, contactInfo *Contact) error {
+func updateRContactInfoType(resumeID, userID string, contactInfo *Contact) error {
     change := bson.M{"contactinfo": contactInfo}
     
     // find document and update fields
@@ -236,6 +248,18 @@ func updateRContactInfo(resumeID, userID string, contactInfo *Contact) error {
 
 func updateRExperiences(resumeID, userID string, experiences *[]Experience) error {
     change := bson.M{"experience.experiences": experiences}
+    
+    // find document and update fields
+    selector := bson.M{"resumeid": resumeID, "userid": userID}
+    update := bson.M{"$set": &change}
+    
+    err := updateResumeDB(&selector, &update)
+    
+    return err
+}
+
+func updateRSkills(resumeID, userID string, skills *[]Skill) error {
+    change := bson.M{"skills.skills": skills}
     
     // find document and update fields
     selector := bson.M{"resumeid": resumeID, "userid": userID}

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>Sparks</title>
+
+        <link href="../assets/stylesheets/default.css" rel="stylesheet" type="text/css">
+        
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/jquery.fullPage.min.css" rel="stylesheet" type="text/css">
+        
+        <link href="../assets/stylesheets/style.css" rel="stylesheet" type="text/css">
+        <link href="../assets/stylesheets/nav-style.css" rel="stylesheet" type="text/css">
+
+        <link href="https://fonts.googleapis.com/css?family=Roboto:700,400,300" rel="stylesheet" type="text/css">
+    </head>
+
+    
+    <body data-spy="scroll" data-target="#myScrollspy" class="sidebar-open" size="medium">
+        <div id="overlay"></div>
+
+        <nav class="navbar navbar-default navbar-fixed-top" id="navbar-top">
+            <div class="container">
+                <ul class="list-inline text-center vertical-align">
+                    <li class="hamburger first">
+                        <a href="#"><i class="fa fa-bars"></i></a>
+                    </li>
+                    <li class="second">
+                        <a href="#"><i class="fa fa-cloud"></i></a>
+                    </li>
+                    <li class="third">
+                        <a href="#"><i class="fa fa-ellipsis-v"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top initialized is-open" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand"><a>Sparks</a></li>
+                <li class="nav-resumes"><a>Resumes</a></li>
+                <li class="nav-portfolios"><a>Portfolios</a></li>
+                <li class="nav-settings"><a>Settings</a></li>
+            </ul>
+            <div id="sidebar-nav-leftover" class="fill-div"></div>
+        </nav>
+
+        <div id="page-content-wrapper">            
+            <div id="main-container">                
+                <section id="resumes">                    
+                    <div class="container">            
+                        <button id="new-resume" type="button" class="default new-button">                
+                            <i class="fa fa-plus absolute-center vertical-align"></i>            
+                        </button>                        
+                        <h1>Resumes</h1>                        
+                        <div class="grid">                            
+                            <div class="grid-sizer"></div>                                        
+                            <div class="grid-item card-wrapper">                    
+                                <div class="card">                        
+                                    <div class="card-cover">                            
+                                        <img src="../images/stocksnap/3J7DMT7754.jpg">                            
+                                        <div class="card-actions fill-div">                                
+                                            <div class="card-action-item-wrapper">                                    
+                                                <div class="card-action-item share">                                        
+                                                    <i class="fa fa-share-square-o"></i>                                    
+                                                </div>                                    
+                                                <div class="card-action-item delete">                                        
+                                                    <i class="fa fa-trash-o"></i>                                    
+                                                </div>                                
+                                            </div>                            
+                                        </div>                        
+                                    </div>                        
+                                    <div class="card-footer">                            
+                                        <h3 class="title">Database Engineer – Spotify</h3>                            
+                                        <h5 class="date">July 17, 2016</h5>                        
+                                    </div>                    
+                                </div>                
+                            </div>                
+                            <div class="grid-item card-wrapper">
+                                <div class="card">                        
+                                    <div class="card-cover">                            
+                                        <img src="../images/stocksnap/3J7DMT7754.jpg">                            
+                                        <div class="card-actions fill-div">                                
+                                            <div class="card-action-item-wrapper">                                    
+                                                <div class="card-action-item share">                                        
+                                                    <i class="fa fa-share-square-o"></i>                                    
+                                                </div>                                    
+                                                <div class="card-action-item delete">                                        
+                                                    <i class="fa fa-trash-o"></i>                                    
+                                                </div>                                
+                                            </div>                            
+                                        </div>                        
+                                    </div>                        
+                                    <div class="card-footer">                            
+                                        <h3 class="title">Systems Analyst –&nbsp;Google</h3>                            
+                                        <h5 class="date">July 26, 2016</h5>                        
+                                    </div>                    
+                                </div>                
+                            </div>                
+                            <div class="grid-item card-wrapper">                    
+                                <div class="card">                        
+                                    <div class="card-cover">                            
+                                        <img src="../images/stocksnap/3J7DMT7754.jpg">                            
+                                        <div class="card-actions fill-div" style="display: none;">                                
+                                            <div class="card-action-item-wrapper">                                    
+                                                <div class="card-action-item share">                                        
+                                                    <i class="fa fa-share-square-o"></i>                                    
+                                                </div>                                    
+                                                <div class="card-action-item delete">                                        
+                                                    <i class="fa fa-trash-o"></i>                                    
+                                                </div>                                
+                                            </div>                            
+                                        </div>                        
+                                    </div>                        
+                                    <div class="card-footer">                            
+                                        <h3 class="title">Software Engineer –&nbsp;Twitter</h3>                            
+                                        <h5 class="date">July 31, 2016</h5>                        
+                                    </div>                    
+                                </div>                
+                            </div>                
+                            <div class="grid-item card-wrapper">                    
+                                <div class="card">                        
+                                    <div class="card-cover">                            
+                                        <img src="../images/stocksnap/3J7DMT7754.jpg">                            
+                                        <div class="card-actions fill-div" style="display: none;">                                
+                                            <div class="card-action-item-wrapper">                                    
+                                                <div class="card-action-item share">                                        
+                                                    <i class="fa fa-share-square-o"></i>                                    
+                                                </div>                                    
+                                                <div class="card-action-item delete">                                        
+                                                    <i class="fa fa-trash-o"></i>                                    
+                                                </div>                                
+                                            </div>                            
+                                        </div>                        
+                                    </div>                        
+                                    <div class="card-footer">                            
+                                        <h3 class="title">Systems Analyst –&nbsp;Facebook</h3>                            
+                                        <h5 class="date">August 01, 2016</h5>                        
+                                    </div>                    
+                                </div>                
+                            </div>                
+                            <div class="grid-item card-wrapper">                    
+                                <div class="card">                        
+                                    <div class="card-cover">                            
+                                        <img src="../images/stocksnap/3J7DMT7754.jpg">                            
+                                        <div class="card-actions fill-div">                                
+                                            <div class="card-action-item-wrapper">                                    
+                                                <div class="card-action-item share">                                        
+                                                    <i class="fa fa-share-square-o"></i>                                    
+                                                </div>                                    
+                                                <div class="card-action-item delete">                                        
+                                                    <i class="fa fa-trash-o"></i>                                    
+                                                </div>                                
+                                            </div>                            
+                                        </div>                        
+                                    </div>                        
+                                    <div class="card-footer">                            
+                                        <h3 class="title">Software Engineer –&nbsp;Canva</h3>                            
+                                        <h5 class="date">August 01, 2016</h5>                        
+                                    </div>                    
+                                </div>                
+                            </div>                
+                            <div class="grid-item card-wrapper">                    
+                                <div class="card">                        
+                                    <div class="card-cover">                            
+                                        <img src="../images/stocksnap/3J7DMT7754.jpg">                            
+                                        <div class="card-actions fill-div">                                
+                                            <div class="card-action-item-wrapper">                                    
+                                                <div class="card-action-item share">                                        
+                                                    <i class="fa fa-share-square-o"></i>                                    
+                                                </div>                                    
+                                                <div class="card-action-item delete">                                        
+                                                    <i class="fa fa-trash-o"></i>                                    
+                                                </div>                                
+                                            </div>                            
+                                        </div>                        
+                                    </div>                        
+                                    <div class="card-footer">                            
+                                        <h3 class="title">Graphic Designer –&nbsp;Prezi</h3>                            
+                                        <h5 class="date">August 04, 2016</h5>                        
+                                    </div>                    
+                                </div>                
+                            </div>
+                        </div>                    
+                    </div>                
+                </section>            
+            </div>
+        </div>
+        
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+    
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/vendors/scrolloverflow.min.js" type="text/javascript"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/jquery.fullPage.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.2/vendors/jquery.easings.min.js" type="text/javascript"></script>
+    
+    <script src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js" type="text/javascript"></script>
+    <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js" type="text/javascript"></script>
+
+    <script src="../assets/js/page.js" type="text/javascript"></script>
+    <script src="../assets/js/global.js" type="text/javascript"></script>
+
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                page('/user/:userID/resumes', loadDashboardResumes);
+                page('/user/:userID/portfolios', loadDashboardPortfolios);
+                page('/user/:userID/settings', loadSettings);
+                page('/user/:userID/resume/:resumeID', loadResume);
+                page('*', notFound);
+                page();
+                
+                initialization();
+                setScreenSize();
+                eventHandler();
+            });
+            
+            $(window).resize(function() {
+                setScreenSize();
+            });
+            
+            
+
+            
+            var globalUserID = '';
+            var globalResumeID = '';
+            var globalPortfolioID = '';
+            
+            
+
+            
+            function initialization() {
+                
+                $(function() {
+                    $('a[href*=#]:not([href=#])').click(function() {
+                        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                            var target = $(this.hash);
+                                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                                if (target.length) {
+                                $('html,body').animate({
+                                    scrollTop: target.offset().top
+                                }, 1000);
+                                return false;
+                            }
+                        }
+                    });
+                });
+            }
+            
+            function initializeFullPage() {
+                var size = $('body').attr('size');
+                
+                if (size == 'extra-small' || size == 'small') {
+                    $('html').addClass('fp-small').removeClass('fp-large');
+                }
+                else {
+                    $('html').addClass('fp-large').removeClass('fp-small');
+                }
+           
+                
+                $('#fullpage').fullpage({
+                    
+                    anchors: ['section1', 'section2', 'section3'],
+                    navigation: true,
+                    navigationPosition: 'right',
+                    navigationTooltips: ['General', 'Summary', 'Contact Info'],
+
+                    
+                    scrollOverflow: true,
+                    scrollOverflowOptions: {
+                        scrollbars: true,
+                        mouseWheel: true,
+                        hideScrollbars: false,
+                        fadeScrollbars: false,
+                        disableMouse: true
+                    },
+                    
+                    paddingTop: (size == 'extra-small' || size == 'small')?50:0,
+                    recordHistory: false
+                    
+                });
+            }
+            
+            function setScreenSize() {
+                var size = '';
+                clearEventHandler();
+
+                if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) {
+                    size = 'extra-small';
+                    extraSmallEventHandler();
+                }
+                else if (window.matchMedia && window.matchMedia('(max-width: 991px)').matches) {
+                    size = 'small';
+                    smallEventHandler();
+                }
+                else if (window.matchMedia && window.matchMedia('(max-width: 1199px)').matches) {
+                    size = 'medium';
+                    mediumEventHandler();
+                }
+                else {
+                    size = 'large';
+                    largeEventHandler();
+                }
+                
+                $('body').attr('size', size);
+                
+                if ($('html').hasClass('fp-small')) {
+                    if (size == 'medium' || size == 'large') {
+                        $.fn.fullpage.destroy('all');
+                        initializeFullPage();
+                    }
+                }
+                else if ($('html').hasClass('fp-large')) {
+                    if (size == 'extra-small' || size == 'small') {
+                        $.fn.fullpage.destroy('all');
+                        initializeFullPage();
+                    }
+                }
+            }
+            
+            function getFormattedDate(date) {
+                
+                
+
+                var year = date.substr(0, 4);
+                var month = date.substr(4, 2);
+                var day = date.substr(6, 2);
+
+                switch (month) {
+                    case '01':
+                        month = 'January';
+                        break;
+                    case '02':
+                        month = 'February';
+                        break;
+                    case '03':
+                        month = 'March';
+                        break;
+                    case '04':
+                        month = 'April';
+                        break;
+                    case '05':
+                        month = 'May';
+                        break;
+                    case '06':
+                        month = 'June';
+                        break;
+                    case '07':
+                        month = 'July';
+                        break;
+                    case '08':
+                        month = 'August';
+                        break;
+                    case '09':
+                        month = 'September';
+                        break;
+                    case '10':
+                        month = 'October';
+                        break;
+                    case '11':
+                        month = 'November';
+                        break;
+                    case '12':
+                        month = 'December';
+                        break;
+                }
+
+                return month + ' ' + day + ', ' + year;
+            }
+            
+            function notFound() {
+                console.log('not found');
+            }
+            
+            
+
+            
+            function clearEventHandler() {
+                $('body').unbind('click');
+                $(window).unbind('click');
+                $('#overlay').fadeOut(500);
+            }
+            
+            function eventHandler() {
+                $('#sidebar-wrapper').on('click', 'li', function() {
+                    page($(this).data('link'));
+                });
+            }
+            
+            function extraSmallEventHandler() {
+                $('#sidebar-wrapper').removeClass('is-open');
+                $('body').removeClass('sidebar-open');
+                
+                $('body').on('click', '.hamburger', function(e) {
+                    if ($('#sidebar-wrapper').hasClass('is-open')) {
+                        $('#sidebar-wrapper').removeClass('is-open');
+                        $('body').removeClass('sidebar-open');
+                        $('#overlay').fadeOut(500);
+                    }
+                    else {
+                        $('#sidebar-wrapper').addClass('is-open');
+                        $('body').addClass('sidebar-open');
+                        $('#overlay').fadeIn(500);
+                        e.stopPropagation();
+                    }
+                });
+
+                $(window).on('click', function() {
+                    if ($('#sidebar-wrapper').hasClass('is-open')) {
+                        $('#sidebar-wrapper').removeClass('is-open');
+                        $('body').removeClass('sidebar-open');
+                        $('#overlay').fadeOut(500);
+                    }
+                });
+                
+                $('body').on('click', '#sidebar-nav-leftover', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            function smallEventHandler() {
+                $('#sidebar-wrapper').removeClass('is-open');
+                $('body').removeClass('sidebar-open');
+                
+                $('body').on('click', '.hamburger', function(e) {
+                    if ($('#sidebar-wrapper').hasClass('is-open')) {
+                        $('#sidebar-wrapper').removeClass('is-open');
+                        $('body').removeClass('sidebar-open');
+                        $('#overlay').fadeOut(500);
+                    }
+                    else {
+                        $('#sidebar-wrapper').addClass('is-open');
+                        $('body').addClass('sidebar-open');
+                        $('#overlay').fadeIn(500);
+                        e.stopPropagation();
+                    }
+                });
+
+                $(window).on('click', function() {
+                    if ($('#sidebar-wrapper').hasClass('is-open')) {
+                        $('#sidebar-wrapper').removeClass('is-open');
+                        $('body').removeClass('sidebar-open');
+                        $('#overlay').fadeOut(500);
+                    }
+                });
+                
+                $('body').on('click', '#sidebar-nav-leftover', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            function mediumEventHandler() {
+                $('#sidebar-wrapper').addClass('is-open');
+                $('body').addClass('sidebar-open');
+                
+                $('body').on('click', '#sidebar-nav-leftover', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            function largeEventHandler() {
+                $('#sidebar-wrapper').addClass('is-open');
+                $('body').addClass('sidebar-open');
+                
+                $('body').on('click', '#sidebar-nav-leftover', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            
+
+            
+            function loadSidebarNavigationLinks() {
+                var $this = $('#sidebar-wrapper');
+                
+                if (!$this.hasClass('initialized')) {
+                    $this.find('.nav-resumes').data('link', '/user/' + globalUserID + '/resumes');
+                    $this.find('.nav-portfolios').data('link', '/user/' + globalUserID + '/portfolios');
+                    $this.find('.nav-settings').data('link', '/user/' + globalUserID + '/settings');
+                    
+                    $this.addClass('initialized');
+                }
+            }
+            
+            
+
+            
+            function loadDashboardResumes(ctx) {
+                globalUserID = ctx.params.userID;
+                loadSidebarNavigationLinks();
+                loadURL('user', 'DashboardResumes', globalUserID, '');
+            }
+            
+            
+
+            
+            function loadDashboardPortfolios(ctx) {
+                globalUserID = ctx.params.userID;
+                loadSidebarNavigationLinks();
+                loadURL('user', 'DashboardPortfolios', globalUserID, '');
+            }
+            
+            
+
+            
+            function loadSettings(ctx) {
+                globalUserID = ctx.params.userID;
+                loadSidebarNavigationLinks();
+                loadURL('user', 'Settings', globalUserID, '');
+            }
+            
+            
+
+            
+            function loadResume(ctx) {
+                globalResumeID = ctx.params.resumeID;
+                
+                var path = window.location.pathname;
+                var userID = path.substr(6, 24);
+                globalUserID = userID;
+                
+                loadSidebarNavigationLinks();
+                
+                if (!$('html').hasClass('fp-enabled')) {
+                    loadURL('user', 'Resume', globalUserID, globalResumeID);
+                }
+            }
+            
+            
+
+            
+            
+
+        </script>
+        
+    
+
+
+
+</body></html>
