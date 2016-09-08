@@ -11,7 +11,7 @@ function viewResumeInit() {
 
             initResumeProfileData(json.profile);
             initResumeExperienceData(json.experience);
-            initResumeContactInfoData(json.contactInfo);
+            initResumeContactData(json.contact);
 
             initializeFullPage();
             eventHandlerResume();
@@ -59,8 +59,8 @@ function viewResumeInit() {
         });
     }
 
-    function initResumeContactInfoData(json) {
-        var resumeContactInfoHTML = '\
+    function initResumeContactData(json) {
+        var resumeContactHTML = '\
             <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
                 <a href="tel:647-786-8808" class="card-link">\
                     <div class="card card-phone">\
@@ -144,7 +144,7 @@ function viewResumeInit() {
                 </a>\
             </div>';
         
-        $('#contact-info .container').append(resumeContactInfoHTML);
+        $('#contact .container').append(resumeContactHTML);
     }
     
     function eventHandlerResume() {

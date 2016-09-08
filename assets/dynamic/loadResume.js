@@ -6,7 +6,7 @@ function loadResumeInit(json, json2, situation) {
             initResumeData(json[0]);
             initResumeProfileData(json[0].profile);
             initResumeExperienceData(json[0].experience);
-            initResumeContactInfoData(json[0].contactInfo);
+            initResumeContactData(json[0].contact);
 
             initializeFullPage();
             eventHandlerResume();
@@ -18,7 +18,7 @@ function loadResumeInit(json, json2, situation) {
     }
     else { // autosave
         checkResumeProfileTypeChanges(situation);
-        checkResumeContactInfoTypeChanges(situation);
+        checkResumeContactTypeChanges(situation);
         checkResumeExperiencesChanges(situation);
     }
     
@@ -26,7 +26,7 @@ function loadResumeInit(json, json2, situation) {
     function setupAutosaveTimer(situation) {
         var timerID = setInterval(function() {
             checkResumeProfileTypeChanges(situation);
-            checkResumeContactInfoTypeChanges(situation);
+            checkResumeContactTypeChanges(situation);
             checkResumeExperiencesChanges(situation);
         }, 5000);
         $('body').data('autosave-timer', timerID);
@@ -53,9 +53,9 @@ function loadResumeInit(json, json2, situation) {
                         <form class="form-horizontal"></form>\
                     </div>\
                 </section>\
-                <section id="contact-info">\
+                <section id="contact">\
                     <div class="container">\
-                        <h1>Contact Info</h1>\
+                        <h1>Contact</h1>\
                         <form class="form-horizontal"></form>\
                     </div>\
                 </section>\
@@ -93,7 +93,7 @@ function loadResumeInit(json, json2, situation) {
                 </div>\
             </div>';
         
-        var userResumeContactInfoHTML = '\
+        var userResumeContactHTML = '\
             <div class="form-group">\
                 <label for="inputHomePhone" class="col-sm-3 control-label">Home Phone</label>\
                 <div class="col-sm-9">\
@@ -130,10 +130,10 @@ function loadResumeInit(json, json2, situation) {
             </div>\
             \
             <div class="form-group">\
-                <label for="inputContactInfoBackground" class="col-sm-3 control-label">Background</label>\
+                <label for="inputContactBackground" class="col-sm-3 control-label">Background</label>\
                 <div class="col-sm-9">\
                     <label class="file">\
-                        <input type="file" id="inputContactInfoBackground">\
+                        <input type="file" id="inputContactBackground">\
                         <span class="file-custom"></span>\
                     </label>\
                 </div>\
@@ -150,7 +150,7 @@ function loadResumeInit(json, json2, situation) {
         $('#page-content-wrapper').append(userResumeHTML);
         $('#profile .form-horizontal').append(userResumeProfileHTML);
         $('#experience .container').append(experienceButtonHTML);
-        $('#contact-info .form-horizontal').append(userResumeContactInfoHTML);
+        $('#contact .form-horizontal').append(userResumeContactHTML);
         
         initSummernote('#summernote-summary');
 
@@ -361,10 +361,10 @@ function loadResumeInit(json, json2, situation) {
     }
     */
 
-    function initResumeContactInfoData(json) {
-        var $this = $('#contact-info .form-horizontal');
+    function initResumeContactData(json) {
+        var $this = $('#contact .form-horizontal');
 
-        // set resume contactInfo
+        // set resume contact
         $this.find('#inputHomePhone').val(json.homePhone);
         $this.find('#inputMobilePhone').val(json.mobilePhone);
         $this.find('#inputWorkPhone').val(json.workPhone);
@@ -376,8 +376,8 @@ function loadResumeInit(json, json2, situation) {
         // json.linkedIn
         // json.background
 
-        // get resume contactInfo JSON
-        var resumeContactInfo = {
+        // get resume contact JSON
+        var resumeContact = {
             homePhone: json.homePhone,
             mobilePhone: json.mobilePhone,
             workPhone: json.workPhone,
@@ -390,8 +390,8 @@ function loadResumeInit(json, json2, situation) {
             // background: json.background
         };
 
-        var resumeContactInfoJSON = JSON.stringify(resumeContactInfo);
-        $this.data('JSONData', resumeContactInfoJSON);
+        var resumeContactJSON = JSON.stringify(resumeContact);
+        $this.data('JSONData', resumeContactJSON);
     }
     
     
@@ -504,7 +504,7 @@ function loadResumeInit(json, json2, situation) {
         updateResume(2, newJSONData, oldJSONData, situation);
     }
 
-    function checkResumeContactInfoTypeChanges(situation) {
+    function checkResumeContactTypeChanges(situation) {
         var data = {
             homePhone: $('#inputHomePhone').val(),
             mobilePhone: $('#inputMobilePhone').val(),
@@ -519,7 +519,7 @@ function loadResumeInit(json, json2, situation) {
         };
 
         var newJSONData = JSON.stringify(data);
-        var oldJSONData = $('#contact-info .form-horizontal').data('JSONData');
+        var oldJSONData = $('#contact .form-horizontal').data('JSONData');
 
         updateResume(7, newJSONData, oldJSONData, situation);
     }
@@ -626,22 +626,22 @@ function loadResumeInit(json, json2, situation) {
                 break;
             case 6: // otherInfoType
                 break;
-            case 7: // contactInfoType
+            case 7: // contactType
                 var data = {
-                    homePhone: json.contactInfo.homePhone,
-                    mobilePhone: json.contactInfo.mobilePhone,
-                    workPhone: json.contactInfo.workPhone,
-                    // extension: json.contactInfo.extension,
-                    email: json.contactInfo.email,
-                    website: json.contactInfo.website
-                    // facebook: json.contactInfo.facebook,
-                    // twitter: json.contactInfo.twitter,
-                    // linkedIn: json.contactInfo.linkedIn
-                    // background: json.contactInfo.background
+                    homePhone: json.contact.homePhone,
+                    mobilePhone: json.contact.mobilePhone,
+                    workPhone: json.contact.workPhone,
+                    // extension: json.contact.extension,
+                    email: json.contact.email,
+                    website: json.contact.website
+                    // facebook: json.contact.facebook,
+                    // twitter: json.contact.twitter,
+                    // linkedIn: json.contact.linkedIn
+                    // background: json.contact.background
                 };
 
                 var JSONData = JSON.stringify(data);
-                $('#contact-info .form-horizontal').data('JSONData', JSONData);
+                $('#contact .form-horizontal').data('JSONData', JSONData);
 
                 break;
             case 8: // experiences

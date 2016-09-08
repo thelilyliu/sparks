@@ -824,20 +824,20 @@ section {
   ========================================
 */
 
-#contact-info {
+#contact {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/infinite-wooden-floors/03.jpg");
 }
-    #contact-info .card {
+    #contact .card {
         height: 150px;
         color: #fff;
         background-color: rgba(138, 219, 255, .9);
         text-align: center;
         transition: all 0.2s ease-in-out;
     }
-    #contact-info .card:hover {
+    #contact .card:hover {
         transform: translateY(-10px);
     }
-    #contact-info .card-info {
+    #contact .card-info {
         margin-top: 16px;
     }
 

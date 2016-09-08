@@ -638,17 +638,17 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
         case 6:
             updateROtherInfoType()
         case 7:
-            contactInfo := new(Contact)
+            contact := new(ContactType)
 
-            err = json.NewDecoder(r.Body).Decode(contactInfo)
+            err = json.NewDecoder(r.Body).Decode(contact)
             logErrorMessage(err)
 
             // contactInfo.Background = new(Image)
 
-            err = updateRContactInfoType(resume.ResumeID, resume.UserID, contactInfo)
+            err = updateRContactType(resume.ResumeID, resume.UserID, contact)
             logErrorMessage(err)
 
-            resume.ContactInfo = *contactInfo
+            resume.Contact = *contact
         case 8:
             var experiences []Experience
             var byteSlice []byte

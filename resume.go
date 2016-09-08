@@ -234,8 +234,8 @@ func updateROtherInfoType() {
     
 }
 
-func updateRContactInfoType(resumeID, userID string, contactInfo *Contact) error {
-    change := bson.M{"contactinfo": contactInfo}
+func updateRContactType(resumeID, userID string, contact *ContactType) error {
+    change := bson.M{"contact": contact}
     
     // find document and update fields
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
