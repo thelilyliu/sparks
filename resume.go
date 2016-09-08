@@ -105,12 +105,12 @@ type Hobby struct {
 }
 
 type Reference struct {
-    FirstName   string  `json:"firstName"`
-    LastName    string  `json:"lastName"`
-    Relation    string  `json:"relation"`
-    Company     string  `json:"company"`
-    Testimony   string  `json:"testimony"`
-    ContactInfo Contact `json:"contactInfo"`
+    FirstName   string      `json:"firstName"`
+    LastName    string      `json:"lastName"`
+    Relation    string      `json:"relation"`
+    Company     string      `json:"company"`
+    Testimony   string      `json:"testimony"`
+    ContactInfo ContactType `json:"contactInfo"`
 }
 
 /*
