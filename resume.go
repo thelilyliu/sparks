@@ -28,7 +28,6 @@ type ProfileType struct {
     Headline   string `json:"headline"`
     Subtitle   string `json:"subtitle"`
     Summary    string `json:"summary"`
-    ProfilePic Image  `json:"profilPic"`
     Background Image  `json:"background"`
 }
 
@@ -47,6 +46,31 @@ type PortfolioType struct {
     Background Image       `json:"image"`
 }
 
+type OthersType struct {
+    Educations []Education `json:"educations"`
+    Awards     []Award     `json:"awards"`
+    Hobbies    []Hobby     `json:"hobbies"`
+    References []Reference `json:"references"`
+    Background Image       `json:"background"`
+}
+
+type ContactType struct {
+    FirstName   string `json:"firstName"`
+    LastName    string `json:"lastName"`
+    Biography   string `json:"biography"`
+    HomePhone   string `json:"homePhone"`
+    MobilePhone string `json:"mobilePhone"`
+    WorkPhone   string `json:"workPhone"`
+    Extension   string `json:"extension"`
+    Email       string `json:"email"`
+    Website     string `json:"website"`
+    Facebook    string `json:"facebook"`
+    Twitter     string `json:"twitter"`
+    LinkedIn    string `json:"linkedIn"`
+    ProfilePic  Image  `json:"profilePic"`
+    Background  Image  `json:"background"`
+}
+
 type Experience struct {
     JobTitle         string `json:"jobTitle"`
     Company          string `json:"company"`
@@ -60,27 +84,6 @@ type Skill struct {
     Years int    `json:"years"`
     Level int    `json:"level"`
     Order int    `json:"order"`
-}
-
-type OthersType struct {
-    Educations []Education `json:"educations"`
-    Awards     []Award     `json:"awards"`
-    Hobbies    []Hobby     `json:"hobbies"`
-    References []Reference `json:"references"`
-    Background Image       `json:"background"`
-}
-
-type ContactType struct {
-    HomePhone   string `json:"homePhone"`
-    MobilePhone string `json:"mobilePhone"`
-    WorkPhone   string `json:"workPhone"`
-    Extension   string `json:"extension"`
-    Email       string `json:"email"`
-    Website     string `json:"website"`
-    Facebook    string `json:"facebook"`
-    Twitter     string `json:"twitter"`
-    LinkedIn    string `json:"linkedIn"`
-    Background  Image  `json:"background"`
 }
 
 type Education struct {
@@ -174,6 +177,16 @@ func updateResumeDB(selector, update *bson.M) error {
     return err
 }
 
+func updateAllResumeDB(selector, update *bson.M) error {
+    // create new MongoDB session
+    collection, session := mongoDBInitialization("resume")
+    defer session.Close()
+
+    _, err := collection.UpdateAll(selector, update)
+
+    return err
+}
+
 func updateRSettings(resumeID, userID string, resume *Resume) error {
     change := bson.M{"title": resume.Title, "titleurl": resume.TitleURL, "linkurl": resume.LinkURL}
     
@@ -242,6 +255,18 @@ func updateRContactType(resumeID, userID string, contact *ContactType) error {
 	update := bson.M{"$set": &change}
     
     err := updateResumeDB(&selector, &update)
+
+    return err
+}
+
+func updateRContactTypeName(user *User) error {
+    change := bson.M{"contact.firstname": user.FirstName, "contact.lastname": user.LastName}
+
+    // find document and update fields
+    selector := bson.M{"userid": user.UserID}
+    update := bson.M{"$set": &change}
+
+    err := updateAllResumeDB(&selector, &update)
 
     return err
 }

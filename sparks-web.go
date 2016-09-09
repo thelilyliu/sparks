@@ -482,6 +482,7 @@ func insertResumeJSON(w http.ResponseWriter, r *http.Request) {
         categoryInt := 0
         resume := new(Resume)
         resume.UserID = uID.(string)
+        // **** add first name and last name to resume.contact section ****
 
         categoryStr := vestigo.Param(r, "category") // 1 = general | 2 = profile | 3 = experience | 4 = skills | 5 = portfolio | 6 = otherInfo | 7 = contactInfo
 
@@ -505,6 +506,10 @@ func insertResumeJSON(w http.ResponseWriter, r *http.Request) {
             if err = updateResume(categoryInt, resume, r); err != nil { // Step 3
                 returnCode = 4
             }
+        }
+
+        if returnCode == 0 {
+            if err = updateRContactTypeName()
         }
 
         if returnCode == 0 {
@@ -783,8 +788,14 @@ func updateUserJSON(w http.ResponseWriter, r *http.Request) {
         }
 
         if returnCode == 0 {
-            if err := json.NewEncoder(w).Encode(user); err != nil {
+            if err := updateRContactTypeName(user); err != nil {
                 returnCode = 3
+            }
+        }
+
+        if returnCode == 0 {
+            if err := json.NewEncoder(w).Encode(user); err != nil {
+                returnCode = 4
             }
         }
 

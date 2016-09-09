@@ -94,6 +94,14 @@ function loadResumeInit(json, json2, situation) {
             </div>';
         
         var userResumeContactHTML = '\
+            <span id="inputFirstName" class="hidden"></span>\
+            <span id="inputLastName" class="hidden"></span>\
+            <div class="form-group">\
+                <label for="inputBiography" class="col-sm-3 control-label">Biography</label>\
+                <div class="col-sm-9">\
+                    <div id="summernote-biography" class="summernote"></div>\
+                </div>\
+            </div>\
             <div class="form-group">\
                 <label for="inputHomePhone" class="col-sm-3 control-label">Home Phone</label>\
                 <div class="col-sm-9">\
@@ -153,6 +161,7 @@ function loadResumeInit(json, json2, situation) {
         $('#contact .form-horizontal').append(userResumeContactHTML);
         
         initSummernote('#summernote-summary');
+        initSummernote('#summernote-biography');
 
         $('#navbar-top-layer-2 .back').attr('link', '/user/resumes');
         $('#navbar-top-layer-2 .preview').attr('link', '/resume/' + globalResumeID);
@@ -365,6 +374,9 @@ function loadResumeInit(json, json2, situation) {
         var $this = $('#contact .form-horizontal');
 
         // set resume contact
+        $this.find('#inputFirstName').text(json.firstName);
+        $this.find('#inputLastName').text(json.lastName);
+        $this.find('#summernote-biography').summernote('code', json.biography);
         $this.find('#inputHomePhone').val(json.homePhone);
         $this.find('#inputMobilePhone').val(json.mobilePhone);
         $this.find('#inputWorkPhone').val(json.workPhone);
@@ -374,10 +386,14 @@ function loadResumeInit(json, json2, situation) {
         // json.facebook
         // json.twitter
         // json.linkedIn
+        // json.profilePic
         // json.background
 
         // get resume contact JSON
         var resumeContact = {
+            firstName: json.firstName,
+            lastName: json.lastName,
+            biography: json.biography,
             homePhone: json.homePhone,
             mobilePhone: json.mobilePhone,
             workPhone: json.workPhone,
@@ -387,6 +403,7 @@ function loadResumeInit(json, json2, situation) {
             // facebook: json.facebook,
             // twitter: json.twitter,
             // linkedIn: json.linkedIn,
+            // profilePic: json.profilePic,
             // background: json.background
         };
 
@@ -506,6 +523,9 @@ function loadResumeInit(json, json2, situation) {
 
     function checkResumeContactTypeChanges(situation) {
         var data = {
+            firstName: $('#inputFirstName').text(),
+            lastName: $('#inputLastName').text(),
+            biography: $('#summernote-biography').summernote('code'),
             homePhone: $('#inputHomePhone').val(),
             mobilePhone: $('#inputMobilePhone').val(),
             workPhone: $('#inputWorkPhone').val(),
@@ -515,7 +535,8 @@ function loadResumeInit(json, json2, situation) {
             // facebook
             // twitter
             // linkedIn
-            //background
+            // profilePic
+            // background
         };
 
         var newJSONData = JSON.stringify(data);
@@ -628,6 +649,9 @@ function loadResumeInit(json, json2, situation) {
                 break;
             case 7: // contactType
                 var data = {
+                    firstName: json.contact.firstName,
+                    lastName: json.contact.lastName,
+                    biography: json.contact.biography,
                     homePhone: json.contact.homePhone,
                     mobilePhone: json.contact.mobilePhone,
                     workPhone: json.contact.workPhone,
@@ -636,7 +660,8 @@ function loadResumeInit(json, json2, situation) {
                     website: json.contact.website
                     // facebook: json.contact.facebook,
                     // twitter: json.contact.twitter,
-                    // linkedIn: json.contact.linkedIn
+                    // linkedIn: json.contact.linkedIn,
+                    // profilePic: json.contact.profilePic,
                     // background: json.contact.background
                 };
 

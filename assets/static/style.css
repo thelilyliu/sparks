@@ -828,17 +828,17 @@ section {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/infinite-wooden-floors/03.jpg");
 }
     #contact .card {
-        height: 150px;
+        padding: 60px 30px;
         color: #fff;
-        background-color: rgba(138, 219, 255, .9);
+        background-color: rgba(0, 0, 0, .7);
         text-align: center;
         transition: all 0.2s ease-in-out;
     }
-    #contact .card:hover {
-        transform: translateY(-10px);
-    }
-    #contact .card-info {
-        margin-top: 16px;
+    #contact .profile-pic {
+        margin: 30px 0;
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
     }
 
 /*
