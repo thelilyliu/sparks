@@ -259,11 +259,11 @@ func updateRContactType(resumeID, userID string, contact *ContactType) error {
     return err
 }
 
-func updateRContactTypeName(user *User) error {
-    change := bson.M{"contact.firstname": user.FirstName, "contact.lastname": user.LastName}
+func updateRContactTypeName(userID, firstName, lastName string) error {
+    change := bson.M{"contact.firstname": firstName, "contact.lastname": lastName}
 
     // find document and update fields
-    selector := bson.M{"userid": user.UserID}
+    selector := bson.M{"userid": userID}
     update := bson.M{"$set": &change}
 
     err := updateAllResumeDB(&selector, &update)
