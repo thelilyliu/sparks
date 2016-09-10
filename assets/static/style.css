@@ -127,6 +127,16 @@ a:hover {
     cursor: pointer;
 }
 
+.links .facebook .fa-circle {
+    color: rgb(73, 92, 165);
+}
+.links .twitter .fa-circle {
+    color: rgb(65, 170, 241);
+}
+.links .linkedin .fa-circle {
+    color: rgb(0, 119, 181);
+}
+
 /*
   ========================================
   5. Lists
@@ -828,18 +838,34 @@ section {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/infinite-wooden-floors/03.jpg");
 }
     #contact .card {
-        padding: 60px 30px;
+        width: 450px;
+        padding: 60px 30px 45px;
+        margin: 0 auto;
         color: #fff;
         background-color: rgba(0, 0, 0, .7);
         text-align: center;
         transition: all 0.2s ease-in-out;
     }
     #contact .profile-pic {
-        margin: 30px 0;
+        margin: 20px 0;
         height: 120px;
         width: 120px;
         border-radius: 50%;
     }
+    #contact .info {
+        margin: 20px 0;
+    }
+
+@media (max-width: 767px) {
+    #contact .card {
+        max-width: 400px;
+    }
+}
+@media (min-width: 991px) {
+    #contact .card {
+        max-width: 450px;
+    }
+}
 
 /*
   ========================================

@@ -61,70 +61,37 @@ function viewResumeInit() {
 
     function initResumeContactData(json) {
         var resumeContactHTML = '\
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4 horizontal-align">\
+            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-5 horizontal-align">\
                 <div class="card">\
                     <h3 class="name">' + json.firstName + ' ' + json.lastName + '</h3>\
                     <img class="profile-pic" src="/images/profile-pic/20160908050723.jpg">\
                     <p class="biography">' + json.biography + '</p>\
+                    <div class="info">\
+                        <div class="home-phone">' + json.homePhone + '</div>\
+                        <div class="mobile-phone">' + json.mobilePhone + '</div>\
+                        <div class="work-phone">' + json.workPhone + '</div>\
+                        <div class="email">' + json.email + '</div>\
+                        <div class="address">' + json.address + '</div>\
+                        <div class="website"><a href="http://' + json.website + '" target="_blank">' + json.website + '</a></div>\
+                    </div>\
+                    <div class="links">\
+                        <span class="fa-stack fa-lg facebook">\
+                            <i class="fa fa-circle fa-stack-2x"></i>\
+                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>\
+                        </span>\
+                        <span class="fa-stack fa-lg twitter">\
+                            <i class="fa fa-circle fa-stack-2x"></i>\
+                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>\
+                        </span>\
+                        <span class="fa-stack fa-lg linkedin">\
+                            <i class="fa fa-circle fa-stack-2x"></i>\
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>\
+                        </span>\
+                    </div>\
                 </div>\
             </div>';
             
-        var testHTML = '<div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="tel:647-786-8808" class="card-link">\
-                    <div class="card card-phone">\
-                        <span class="fa fa-phone fa-2x"></span>\
-                        <h3 class="card-info">' + json.homePhone + '</h3>\
-                    </div>\
-                </a>\
-            </div>\
-            \
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="tel:647-786-8808" class="card-link">\
-                    <div class="card card-phone">\
-                        <span class="fa fa-phone fa-2x"></span>\
-                        <h3 class="card-info">' + json.mobilePhone + '</h3>\
-                    </div>\
-                </a>\
-            </div>\
-            \
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="tel:647-786-8808" class="card-link">\
-                    <div class="card card-phone">\
-                        <span class="fa fa-phone fa-2x"></span>\
-                        <h3 class="card-info">' + json.workPhone + '</h3>\
-                    </div>\
-                </a>\
-            </div>\
-            \
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="mailto:lilyxcliu@gmail.com" class="card-link">\
-                    <div class="card card-email">\
-                        <span class="fa fa-envelope-o fa-2x"></span>\
-                        <h3 class="card-info">' + json.email + '</h3>\
-                    </div>\
-                </a>\
-            </div>\
-            \
-            <!-- <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="https://maps.google.com/?q=11 Lavallee Crescent, Brampton ON" class="card-link" target="_blank">\
-                    <div class="card card-address">\
-                        <!-- <span class="fa fa-location-arrow fa-2x"></span> -->\
-                        <!-- <span class="fa fa-map-marker fa-2x"></span>\
-                        <h3 class="card-info">' + json.address + '</h3>\
-                    </div>\
-                </a>\
-            </div> -->\
-            \
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="http://dsssmun.com/" class="card-link" target="_blank">\
-                    <div class="card card-website">\
-                        <!-- <span class="fa fa-laptop fa-2x"></span> -->\
-                        <span class="fa fa-desktop fa-2x"></span>\
-                        <h3 class="card-info">' + json.website + '</h3>\
-                    </div>\
-                </a>\
-            </div>\
-            \
+            /*
             <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
                 <a href="https://www.facebook.com/" class="card-link" target="_blank">\
                     <div class="card card-facebook">\
@@ -151,6 +118,7 @@ function viewResumeInit() {
                     </div>\
                 </a>\
             </div>';
+            */
         
         $('#contact .container').append(resumeContactHTML);
     }
