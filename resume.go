@@ -62,7 +62,7 @@ type ContactType struct {
     MobilePhone string `json:"mobilePhone"`
     WorkPhone   string `json:"workPhone"`
     Extension   string `json:"extension"`
-    Address     string `json:"address"`
+    Location    string `json:"location"`
     Email       string `json:"email"`
     Website     string `json:"website"`
     Facebook    string `json:"facebook"`

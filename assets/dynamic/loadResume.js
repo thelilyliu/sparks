@@ -126,9 +126,9 @@ function loadResumeInit(json, json2, situation) {
             </div>\
             \
             <div class="form-group">\
-                <label for="inputAddress" class="col-sm-3 control-label">Address</label>\
+                <label for="inputLocation" class="col-sm-3 control-label">Location</label>\
                 <div class="col-sm-9">\
-                    <input type="address" class="form-control" id="inputAddress" placeholder="Address">\
+                    <input type="location" class="form-control" id="inputLocation" placeholder="Location">\
                 </div>\
             </div>\
             \
@@ -393,7 +393,7 @@ function loadResumeInit(json, json2, situation) {
         $this.find('#inputMobilePhone').val(json.mobilePhone);
         $this.find('#inputWorkPhone').val(json.workPhone);
         // $this.find('#inputExtension').val(json.extension);
-        $this.find('#inputAddress').val(json.address);
+        $this.find('#inputLocation').val(json.location);
         $this.find('#inputEmail').val(json.email);
         $this.find('#inputWebsite').val(json.website);
         // json.facebook
@@ -411,7 +411,7 @@ function loadResumeInit(json, json2, situation) {
             mobilePhone: json.mobilePhone,
             workPhone: json.workPhone,
             // extension: json.extension,
-            address: json.address,
+            location: json.location,
             email: json.email,
             website: json.website
             // facebook: json.facebook,
@@ -550,7 +550,7 @@ function loadResumeInit(json, json2, situation) {
             mobilePhone: $('#inputMobilePhone').val(),
             workPhone: $('#inputWorkPhone').val(),
             // extension
-            address: $('#inputAddress').val(),
+            location: $('#inputLocation').val(),
             email: $('#inputEmail').val(),
             website: $('#inputWebsite').val()
             // facebook
@@ -677,7 +677,7 @@ function loadResumeInit(json, json2, situation) {
                     mobilePhone: json.contact.mobilePhone,
                     workPhone: json.contact.workPhone,
                     // extension: json.contact.extension,
-                    address: json.contact.address,
+                    location: json.contact.location,
                     email: json.contact.email,
                     website: json.contact.website
                     // facebook: json.contact.facebook,

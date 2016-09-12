@@ -71,7 +71,7 @@ function viewResumeInit() {
                         <div class="mobile-phone">' + json.mobilePhone + '</div>\
                         <div class="work-phone">' + json.workPhone + '</div>\
                         <div class="email">' + json.email + '</div>\
-                        <div class="address">' + json.address + '</div>\
+                        <div class="location">' + json.location + '</div>\
                         <div class="website"><a href="http://' + json.website + '" target="_blank">' + json.website + '</a></div>\
                     </div>\
                     <div class="links">\
