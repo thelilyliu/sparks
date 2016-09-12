@@ -758,10 +758,18 @@ section {
             height: 30px;
             width: 30px;
         }
+        /*
         #experience .experience-group:first-child button.up {
             visibility: hidden;
         }
         #experience .experience-group:last-child button.down {
+            visibility: hidden;
+        }
+        */
+        #experience .experience-group.first button.up {
+            visibility: hidden;
+        }
+        #experience .experience-group.last button.down {
             visibility: hidden;
         }
 

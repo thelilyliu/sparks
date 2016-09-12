@@ -44,7 +44,9 @@ function loadResumeInit(json, json2, situation) {
                 <section id="experience">\
                     <div class="container">\
                         <h1>Experience</h1>\
-                        <form class="form-horizontal"></form>\
+                        <form class="form-horizontal">\
+                            <ul class="sortable default"></ul>\
+                        </form>\
                     </div>\
                 </section>\
                 <section id="skills">\
@@ -211,7 +213,7 @@ function loadResumeInit(json, json2, situation) {
             
             $.each(json.experiences, function(i, experience) {
                 var userResumeExperienceHTML = '\
-                    <div id="experience-group' + (i + 1) + '" class="experience-group">\
+                    <li id="experience-group' + (i + 1) + '" class="experience-group ui-state-default">\
                         <div class="button-group">\
                             <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
                             <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
@@ -243,9 +245,9 @@ function loadResumeInit(json, json2, situation) {
                                 <div id="summernote-responsibilities' + (i + 1) + '" class="summernote"></div>\
                             </div>\
                         </div>\
-                    </div>';
+                    </li>';
 
-                $this.append(userResumeExperienceHTML);
+                $('#experience .form-horizontal ul.sortable').append(userResumeExperienceHTML);
 
                 initSummernote('#summernote-responsibilities' + (i + 1));
 
@@ -267,6 +269,9 @@ function loadResumeInit(json, json2, situation) {
 
                 experiencesArray.push(resumeExperience);
             });
+
+            $this.find('.experience-group').first().addClass('first');
+            $this.find('.experience-group').last().addClass('last');
         }
         else {
             addExperienceGroup();
@@ -477,8 +482,11 @@ function loadResumeInit(json, json2, situation) {
         });
         
         $('#experience').on('click', '#new-experience', function() {
+            $('.experience-group').last().removeClass('last');
+
             addExperienceGroup();
             $.fn.fullpage.reBuild();
+            $('.experience-group').last().addClass('last');
         });
         
         $('#experience').on('click', 'button.delete', function(e) {
@@ -488,9 +496,12 @@ function loadResumeInit(json, json2, situation) {
             $this.fadeOut(500, function() {
                 $this.remove();
                 $.fn.fullpage.reBuild();
+                $('.experience-group').last().addClass('last');
             });
         });
         
+        $('.sortable').sortable(); // **** In the voice of Alexander Hamilton: "So it needs amendment." ****
+
         $('#experience').on('click', 'button.move', function() {
             var $item = $(this).closest('.experience-group');
             var order = $item.attr('order');
