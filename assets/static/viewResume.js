@@ -61,7 +61,7 @@ function viewResumeInit() {
 
     function initResumeContactData(json) {
         var resumeContactHTML = '\
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-5 horizontal-align">\
+            <div class="card-wrapper col-xs-12 horizontal-align">\
                 <div class="card">\
                     <h3 class="name">' + json.firstName + ' ' + json.lastName + '</h3>\
                     <img class="profile-pic" src="/images/profile-pic/20160908050723.jpg">\

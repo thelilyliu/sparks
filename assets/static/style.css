@@ -102,6 +102,11 @@ section .container {
     min-height: 100vh;
 }
 
+@media (max-width: 767px) {
+    section .container {
+        padding: 50px 0;
+    }
+}
 @media (min-width: 992px) {
     #page-content-wrapper #main-container,
     #page-content-wrapper #fullpage {
@@ -854,16 +859,17 @@ section {
     }
     #contact .info {
         margin: 20px 0;
+        font-weight: 300;
     }
+        #contact .info .website a {
+            color: #fff;
+            border-bottom: 2px dotted #337ab7;
+        }
 
 @media (max-width: 767px) {
     #contact .card {
+        width: 100%;
         max-width: 400px;
-    }
-}
-@media (min-width: 991px) {
-    #contact .card {
-        max-width: 450px;
     }
 }
 
