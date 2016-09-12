@@ -65,7 +65,7 @@ function viewResumeInit() {
                 <div class="card">\
                     <h3 class="name">' + json.firstName + ' ' + json.lastName + '</h3>\
                     <img class="profile-pic" src="/images/profile-pic/20160908050723.jpg">\
-                    <p class="biography">' + json.biography + '</p>\
+                    <div class="biography">' + json.biography + '</div>\
                     <div class="info">\
                         <div class="home-phone">' + json.homePhone + '</div>\
                         <div class="mobile-phone">' + json.mobilePhone + '</div>\
@@ -99,25 +99,7 @@ function viewResumeInit() {
                         <h3 class="card-info">Facebook</h3>\
                     </div>\
                 </a>\
-            </div>\
-            \
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="https://twitter.com/thelilyliu" class="card-link" target="_blank">\
-                    <div class="card card-twitter">\
-                        <span class="fa fa-twitter fa-2x"></span>\
-                        <h3 class="card-info">Twitter</h3>\
-                    </div>\
-                </a>\
-            </div>\
-            \
-            <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
-                <a href="https://www.linkedin.com/uas/login" class="card-link" target="_blank">\
-                    <div class="card card-linkedin">\
-                        <span class="fa fa-linkedin fa-2x"></span>\
-                        <h3 class="card-info">LinkedIn</h3>\
-                    </div>\
-                </a>\
-            </div>';
+            </div>
             */
         
         $('#contact .container').append(resumeContactHTML);
