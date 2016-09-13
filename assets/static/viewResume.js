@@ -67,19 +67,29 @@ function viewResumeInit() {
         });
         
         var $this = $('#skills .container .row');
+        var starHTML = '<i class="fa fa-star"></i>';
+        var starOHTML = '<i class="fa fa-star-o"></i>';
 
         $.each(json.skills, function(i, skill) {
             var resumeSkillHTML = '\
-                <div class="grid-item card-wrapper">\
+                <div class="card-wrapper">\
                     <div class="card">\
                         <div class="card-header">\
-                            <h2 class="title">' + skill.name + '</h2>\
-                            <h3 class="subtitle">' + skill.level + '</h3>\
+                            <h3 class="skill-name">' + skill.name + '</h3>\
+                            <div class="skill-level"></div>\
                         </div>\
                     </div>\
                 </div>';
 
             $this.append(resumeSkillHTML);
+            var $level = $('#skills .card-wrapper').last().find('.skill-level');
+
+            for (var i = 0; i < skill.level; i++) {
+                $level.append(starHTML);
+            }
+            for (var i = 5; i > skill.level; i--) {
+                $level.append(starOHTML);
+            }
         });
     }
 
