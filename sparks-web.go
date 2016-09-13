@@ -694,7 +694,7 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
             
             err = updateRSkills(resume.ResumeID, resume.UserID, &skills)
             logErrorMessage(err)
-            
+           
             resume.Skills.Skills = skills
         default:
             log.Println("No category selected. Resume not updated.")

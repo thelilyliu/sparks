@@ -82,7 +82,6 @@ type Experience struct {
 
 type Skill struct {
     Name  string `json:"name"`
-    Years int    `json:"years"`
     Level int    `json:"level"`
     Order int    `json:"order"`
 }

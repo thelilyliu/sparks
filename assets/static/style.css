@@ -189,7 +189,7 @@ button.close {
     z-index: 10;
 }
 */
-.new-button {
+button.new {
     width: 75px;
     height: 75px;
     border-radius: 50%;
@@ -758,14 +758,6 @@ section {
             height: 30px;
             width: 30px;
         }
-        /*
-        #experience .experience-group:first-child button.up {
-            visibility: hidden;
-        }
-        #experience .experience-group:last-child button.down {
-            visibility: hidden;
-        }
-        */
         #experience .experience-group.first button.up {
             visibility: hidden;
         }
@@ -797,9 +789,12 @@ section {
     #skills .card {
         height: 100px;
     }
-    #skills .hard-skill,
-    #skills .soft-skill {
-        margin-bottom: 5px;
+    #skills .skill-group {
+        background-color: rgb(229, 229, 229);
+        padding: 20px;
+        border-radius: 4px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
     }
     #skills .level-1 {
         background-color: rgba(110, 211, 207, .9);

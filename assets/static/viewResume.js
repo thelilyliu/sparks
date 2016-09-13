@@ -11,6 +11,7 @@ function viewResumeInit() {
 
             initResumeProfileData(json.profile);
             initResumeExperienceData(json.experience);
+            initResumeSkillsData(json.skills);
             initResumeContactData(json.contact);
 
             initializeFullPage();
@@ -56,6 +57,29 @@ function viewResumeInit() {
                 $('.grid').append($element) // append items to grid
                     .masonry('appended', $element); // add and lay out newly appended items
             }, 100);
+        });
+    }
+
+    function initResumeSkillsData(json) {
+        // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
+        json.skills.sort(function(a, b) {
+            return a.order - b.order;
+        });
+        
+        var $this = $('#skills .container .row');
+
+        $.each(json.skills, function(i, skill) {
+            var resumeSkillHTML = '\
+                <div class="grid-item card-wrapper">\
+                    <div class="card">\
+                        <div class="card-header">\
+                            <h2 class="title">' + skill.name + '</h2>\
+                            <h3 class="subtitle">' + skill.level + '</h3>\
+                        </div>\
+                    </div>\
+                </div>';
+
+            $this.append(resumeSkillHTML);
         });
     }
 

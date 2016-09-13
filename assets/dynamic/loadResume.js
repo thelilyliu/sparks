@@ -4,9 +4,10 @@ function loadResumeInit(json, json2, situation) {
 
         if (!jQuery.isEmptyObject(json)) { // JSON is not empty
             initResumeData(json[0]);
-            initResumeProfileData(json[0].profile);
-            initResumeExperienceData(json[0].experience);
-            initResumeContactData(json[0].contact);
+            initResumeProfileTypeData(json[0].profile);
+            initResumeExperiencesData(json[0].experience);
+            initResumeSkillsData(json[0].skills);
+            initResumeContactTypeData(json[0].contact);
 
             initializeFullPage();
             eventHandlerResume();
@@ -20,6 +21,7 @@ function loadResumeInit(json, json2, situation) {
         checkResumeProfileTypeChanges(situation);
         checkResumeContactTypeChanges(situation);
         checkResumeExperiencesChanges(situation);
+        checkResumeSkillsChanges(situation);
     }
     
     
@@ -28,6 +30,7 @@ function loadResumeInit(json, json2, situation) {
             checkResumeProfileTypeChanges(situation);
             checkResumeContactTypeChanges(situation);
             checkResumeExperiencesChanges(situation);
+            checkResumeSkillsChanges(situation);
         }, 5000);
         $('body').data('autosave-timer', timerID);
     }
@@ -52,7 +55,9 @@ function loadResumeInit(json, json2, situation) {
                 <section id="skills">\
                     <div class="container">\
                         <h1>Skills</h1>\
-                        <form class="form-horizontal"></form>\
+                        <form class="form-horizontal">\
+                            <ul class="sortable default"></ul>\
+                        </form>\
                     </div>\
                 </section>\
                 <section id="contact">\
@@ -156,8 +161,8 @@ function loadResumeInit(json, json2, situation) {
                 </div>\
             </div>';
         
-        var experienceButtonHTML = '\
-            <button id="new-experience" type="button" class="default new-button">\
+        var newButtonHTML = '\
+            <button type="button" class="default new">\
                 <i class="fa fa-plus absolute-center vertical-align"></i>\
             </button>';
         
@@ -166,7 +171,8 @@ function loadResumeInit(json, json2, situation) {
         
         $('#page-content-wrapper').append(userResumeHTML);
         $('#profile .form-horizontal').append(userResumeProfileHTML);
-        $('#experience .container').append(experienceButtonHTML);
+        $('#experience .container').append(newButtonHTML);
+        $('#skills .container').append(newButtonHTML);
         $('#contact .form-horizontal').append(userResumeContactHTML);
         
         initSummernote('#summernote-summary');
@@ -182,7 +188,7 @@ function loadResumeInit(json, json2, situation) {
             .attr('href', '/user/resume/' + globalResumeID + '#section1');
     }
     
-    function initResumeProfileData(json) {
+    function initResumeProfileTypeData(json) {
         // set resume profile
         $('#inputHeadline').val(json.headline);
         $('#inputSubtitle').val(json.subtitle);
@@ -201,7 +207,7 @@ function loadResumeInit(json, json2, situation) {
         $('#profile .form-horizontal').data('JSONData', resumeProfileJSON);
     }
     
-    function initResumeExperienceData(json) {
+    function initResumeExperiencesData(json) {
         var $this = $('#experience .form-horizontal');
         var experiencesArray = [];
         
@@ -219,6 +225,7 @@ function loadResumeInit(json, json2, situation) {
                             <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
                             <button type="button" class="move down default" aria-label="Down"><i class="fa fa-chevron-down"></i></button>\
                         </div>\
+                        \
                         <div class="form-group">\
                             <label for="inputJobTitle' + (i + 1) + '" class="col-sm-3 control-label">Job Title</label>\
                             <div class="col-sm-9">\
@@ -239,6 +246,7 @@ function loadResumeInit(json, json2, situation) {
                                 <input type="duration" class="form-control" id="inputDuration' + (i + 1) + '" placeholder="Duration">\
                             </div>\
                         </div>\
+                        \
                         <div class="form-group">\
                             <label for="inputResponsibilities' + (i + 1) + '" class="col-sm-3 control-label">Responsibilities</label>\
                             <div class="col-sm-9">\
@@ -292,97 +300,82 @@ function loadResumeInit(json, json2, situation) {
         $this.data('JSONData', resumeExperienceJSON);
     }
 
-    /*
     function initResumeSkillsData(json) {
         var $this = $('#skills .form-horizontal');
         var skillsArray = [];
         
-        if (json.experiences != null && json.experiences.length > 0) { // not undefined or empty
+        if (json.skills != null && json.skills.length > 0) { // not undefined or empty
             // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
-            json.experiences.sort(function(a, b) {
+            json.skills.sort(function(a, b) {
                 return a.order - b.order;
             });
             
-            $.each(json.experiences, function(i, experience) {
-                var userResumeExperienceHTML = '\
-                    <div id="experience-group' + (i + 1) + '" class="experience-group">\
-                        <div class="button-group">\
-                            <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
-                            <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
-                            <button type="button" class="move down default" aria-label="Down"><i class="fa fa-chevron-down"></i></button>\
-                        </div>\
+            $.each(json.skills, function(i, skill) {
+                var userResumeSkillHTML = '\
+                    <li id="skill-group' + (i + 1) + '" class="brick skill-group ui-state-default">\
                         <div class="form-group">\
-                            <label for="inputJobTitle' + (i + 1) + '" class="col-sm-3 control-label">Job Title</label>\
+                            <label for="inputSkillName' + (i + 1) + '" class="col-sm-3 control-label">Skill Name</label>\
                             <div class="col-sm-9">\
-                                <input type="job-title" class="form-control" id="inputJobTitle' + (i + 1) + '" placeholder="Job Title">\
-                            </div>\
-                        </div>\
-                        \
-                        <div class="form-group">\
-                            <label for="inputCompany' + (i + 1) + '" class="col-sm-3 control-label">Company</label>\
-                            <div class="col-sm-9">\
-                                <input type="company" class="form-control" id="inputCompany' + (i + 1) + '" placeholder="Company">\
-                            </div>\
-                        </div>\
-                        \
-                        <div class="form-group">\
-                            <label for="inputDuration' + (i + 1) + '" class="col-sm-3 control-label">Duration</label>\
-                            <div class="col-sm-9">\
-                                <input type="duration" class="form-control" id="inputDuration' + (i + 1) + '" placeholder="Duration">\
+                                <input type="skill-name" class="form-control" id="inputSkillName' + (i + 1) + '" placeholder="Skill Name">\
                             </div>\
                         </div>\
                         <div class="form-group">\
-                            <label for="inputResponsibilities' + (i + 1) + '" class="col-sm-3 control-label">Responsibilities</label>\
-                            <div class="col-sm-9">\
-                                <div id="summernote-responsibilities' + (i + 1) + '" class="summernote"></div>\
+                            <label for="inputSkillLevel' + (i + 1) + '" class="col-sm-3 control-label">Skill Level</label>\
+                            <div class="col-sm-9" id="inputSkillLevel' + (i + 1) + '">\
+                                <label class="radio-inline">\
+                                    <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option1" value="1"> 1\
+                                </label>\
+                                <label class="radio-inline">\
+                                    <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option2" value="2"> 2\
+                                </label>\
+                                <label class="radio-inline">\
+                                    <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option3" value="3"> 3\
+                                </label>\
+                                <label class="radio-inline">\
+                                    <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option4" value="4"> 4\
+                                </label>\
+                                <label class="radio-inline">\
+                                    <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option5" value="5"> 5\
+                                </label>\
                             </div>\
                         </div>\
-                    </div>';
+                    </li>';
 
-                $this.append(userResumeExperienceHTML);
-
-                initSummernote('#summernote-responsibilities' + (i + 1));
+                $('#skills .form-horizontal .sortable').append(userResumeSkillHTML);
 
                 // set resume experience
-                $('#inputJobTitle' + (i + 1)).val(experience.jobTitle);
-                $('#inputCompany' + (i + 1)).val(experience.company);
-                $('#inputDuration' + (i + 1)).val(experience.duration);
-                $('#summernote-responsibilities' + (i + 1)).summernote('code', experience.responsibilities);
-                $('#experience-group' + (i + 1)).attr('order', experience.order);
+                $('#inputSkillName' + (i + 1)).val(skill.name);
+                $('#skill' + (i + 1) + '-option' + skill.level).prop('checked', true);
+                $('#skill-group' + (i + 1)).attr('order', skill.order);
 
-                // get resume experience JSON
-                var resumeExperience = {
-                    jobTitle: experience.jobTitle,
-                    company: experience.company,
-                    duration: experience.duration,
-                    responsibilities: experience.responsibilities,
-                    order: experience.order
+                // get resume skill JSON
+                var resumeSkill = {
+                    name: skill.name,
+                    level: skill.level,
+                    order: skill.order
                 };
 
-                experiencesArray.push(resumeExperience);
+                skillsArray.push(resumeSkill);
             });
         }
         else {
-            addExperienceGroup();
+            addSkillGroup();
 
-            // get resume experience JSON
-            var resumeExperience = {
-                jobTitle: '',
-                company: '',
-                duration: '',
-                responsibilities: '<ul><li><br></li></ul>',
+            // get resume skill JSON
+            var resumeSkill = {
+                name: '',
+                level: '',
                 order: 0
             };
 
-            experiencesArray.push(resumeExperience);
+            skillsArray.push(resumeSkill);
         }
         
-        var resumeExperienceJSON = JSON.stringify(experiencesArray);
-        $this.data('JSONData', resumeExperienceJSON);
+        var resumeSkillsJSON = JSON.stringify(skillsArray);
+        $this.data('JSONData', resumeSkillsJSON);
     }
-    */
 
-    function initResumeContactData(json) {
+    function initResumeContactTypeData(json) {
         var $this = $('#contact .form-horizontal');
 
         // set resume contact
@@ -464,11 +457,48 @@ function loadResumeInit(json, json2, situation) {
                 </div>\
             </div>';
 
-        $('#experience .form-horizontal').append(userResumeExperienceHTML);
+        $('#experience .form-horizontal ul.sortable').append(userResumeExperienceHTML);
         $('.experience-group').last().attr('order', i);
         
         initSummernote('#summernote-responsibilities' + (i + 1));
         $('#summernote-responsibilities' + (i + 1)).summernote('code', '<ul><li><br></li></ul>');
+    }
+
+    function addSkillGroup() {
+        var i = $('.skill-group').length;
+        
+        var userResumeSkillHTML = '\
+            <li id="skill-group' + (i + 1) + '" class="brick skill-group ui-state-default">\
+                <div class="form-group">\
+                    <label for="inputSkillName' + (i + 1) + '" class="col-sm-3 control-label">Skill Name</label>\
+                    <div class="col-sm-9">\
+                        <input type="skill-name" class="form-control" id="inputSkillName' + (i + 1) + '" placeholder="Skill Name">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputSkillLevel' + (i + 1) + '" class="col-sm-3 control-label">Skill Level</label>\
+                    <div class="col-sm-9" id="inputSkillLevel' + (i + 1) + '">\
+                        <label class="radio-inline">\
+                            <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option1" value="1"> 1\
+                        </label>\
+                        <label class="radio-inline">\
+                            <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option2" value="2"> 2\
+                        </label>\
+                        <label class="radio-inline">\
+                            <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option3" value="3"> 3\
+                        </label>\
+                        <label class="radio-inline">\
+                            <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option4" value="4"> 4\
+                        </label>\
+                        <label class="radio-inline">\
+                            <input type="radio" name="inlineRadioOptions' + (i + 1) + '" id="skill' + (i + 1) + '-option5" value="5"> 5\
+                        </label>\
+                    </div>\
+                </div>\
+            </li>';
+
+        $('#skills .form-horizontal .sortable').append(userResumeSkillHTML);
+        $('.skill-group').last().attr('order', i);
     }
     
 
@@ -480,8 +510,10 @@ function loadResumeInit(json, json2, situation) {
         $('#navbar-top-layer-2').on('click', '.preview', function() {
             window.open($(this).attr('link'), '_blank');
         });
+
+        // $('.sortable').sortable(); // **** In the voice of Alexander Hamilton: "So it needs amendment." ****
         
-        $('#experience').on('click', '#new-experience', function() {
+        $('#experience').on('click', 'button.new', function() {
             $('.experience-group').last().removeClass('last');
 
             addExperienceGroup();
@@ -499,8 +531,6 @@ function loadResumeInit(json, json2, situation) {
                 $('.experience-group').last().addClass('last');
             });
         });
-        
-        $('.sortable').sortable(); // **** In the voice of Alexander Hamilton: "So it needs amendment." ****
 
         $('#experience').on('click', 'button.move', function() {
             var $item = $(this).closest('.experience-group');
@@ -523,6 +553,25 @@ function loadResumeInit(json, json2, situation) {
         // http://summernote.org/deep-dive/#onchange
         $('#experience').on('summernote.change', function() {
             $.fn.fullpage.reBuild();
+        });
+
+        $('#skills').on('click', 'button.new', function() {
+            $('.skill-group').last().removeClass('last');
+
+            addSkillGroup();
+            $.fn.fullpage.reBuild();
+            $('.skill-group').last().addClass('last');
+        });
+
+        $('#skills').on('click', 'button.delete', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this).closest('.experience-group');
+            $this.fadeOut(500, function() {
+                $this.remove();
+                $.fn.fullpage.reBuild();
+                $('.experience-group').last().addClass('last');
+            });
         });
     }
 
@@ -586,6 +635,31 @@ function loadResumeInit(json, json2, situation) {
         var oldJSONData = $('#experience .form-horizontal').data('JSONData');
 
         updateResume(8, newJSONData, oldJSONData, situation);
+    }
+
+    function checkResumeSkillsChanges(situation) {
+        var $this = $('#skills .skill-group');
+        var skillsArray = [];
+        
+        $.each($this, function(i, skill) {
+            var level = parseInt($('#inputSkillLevel' + (i + 1)).find('input:radio:checked').val());
+            if (isNaN(level)) { // no radio is checked
+                level = 0;
+            }
+
+            var data = {
+                name: $('#inputSkillName' + (i + 1)).val(),
+                level: level,
+                order: parseInt($('#skill-group' + (i + 1)).attr('order'))
+            };
+            
+            skillsArray.push(data);
+        });
+
+        var newJSONData = JSON.stringify(skillsArray);
+        var oldJSONData = $('#skills .form-horizontal').data('JSONData');
+
+        updateResume(9, newJSONData, oldJSONData, situation);
     }
 
 
@@ -716,15 +790,14 @@ function loadResumeInit(json, json2, situation) {
                 $.each(json.skills.skills, function(i, skill) {
                     var data = {
                         name: skill.name,
-                        years: skill.years,
                         level: skill.level,
                         order: skill.order
                     };
 
-                    skills.push(data);
+                    skillsArray.push(data);
                 });
 
-                var JSONData = JSON.stringify(experiencesArray);
+                var JSONData = JSON.stringify(skillsArray);
                 $('#skills .form-horizontal').data('JSONData', JSONData);
                 
                 break;
