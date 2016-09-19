@@ -24,7 +24,7 @@ function loadDashboardResumesInit(json, json2, situation) {
             </div>';
 
         var resumeButtonHTML = '\
-            <button id="new-resume" type="button" class="default new-button">\
+            <button id="new-resume" type="button" class="default new">\
                 <i class="fa fa-plus absolute-center vertical-align"></i>\
             </button>';
         

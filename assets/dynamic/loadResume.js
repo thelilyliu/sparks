@@ -219,7 +219,7 @@ function loadResumeInit(json, json2, situation) {
             
             $.each(json.experiences, function(i, experience) {
                 var userResumeExperienceHTML = '\
-                    <li id="experience-group' + (i + 1) + '" class="experience-group ui-state-default">\
+                    <li id="experience-group' + (i + 1) + '" class="group experience-group ui-state-default">\
                         <div class="button-group">\
                             <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
                             <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
@@ -278,8 +278,8 @@ function loadResumeInit(json, json2, situation) {
                 experiencesArray.push(resumeExperience);
             });
 
-            $this.find('.experience-group').first().addClass('first');
-            $this.find('.experience-group').last().addClass('last');
+            $this.find('.group').first().addClass('first');
+            $this.find('.group').last().addClass('last');
         }
         else {
             addExperienceGroup();
@@ -312,7 +312,12 @@ function loadResumeInit(json, json2, situation) {
             
             $.each(json.skills, function(i, skill) {
                 var userResumeSkillHTML = '\
-                    <li id="skill-group' + (i + 1) + '" class="brick skill-group ui-state-default">\
+                    <li id="skill-group' + (i + 1) + '" class="group brick skill-group ui-state-default">\
+                        <div class="button-group">\
+                            <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
+                            <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                            <button type="button" class="move down default" aria-label="Down"><i class="fa fa-chevron-down"></i></button>\
+                        </div>\
                         <div class="form-group">\
                             <label for="inputSkillName' + (i + 1) + '" class="col-sm-3 control-label">Skill Name</label>\
                             <div class="col-sm-9">\
@@ -357,6 +362,9 @@ function loadResumeInit(json, json2, situation) {
 
                 skillsArray.push(resumeSkill);
             });
+
+            $this.find('.group').first().addClass('first');
+            $this.find('.group').last().addClass('last');
         }
         else {
             addSkillGroup();
@@ -423,7 +431,7 @@ function loadResumeInit(json, json2, situation) {
         var i = $('.experience-group').length;
         
         var userResumeExperienceHTML = '\
-            <div id="experience-group' + (i + 1) + '" class="experience-group">\
+            <div id="experience-group' + (i + 1) + '" class="group experience-group">\
                 <div class="button-group">\
                     <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
                     <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
@@ -468,7 +476,12 @@ function loadResumeInit(json, json2, situation) {
         var i = $('.skill-group').length;
         
         var userResumeSkillHTML = '\
-            <li id="skill-group' + (i + 1) + '" class="brick skill-group ui-state-default">\
+            <li id="skill-group' + (i + 1) + '" class="group brick skill-group ui-state-default">\
+                <div class="button-group">\
+                    <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
+                    <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                    <button type="button" class="move down default" aria-label="Down"><i class="fa fa-chevron-down"></i></button>\
+                </div>\
                 <div class="form-group">\
                     <label for="inputSkillName' + (i + 1) + '" class="col-sm-3 control-label">Skill Name</label>\
                     <div class="col-sm-9">\
@@ -511,7 +524,32 @@ function loadResumeInit(json, json2, situation) {
             window.open($(this).attr('link'), '_blank');
         });
 
-        // $('.sortable').sortable(); // **** In the voice of Alexander Hamilton: "So it needs amendment." ****
+        // $('.sortable').sortable(); // **** So it needs amendment. ****
+
+        $('#fullpage').on('click', 'button.move', function() {
+            var $this = $(this);
+            var $item = $this.closest('.group');
+            var $form = $this.closest('.form-horizontal');
+            var order = $item.attr('order');
+            
+            if ($this.hasClass('up')) {
+                $item.attr('order', (order - 1));
+                $item.prev().attr('order', order);
+                
+                $item.swapWith($item.prev());
+            }
+            else {
+                $item.attr('order', (order + 1));
+                $item.next().attr('order', order);
+                
+                $item.swapWith($item.next());
+            }
+
+            $form.find('.first').removeClass('first'); // reset order of classes
+            $form.find('.last').removeClass('last');
+            $form.find('.group').first().addClass('first'); // set order of classes
+            $form.find('.group').last().addClass('last');
+        });
         
         $('#experience').on('click', 'button.new', function() {
             $('.experience-group').last().removeClass('last');
@@ -531,24 +569,6 @@ function loadResumeInit(json, json2, situation) {
                 $('.experience-group').last().addClass('last');
             });
         });
-
-        $('#experience').on('click', 'button.move', function() {
-            var $item = $(this).closest('.experience-group');
-            var order = $item.attr('order');
-            
-            if ($(this).hasClass('up')) {
-                $item.attr('order', (order - 1));
-                $item.prev().attr('order', order);
-                
-                $item.swapWith($item.prev());
-            }
-            else {
-                $item.attr('order', (order + 1));
-                $item.next().attr('order', order);
-                
-                $item.swapWith($item.next());
-            }
-        });
         
         // http://summernote.org/deep-dive/#onchange
         $('#experience').on('summernote.change', function() {
@@ -566,11 +586,11 @@ function loadResumeInit(json, json2, situation) {
         $('#skills').on('click', 'button.delete', function(e) {
             e.stopPropagation();
 
-            var $this = $(this).closest('.experience-group');
+            var $this = $(this).closest('.skill-group');
             $this.fadeOut(500, function() {
                 $this.remove();
                 $.fn.fullpage.reBuild();
-                $('.experience-group').last().addClass('last');
+                $('.skill-group').last().addClass('last');
             });
         });
     }
