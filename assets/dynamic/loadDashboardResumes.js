@@ -121,7 +121,7 @@ function loadDashboardResumesInit(json, json2, situation) {
             }
         });
         
-        $('#resumes').on('click', '.title', function() {
+        $('#resumes').on('dblclick', '.title', function() {
             var $this = $(this);
             
             var $input = $('<input type="text" class="form-control">').val($this.text());

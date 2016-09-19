@@ -8,20 +8,20 @@ import (
 )
 
 type Resume struct {
-	ResumeID   string         `json:"resumeID"`
-	UserID     string         `json:"userID"`
-	Date       string         `json:"date"`
-	Title      string         `json:"title"`
-	TitleURL   string         `json:"titleURL"`
-	LinkURL    string         `json:"linkURL"`
-	ThemeID    string         `json:"themeID"`
-	ThemeName  string         `json:"themeName"`
-	Profile    ProfileType    `json:"profile"`
-	Experience ExperienceType `json:"experience"`
-	Skills     SkillsType     `json:"skills"`
-	Portfolio  PortfolioType  `json:"portfolio"`
-	Others     OthersType     `json:"others"`
-	Contact    ContactType    `json:"contact"`
+	ResumeID     string           `json:"resumeID"`
+	UserID       string           `json:"userID"`
+	Date         string           `json:"date"`
+	Title        string           `json:"title"`
+	TitleURL     string           `json:"titleURL"`
+	LinkURL      string           `json:"linkURL"`
+	ThemeID      string           `json:"themeID"`
+	ThemeName    string           `json:"themeName"`
+	Profile      ProfileType      `json:"profile"`
+	Experience   ExperienceType   `json:"experience"`
+	Skills       SkillsType       `json:"skills"`
+	Portfolio    PortfolioType    `json:"portfolio"`
+	Achievements AchievementsType `json:"achievements"`
+	Contact      ContactType      `json:"contact"`
 }
 
 type ProfileType struct {
@@ -46,12 +46,11 @@ type PortfolioType struct {
 	Background Image       `json:"image"`
 }
 
-type OthersType struct {
-	Educations []Education `json:"educations"`
-	Awards     []Award     `json:"awards"`
-	Hobbies    []Hobby     `json:"hobbies"`
-	References []Reference `json:"references"`
-	Background Image       `json:"background"`
+type AchievementsType struct {
+	Educations     []Education     `json:"educations"`
+	Qualifications []Qualification `json:"qualifications"`
+	Awards         []Award         `json:"awards"`
+	Background     Image           `json:"background"`
 }
 
 type ContactType struct {
@@ -88,32 +87,29 @@ type Skill struct {
 
 type Education struct {
 	School     string `json:"school"`
-	YearStart  int    `json:"yearStart"`
-	YearEnd    int    `json:"yearEnd"`
+	StartMonth string `json:"startMonth"`
+	StartYear  int    `json:"startYear"`
+	EndMonth   string `json:"endMonth"`
+	EndYear    int    `json:"endYear"`
 	Major      string `json:"major"`
 	Minor      string `json:"minor"`
 	Specialist string `json:"specialist"`
 	Notes      string `json:"notes"`
+	Order      int    `json:"order"`
+}
+
+type Qualification struct {
+	Name  string `json:"name"`
+	Date  string `json:"date"`
+	Notes string `json:"notes"`
+	Order int    `json:"order"`
 }
 
 type Award struct {
 	Name  string `json:"name"`
 	Date  string `json:"date"`
 	Notes string `json:"notes"`
-}
-
-type Hobby struct {
-	Name  string `json:"name"`
-	Notes string `json:"notes"`
-}
-
-type Reference struct {
-	FirstName   string      `json:"firstName"`
-	LastName    string      `json:"lastName"`
-	Relation    string      `json:"relation"`
-	Company     string      `json:"company"`
-	Testimony   string      `json:"testimony"`
-	ContactInfo ContactType `json:"contactInfo"`
+	Order int    `json:"order"`
 }
 
 /*
@@ -241,7 +237,7 @@ func updateRPortfolioType() {
 
 }
 
-func updateROtherInfoType() {
+func updateRAchievementsType() {
 
 	// **** EDIT ****
 
@@ -293,6 +289,22 @@ func updateRSkills(resumeID, userID string, skills *[]Skill) error {
 	err := updateResumeDB(&selector, &update)
 
 	return err
+}
+
+func updateRPortfolios() {
+
+}
+
+func updateREducations() {
+
+}
+
+func updateRQualifications() {
+
+}
+
+func updateRAwards() {
+
 }
 
 /*
