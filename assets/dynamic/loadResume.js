@@ -7,6 +7,7 @@ function loadResumeInit(json, json2, situation) {
             initResumeProfileTypeData(json[0].profile);
             initResumeExperiencesData(json[0].experience);
             initResumeSkillsData(json[0].skills);
+            initResumeAchievementsData(json[0].achievements);
             initResumeContactTypeData(json[0].contact);
 
             initializeFullPage();
@@ -20,8 +21,13 @@ function loadResumeInit(json, json2, situation) {
     else { // autosave
         checkResumeProfileTypeChanges(situation);
         checkResumeContactTypeChanges(situation);
+
         checkResumeExperiencesChanges(situation);
         checkResumeSkillsChanges(situation);
+
+        checkResumeEducationsChanges(situation);
+        checkResumeQualificationsChanges(situation);
+        checkResumeAwardsChanges(situation);
     }
     
     
@@ -29,8 +35,13 @@ function loadResumeInit(json, json2, situation) {
         var timerID = setInterval(function() {
             checkResumeProfileTypeChanges(situation);
             checkResumeContactTypeChanges(situation);
+
             checkResumeExperiencesChanges(situation);
             checkResumeSkillsChanges(situation);
+            
+            checkResumeEducationsChanges(situation);
+            checkResumeQualificationsChanges(situation);
+            checkResumeAwardsChanges(situation);
         }, 5000);
         $('body').data('autosave-timer', timerID);
     }
@@ -58,6 +69,12 @@ function loadResumeInit(json, json2, situation) {
                         <form class="form-horizontal">\
                             <ul class="sortable default"></ul>\
                         </form>\
+                    </div>\
+                </section>\
+                <section id="achievements">\
+                    <div class="container">\
+                        <h1>Achievements</h1>\
+                        <form class="form-horizontal"></form>\
                     </div>\
                 </section>\
                 <section id="contact">\
@@ -383,6 +400,10 @@ function loadResumeInit(json, json2, situation) {
         $this.data('JSONData', resumeSkillsJSON);
     }
 
+    function initResumeAchievementsData(json) {
+        // **** EDIT ****
+    }
+
     function initResumeContactTypeData(json) {
         var $this = $('#contact .form-horizontal');
 
@@ -512,6 +533,18 @@ function loadResumeInit(json, json2, situation) {
 
         $('#skills .form-horizontal .sortable').append(userResumeSkillHTML);
         $('.skill-group').last().attr('order', i);
+    }
+
+    function addEducationGroup() {
+        // **** EDIT ****
+    }
+
+    function addQualificationGroup() {
+        // **** EDIT ****
+    }
+
+    function addAwardGroup() {
+        // **** EDIT ****
     }
     
 
@@ -682,6 +715,18 @@ function loadResumeInit(json, json2, situation) {
         updateResume(9, newJSONData, oldJSONData, situation);
     }
 
+    function checkResumeEducationsChanges(situation) {
+        // **** EDIT ****
+    }
+
+    function checkResumeQualificationsChanges(situation) {
+        // **** EDIT ****
+    }
+
+    function checkResumeAwardsChanges(situation) {
+        // **** EDIT ****
+    }
+
 
     function updateResume(category, newJSONData, oldJSONData, situation) {
         if (newJSONData != oldJSONData) {
@@ -820,6 +865,20 @@ function loadResumeInit(json, json2, situation) {
                 var JSONData = JSON.stringify(skillsArray);
                 $('#skills .form-horizontal').data('JSONData', JSONData);
                 
+                break;
+            case 10: // portfolios
+                break;
+            case 11: // educations
+                console.log('11: educations');
+
+                break;
+            case 12: // qualifications
+                console.log('12: qualifications');
+
+                break;
+            case 13: // awards
+                console.log('13: awards');
+
                 break;
             default:
                 console.log('Error: updateResumeJSON category not matched.');

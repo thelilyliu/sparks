@@ -12,6 +12,7 @@ function viewResumeInit() {
             initResumeProfileData(json.profile);
             initResumeExperienceData(json.experience);
             initResumeSkillsData(json.skills);
+            initResumeAchievementsData(json.achievements);
             initResumeContactData(json.contact);
 
             initializeFullPage();
@@ -91,6 +92,10 @@ function viewResumeInit() {
                 $level.append(starOHTML);
             }
         });
+    }
+
+    function initResumeAchievementsData(json) {
+        // **** EDIT ****
     }
 
     function initResumeContactData(json) {

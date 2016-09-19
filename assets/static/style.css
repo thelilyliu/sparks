@@ -21,7 +21,7 @@
     19. Experience
     20. Skills
     21. Portfolio
-    22. Education
+    22. Achievements
     23. Contact
     24. Portfolios
 */
@@ -827,14 +827,14 @@ section {
 
 /*
   ========================================
-  22. Education
+  22. Achievements
   ========================================
 */
 
-#education {
+#achievements {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/04.jpg");
 }
-    #education .card {
+    #achievements .card {
         position: relative;
         background-color: rgba(138, 219, 255, .9);
     }
