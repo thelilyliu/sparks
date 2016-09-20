@@ -20,28 +20,20 @@ function loadResumeInit(json, json2, situation) {
     }
     else { // autosave
         checkResumeProfileTypeChanges(situation);
+        checkResumeExperienceTypeChanges(situation);
+        checkResumeSkillsTypeChanges(situation);
+        checkResumeAchievementsTypeChanges(situation);
         checkResumeContactTypeChanges(situation);
-
-        checkResumeExperiencesChanges(situation);
-        checkResumeSkillsChanges(situation);
-
-        checkResumeEducationsChanges(situation);
-        checkResumeQualificationsChanges(situation);
-        checkResumeAwardsChanges(situation);
     }
     
     
     function setupAutosaveTimer(situation) {
         var timerID = setInterval(function() {
             checkResumeProfileTypeChanges(situation);
+            checkResumeExperienceTypeChanges(situation);
+            checkResumeSkillsTypeChanges(situation);
+            checkResumeAchievementsTypeChanges(situation);
             checkResumeContactTypeChanges(situation);
-
-            checkResumeExperiencesChanges(situation);
-            checkResumeSkillsChanges(situation);
-
-            checkResumeEducationsChanges(situation);
-            checkResumeQualificationsChanges(situation);
-            checkResumeAwardsChanges(situation);
         }, 5000);
         $('body').data('autosave-timer', timerID);
     }
@@ -194,7 +186,7 @@ function loadResumeInit(json, json2, situation) {
         $('#skills .container').append(newButtonHTML);
         $('#educations').append(newButtonHTML);
         $('#qualifications').append(newButtonHTML);
-        // $('#awards').append(newButtonHTML);
+        $('#awards').append(newButtonHTML);
         $('#contact .form-horizontal').append(userResumeContactHTML);
 
         $('#navbar-top-layer-2 .back').attr('link', '/user/resumes');
@@ -641,7 +633,9 @@ function loadResumeInit(json, json2, situation) {
 
                 // get resume qualification JSON
                 var resumeQualification = {
-                    school: education.school,
+                    name: qualification.name,
+                    date: qualification.date,
+                    notes: qualification.notes,
                     order: education.order
                 };
 
@@ -667,7 +661,73 @@ function loadResumeInit(json, json2, situation) {
     }
 
     function initResumeAwardsData(json) {
+        var $awards = $('#awards');
+        var awardsArray = [];
 
+        if (json != null && json.length > 0) { // not undefined or empty
+            $.each(json, function(i, award) {
+                var userResumeAwardHTML = '\
+                    <div id="award-group' + (i + 1) + '" class="group award-group">\
+                        <div class="button-group">\
+                            <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputAwardName' + (i + 1) + '" class="col-sm-3 control-label">Award</label>\
+                            <div class="col-sm-9">\
+                                <input type="award-name" class="form-control" id="inputAwardName' + (i + 1) + '" placeholder="Award">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputAwardDate' + (i + 1) + '" class="col-sm-3 control-label">Date</label>\
+                            <div class="col-sm-9">\
+                                <input type="award-date" class="form-control" id="inputAwardDate' + (i + 1) + '" placeholder="Date">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputAwardNotes' + (i + 1) + '" class="col-sm-3 control-label">Notes</label>\
+                            <div class="col-sm-9">\
+                                <div id="summernote-award-notes' + (i + 1) + '" class="summernote"></div>\
+                            </div>\
+                        </div>\
+                    </div>';
+
+                $awards.append(userResumeAwardHTML);
+
+                initSummernote('#summernote-award-notes' + (i + 1));
+
+                // set resume award
+                $('#inputAwardName' + (i + 1)).val(award.name);
+                $('#inputAwardDate' + (i + 1)).val(award.date);
+                $('summernote-award-notes' + (i + 1)).summernote('code', award.notes);
+                $('#award-group' + (i + 1)).attr('order', award.order);
+
+                // get resume award JSON
+                var resumeAward = { // **** EDIT ****
+                    name: award.name,
+                    date: award.date,
+                    notes: award.notes,
+                    order: award.order
+                };
+
+                awardsArray.push(resumeAward);
+            });
+        }
+        else {
+            addAwardGroup();
+
+            // get resume award JSON
+            var resumeAward = {
+                name: '',
+                date: '',
+                notes: '<ul><li><br></li></ul>',
+                order: 0
+            };
+
+            awardsArray.push(resumeAward);
+        }
+        
+        var resumeAwardsJSON = JSON.stringify(awardsArray);
+        $awards.data('JSONData', resumeAwardsJSON);
     }
     
     
@@ -885,7 +945,38 @@ function loadResumeInit(json, json2, situation) {
     }
 
     function addAwardGroup() {
-        // **** EDIT ****
+        var i = $('.award-group').length;
+        
+        var userResumeAwardHTML = '\
+            <div id="award-group' + (i + 1) + '" class="group award-group">\
+                <div class="button-group">\
+                    <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputAwardName' + (i + 1) + '" class="col-sm-3 control-label">Award</label>\
+                    <div class="col-sm-9">\
+                        <input type="award-name" class="form-control" id="inputAwardName' + (i + 1) + '" placeholder="Award">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputAwardDate' + (i + 1) + '" class="col-sm-3 control-label">Date</label>\
+                    <div class="col-sm-9">\
+                        <input type="award-date" class="form-control" id="inputAwardDate' + (i + 1) + '" placeholder="Date">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputAwardNotes' + (i + 1) + '" class="col-sm-3 control-label">Notes</label>\
+                    <div class="col-sm-9">\
+                        <div id="summernote-award-notes' + (i + 1) + '" class="summernote"></div>\
+                    </div>\
+                </div>\
+            </div>';
+
+        $('#awards').append(userResumeAwardHTML);
+        $('.award-group').last().attr('order', i);
+
+        initSummernote('#summernote-award-notes' + (i + 1));
+        $('#summernote-award-notes' + (i + 1)).summernote('code', '<ul><li><br></li></ul>');
     }
     
 
@@ -980,7 +1071,6 @@ function loadResumeInit(json, json2, situation) {
             $.fn.fullpage.reBuild();
             $('.award-group').last().addClass('last');
         });
-
     }
 
 
@@ -1023,7 +1113,7 @@ function loadResumeInit(json, json2, situation) {
         updateResume(7, newJSONData, oldJSONData, situation);
     }
 
-    function checkResumeExperiencesChanges(situation) {
+    function checkResumeExperienceTypeChanges(situation) {
         var $this = $('#experience .experience-group');
         var experiencesArray = [];
         
@@ -1045,7 +1135,7 @@ function loadResumeInit(json, json2, situation) {
         updateResume(8, newJSONData, oldJSONData, situation);
     }
 
-    function checkResumeSkillsChanges(situation) {
+    function checkResumeSkillsTypeChanges(situation) {
         var $this = $('#skills .skill-group');
         var skillsArray = [];
         
@@ -1068,6 +1158,12 @@ function loadResumeInit(json, json2, situation) {
         var oldJSONData = $('#skills .form-horizontal').data('JSONData');
 
         updateResume(9, newJSONData, oldJSONData, situation);
+    }
+
+    function checkResumeAchievementsTypeChanges(situation) {
+        checkResumeEducationsChanges(situation);
+        checkResumeQualificationsChanges(situation);
+        checkResumeAwardsChanges(situation);
     }
 
     function checkResumeEducationsChanges(situation) {
