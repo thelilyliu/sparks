@@ -617,6 +617,14 @@ section {
         cursor: text;
     }
 
+.group {
+    background-color: rgb(229, 229, 229);
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+}
+
 /*
   ========================================
   14. Forms
@@ -763,13 +771,6 @@ section {
         display: block;
         color: #677077;
     }
-    #experience .experience-group {
-        background-color: rgb(229, 229, 229);
-        padding: 20px;
-        border-radius: 4px;
-        margin-bottom: 30px;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-    }
 
 @media (max-width: 767px) {
     #experience .card-wrapper {
@@ -791,13 +792,6 @@ section {
 }
     #skills .card {
         height: 100px;
-    }
-    #skills .skill-group {
-        background-color: rgb(229, 229, 229);
-        padding: 20px;
-        border-radius: 4px;
-        margin-bottom: 30px;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
     }
     #skills .level-1 {
         background-color: rgba(110, 211, 207, .9);

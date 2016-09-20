@@ -295,16 +295,40 @@ func updateRPortfolios() {
 
 }
 
-func updateREducations() {
+func updateREducations(resumeID, userID string, educations *[]Education) error {
+	change := bson.M{"achievements.educations": educations}
 
+	// find document and update fields
+	selector := bson.M{"resumeid": resumeID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	err := updateResumeDB(&selector, &update)
+
+	return err
 }
 
-func updateRQualifications() {
+func updateRQualifications(resumeID, userID string, qualifications *[]Qualification) error {
+	change := bson.M{"achievements.qualifications": qualifications}
 
+	// find document and update fields
+	selector := bson.M{"resumeid": resumeID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	err := updateResumeDB(&selector, &update)
+
+	return err
 }
 
-func updateRAwards() {
+func updateRAwards(resumeID, userID string, awards *[]Award) error {
+	change := bson.M{"achievements.awards": awards}
 
+	// find document and update fields
+	selector := bson.M{"resumeid": resumeID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	err := updateResumeDB(&selector, &update)
+
+	return err
 }
 
 /*

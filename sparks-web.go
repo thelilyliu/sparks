@@ -719,11 +719,53 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 	case 10:
 		log.Println("10: portfolios")
 	case 11:
-		log.Println("11: educations")
+		var educations []Education
+		var byteSlice []byte
+
+		// https://golang.org/pkg/io/ioutil/#ReadAll
+		byteSlice, err = ioutil.ReadAll(r.Body)
+		logErrorMessage(err)
+
+		// https://golang.org/pkg/encoding/json/#Unmarshal
+		err = json.Unmarshal(byteSlice, &educations)
+		logErrorMessage(err)
+
+		err = updateREducations(resume.ResumeID, resume.UserID, &educations)
+		logErrorMessage(err)
+
+		resume.Achievements.Educations = educations
 	case 12:
-		log.Println("12: qualifications")
+		var qualifications []Qualification
+		var byteSlice []byte
+
+		// https://golang.org/pkg/io/ioutil/#ReadAll
+		byteSlice, err = ioutil.ReadAll(r.Body)
+		logErrorMessage(err)
+
+		// https://golang.org/pkg/encoding/json/#Unmarshal
+		err = json.Unmarshal(byteSlice, &qualifications)
+		logErrorMessage(err)
+
+		err = updateRQualifications(resume.ResumeID, resume.UserID, &qualifications)
+		logErrorMessage(err)
+
+		resume.Achievements.Qualifications = qualifications
 	case 13:
-		log.Println("13: awards")
+		var awards []Award
+		var byteSlice []byte
+
+		// https://golang.org/pkg/io/ioutil/#ReadAll
+		byteSlice, err = ioutil.ReadAll(r.Body)
+		logErrorMessage(err)
+
+		// https://golang.org/pkg/encoding/json/#Unmarshal
+		err = json.Unmarshal(byteSlice, &awards)
+		logErrorMessage(err)
+
+		err = updateRAwards(resume.ResumeID, resume.UserID, &awards)
+		logErrorMessage(err)
+
+		resume.Achievements.Awards = awards
 	default:
 		log.Println("No category selected. Resume not updated.")
 	}

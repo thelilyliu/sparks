@@ -5,9 +5,9 @@ function loadResumeInit(json, json2, situation) {
         if (!jQuery.isEmptyObject(json)) { // JSON is not empty
             initResumeData(json[0]);
             initResumeProfileTypeData(json[0].profile);
-            initResumeExperiencesData(json[0].experience);
-            initResumeSkillsData(json[0].skills);
-            initResumeAchievementsData(json[0].achievements);
+            initResumeExperienceTypeData(json[0].experience);
+            initResumeSkillsTypeData(json[0].skills);
+            initResumeAchievementsTypeData(json[0].achievements);
             initResumeContactTypeData(json[0].contact);
 
             initializeFullPage();
@@ -38,7 +38,7 @@ function loadResumeInit(json, json2, situation) {
 
             checkResumeExperiencesChanges(situation);
             checkResumeSkillsChanges(situation);
-            
+
             checkResumeEducationsChanges(situation);
             checkResumeQualificationsChanges(situation);
             checkResumeAwardsChanges(situation);
@@ -74,7 +74,9 @@ function loadResumeInit(json, json2, situation) {
                 <section id="achievements">\
                     <div class="container">\
                         <h1>Achievements</h1>\
-                        <form class="form-horizontal"></form>\
+                        <form id="educations" class="form-horizontal"></form>\
+                        <form id="qualifications" class="form-horizontal"></form>\
+                        <form id="awards" class="form-horizontal"></form>\
                     </div>\
                 </section>\
                 <section id="contact">\
@@ -190,10 +192,10 @@ function loadResumeInit(json, json2, situation) {
         $('#profile .form-horizontal').append(userResumeProfileHTML);
         $('#experience .container').append(newButtonHTML);
         $('#skills .container').append(newButtonHTML);
+        $('#educations').append(newButtonHTML);
+        // $('#qualifications').append(newButtonHTML);
+        // $('#awards').append(newButtonHTML);
         $('#contact .form-horizontal').append(userResumeContactHTML);
-        
-        initSummernote('#summernote-summary');
-        initSummernote('#summernote-biography');
 
         $('#navbar-top-layer-2 .back').attr('link', '/user/resumes');
         $('#navbar-top-layer-2 .preview').attr('link', '/resume/' + globalResumeID);
@@ -206,6 +208,9 @@ function loadResumeInit(json, json2, situation) {
     }
     
     function initResumeProfileTypeData(json) {
+        initSummernote('#summernote-summary');
+        initSummernote('#summernote-biography');
+
         // set resume profile
         $('#inputHeadline').val(json.headline);
         $('#inputSubtitle').val(json.subtitle);
@@ -224,7 +229,7 @@ function loadResumeInit(json, json2, situation) {
         $('#profile .form-horizontal').data('JSONData', resumeProfileJSON);
     }
     
-    function initResumeExperiencesData(json) {
+    function initResumeExperienceTypeData(json) {
         var $this = $('#experience .form-horizontal');
         var experiencesArray = [];
         
@@ -317,7 +322,7 @@ function loadResumeInit(json, json2, situation) {
         $this.data('JSONData', resumeExperienceJSON);
     }
 
-    function initResumeSkillsData(json) {
+    function initResumeSkillsTypeData(json) {
         var $this = $('#skills .form-horizontal');
         var skillsArray = [];
         
@@ -400,8 +405,10 @@ function loadResumeInit(json, json2, situation) {
         $this.data('JSONData', resumeSkillsJSON);
     }
 
-    function initResumeAchievementsData(json) {
-        // **** EDIT ****
+    function initResumeAchievementsTypeData(json) {
+        initResumeEducationsData(json.educations);
+        initResumeQualificationsData(json.qualifications);
+        initResumeAwardsData(json.awards);
     }
 
     function initResumeContactTypeData(json) {
@@ -445,6 +452,134 @@ function loadResumeInit(json, json2, situation) {
 
         var resumeContactJSON = JSON.stringify(resumeContact);
         $this.data('JSONData', resumeContactJSON);
+    }
+
+    function initResumeEducationsData(json) {
+        var $educations = $('#educations');
+        var educationsArray = [];
+
+        if (json != null && json.length > 0) { // not undefined or empty
+            $.each(json, function(i, education) {
+                var userResumeEducationHTML = '\
+                    <div id="education-group' + (i + 1) + '" class="group education-group">\
+                        <div class="button-group">\
+                            <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationSchool' + (i + 1) + '" class="col-sm-3 control-label">School</label>\
+                            <div class="col-sm-9">\
+                                <input type="education-school" class="form-control" id="inputEducationSchool' + (i + 1) + '" placeholder="School">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationStartDate' + (i + 1) + '" class="col-sm-3 control-label">Start Date</label>\
+                            <div class="col-sm-3">\
+                                <select class="form-control" id="inputEducationStartMonth' + (i + 1) + '">\
+                                    <option>January</option>\
+                                    <option>February</option>\
+                                    <option>March</option>\
+                                    <option>April</option>\
+                                    <option>May</option>\
+                                    <option>June</option>\
+                                    <option>July</option>\
+                                    <option>August</option>\
+                                    <option>September</option>\
+                                    <option>October</option>\
+                                    <option>November</option>\
+                                    <option>December</option>\
+                                </select>\
+                            </div>\
+                            <div class="col-sm-3">\
+                                <input type="start-year" class="form-control" id="inputStartYear' + (i + 1) + '" placeholder="Start Year">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationEndDate' + (i + 1) + '" class="col-sm-3 control-label">End Date</label>\
+                            <div class="col-sm-3">\
+                                <select class="form-control" id="inputEducationEndMonth' + (i + 1) + '">\
+                                    <option>January</option>\
+                                    <option>February</option>\
+                                    <option>March</option>\
+                                    <option>April</option>\
+                                    <option>May</option>\
+                                    <option>June</option>\
+                                    <option>July</option>\
+                                    <option>August</option>\
+                                    <option>September</option>\
+                                    <option>October</option>\
+                                    <option>November</option>\
+                                    <option>December</option>\
+                                </select>\
+                            </div>\
+                            <div class="col-sm-3">\
+                                <input type="end-year" class="form-control" id="inputEndYear' + (i + 1) + '" placeholder="End Year">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationMajor' + (i + 1) + '" class="col-sm-3 control-label">Major</label>\
+                            <div class="col-sm-9">\
+                                <input type="education-major" class="form-control" id="inputEducationMajor' + (i + 1) + '" placeholder="Major">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationMinor' + (i + 1) + '" class="col-sm-3 control-label">Minor</label>\
+                            <div class="col-sm-9">\
+                                <input type="education-minor" class="form-control" id="inputEducationMinor' + (i + 1) + '" placeholder="Minor">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationSpecialist' + (i + 1) + '" class="col-sm-3 control-label">Specialist</label>\
+                            <div class="col-sm-9">\
+                                <input type="education-specialist" class="form-control" id="inputEducationSpecialist' + (i + 1) + '" placeholder="Specialist">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputEducationNotes' + (i + 1) + '" class="col-sm-3 control-label">Notes</label>\
+                            <div class="col-sm-9">\
+                                <div id="summernote-education-notes' + (i + 1) + '" class="summernote"></div>\
+                            </div>\
+                        </div>\
+                    </div>';
+
+                $educations.append(userResumeEducationHTML);
+
+                initSummernote('#summernote-responsibilities' + (i + 1));
+
+                // set resume education
+                $('#inputEducationSchool' + (i + 1)).val(education.school);
+                $('#education-group' + (i + 1)).attr('order', education.order);
+
+                // get resume education JSON
+                var resumeEducation = {
+                    school: education.school,
+                    order: education.order
+                };
+
+                educationsArray.push(resumeEducation);
+            });
+        }
+        else {
+            addEducationGroup();
+
+            // get resume education JSON
+            var resumeEducation = {
+                school: '',
+                order: 0
+            };
+
+            educationsArray.push(resumeEducation);
+        }
+        
+        var resumeEducationsJSON = JSON.stringify(educationsArray);
+        $educations.data('JSONData', resumeEducationsJSON);
+    }
+
+    function initResumeQualificationsData(json) {
+
+    }
+
+    function initResumeAwardsData(json) {
+
     }
     
     
@@ -536,7 +671,94 @@ function loadResumeInit(json, json2, situation) {
     }
 
     function addEducationGroup() {
-        // **** EDIT ****
+        var i = $('.education-group').length;
+        
+        var userResumeEducationHTML = '\
+            <div id="education-group' + (i + 1) + '" class="group education-group">\
+                <div class="button-group">\
+                    <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationSchool' + (i + 1) + '" class="col-sm-3 control-label">School</label>\
+                    <div class="col-sm-9">\
+                        <input type="education-school" class="form-control" id="inputEducationSchool' + (i + 1) + '" placeholder="School">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationStartDate' + (i + 1) + '" class="col-sm-3 control-label">Start Date</label>\
+                    <div class="col-sm-3">\
+                        <select class="form-control" id="inputEducationStartMonth' + (i + 1) + '">\
+                            <option>January</option>\
+                            <option>February</option>\
+                            <option>March</option>\
+                            <option>April</option>\
+                            <option>May</option>\
+                            <option>June</option>\
+                            <option>July</option>\
+                            <option>August</option>\
+                            <option>September</option>\
+                            <option>October</option>\
+                            <option>November</option>\
+                            <option>December</option>\
+                        </select>\
+                    </div>\
+                    <div class="col-sm-3">\
+                        <input type="start-year" class="form-control" id="inputStartYear' + (i + 1) + '" placeholder="Start Year">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationEndDate' + (i + 1) + '" class="col-sm-3 control-label">End Date</label>\
+                    <div class="col-sm-3">\
+                        <select class="form-control" id="inputEducationEndMonth' + (i + 1) + '">\
+                            <option>January</option>\
+                            <option>February</option>\
+                            <option>March</option>\
+                            <option>April</option>\
+                            <option>May</option>\
+                            <option>June</option>\
+                            <option>July</option>\
+                            <option>August</option>\
+                            <option>September</option>\
+                            <option>October</option>\
+                            <option>November</option>\
+                            <option>December</option>\
+                        </select>\
+                    </div>\
+                    <div class="col-sm-3">\
+                        <input type="end-year" class="form-control" id="inputEndYear' + (i + 1) + '" placeholder="End Year">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationMajor' + (i + 1) + '" class="col-sm-3 control-label">Major</label>\
+                    <div class="col-sm-9">\
+                        <input type="education-major" class="form-control" id="inputEducationMajor' + (i + 1) + '" placeholder="Major">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationMinor' + (i + 1) + '" class="col-sm-3 control-label">Minor</label>\
+                    <div class="col-sm-9">\
+                        <input type="education-minor" class="form-control" id="inputEducationMinor' + (i + 1) + '" placeholder="Minor">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationSpecialist' + (i + 1) + '" class="col-sm-3 control-label">Specialist</label>\
+                    <div class="col-sm-9">\
+                        <input type="education-specialist" class="form-control" id="inputEducationSpecialist' + (i + 1) + '" placeholder="Specialist">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputEducationNotes' + (i + 1) + '" class="col-sm-3 control-label">Notes</label>\
+                    <div class="col-sm-9">\
+                        <div id="summernote-education-notes' + (i + 1) + '" class="summernote"></div>\
+                    </div>\
+                </div>\
+            </div>';
+
+        $('#educations').append(userResumeEducationHTML);
+        $('.education-group').last().attr('order', i);
+
+        initSummernote('#summernote-education-notes' + (i + 1));
+        $('#summernote-education-notes' + (i + 1)).summernote('code', '<ul><li><br></li></ul>');
     }
 
     function addQualificationGroup() {
@@ -583,6 +805,22 @@ function loadResumeInit(json, json2, situation) {
             $form.find('.group').first().addClass('first'); // set order of classes
             $form.find('.group').last().addClass('last');
         });
+
+        $('#fullpage').on('click', 'button.delete', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this).closest('.group');
+            $this.fadeOut(500, function() {
+                $this.remove();
+                $.fn.fullpage.reBuild();
+                $('.group').last().addClass('last');
+            });
+        });
+        
+        // http://summernote.org/deep-dive/#onchange
+        $('#fullpage').on('summernote.change', function() {
+            $.fn.fullpage.reBuild();
+        });
         
         $('#experience').on('click', 'button.new', function() {
             $('.experience-group').last().removeClass('last');
@@ -590,22 +828,6 @@ function loadResumeInit(json, json2, situation) {
             addExperienceGroup();
             $.fn.fullpage.reBuild();
             $('.experience-group').last().addClass('last');
-        });
-        
-        $('#experience').on('click', 'button.delete', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this).closest('.experience-group');
-            $this.fadeOut(500, function() {
-                $this.remove();
-                $.fn.fullpage.reBuild();
-                $('.experience-group').last().addClass('last');
-            });
-        });
-        
-        // http://summernote.org/deep-dive/#onchange
-        $('#experience').on('summernote.change', function() {
-            $.fn.fullpage.reBuild();
         });
 
         $('#skills').on('click', 'button.new', function() {
@@ -616,15 +838,12 @@ function loadResumeInit(json, json2, situation) {
             $('.skill-group').last().addClass('last');
         });
 
-        $('#skills').on('click', 'button.delete', function(e) {
-            e.stopPropagation();
+        $('#educations').on('click', 'button.new', function() {
+            $('.education-group').last().removeClass('last');
 
-            var $this = $(this).closest('.skill-group');
-            $this.fadeOut(500, function() {
-                $this.remove();
-                $.fn.fullpage.reBuild();
-                $('.skill-group').last().addClass('last');
-            });
+            addEducationGroup();
+            $.fn.fullpage.reBuild();
+            $('.education-group').last().addClass('last');
         });
     }
 
