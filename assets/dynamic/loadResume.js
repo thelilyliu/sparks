@@ -466,7 +466,7 @@ function loadResumeInit(json, json2, situation) {
                         <div class="form-group">\
                             <label for="inputEducationStartDate' + (i + 1) + '" class="col-sm-3 control-label">Start Date</label>\
                             <div class="col-sm-3">\
-                                <select class="form-control" id="inputEducationStartMonth' + (i + 1) + '">\
+                                <select class="form-control selectpicker" id="inputEducationStartMonth' + (i + 1) + '">\
                                     <option>January</option>\
                                     <option>February</option>\
                                     <option>March</option>\
@@ -482,16 +482,16 @@ function loadResumeInit(json, json2, situation) {
                                 </select>\
                             </div>\
                             <div class="col-sm-3">\
-                                <input type="start-year" class="form-control" id="inputStartYear' + (i + 1) + '" placeholder="Start Year">\
+                                <input type="start-year" class="form-control" id="inputEducationStartYear' + (i + 1) + '" placeholder="Start Year">\
                             </div>\
                         </div>\
                         <div class="form-group">\
                             <label for="inputEducationEndDate' + (i + 1) + '" class="col-sm-3 control-label">End Date</label>\
                             <div class="col-sm-3">\
-                                <select class="form-control" id="inputEducationEndMonth' + (i + 1) + '">\
-                                    <option>January</option>\
-                                    <option>February</option>\
-                                    <option>March</option>\
+                                <select class="form-control selectpicker" id="inputEducationEndMonth' + (i + 1) + '">\
+                                    <option value="January">January</option>\
+                                    <option value="February">February</option>\
+                                    <option value="March">March</option>\
                                     <option>April</option>\
                                     <option>May</option>\
                                     <option>June</option>\
@@ -504,7 +504,7 @@ function loadResumeInit(json, json2, situation) {
                                 </select>\
                             </div>\
                             <div class="col-sm-3">\
-                                <input type="end-year" class="form-control" id="inputEndYear' + (i + 1) + '" placeholder="End Year">\
+                                <input type="end-year" class="form-control" id="inputEducationEndYear' + (i + 1) + '" placeholder="End Year">\
                             </div>\
                         </div>\
                         <div class="form-group">\
@@ -535,19 +535,21 @@ function loadResumeInit(json, json2, situation) {
 
                 $educations.append(userResumeEducationHTML);
 
-                initSummernote('#summernote-responsibilities' + (i + 1));
+                initSummernote('#summernote-education-notes' + (i + 1));
 
                 // set resume education
                 $('#inputEducationSchool' + (i + 1)).val(education.school);
-                $('#inputEducationStartMonth' + (i + 1)).val(education.startMonth); // **** EDIT ****
+                $('#inputEducationStartMonth' + (i + 1)).val(education.startMonth);
                 $('#inputEducationStartYear' + (i + 1)).val(education.startYear);
-                $('#inputEducationEndMonth' + (i + 1)).val(education.endMonth); // **** EDIT ****
+                $('#inputEducationEndMonth' + (i + 1)).val(education.endMonth);                
                 $('#inputEducationEndYear' + (i + 1)).val(education.endYear);
                 $('#inputEducationMajor' + (i + 1)).val(education.major);
                 $('#inputEducationMinor' + (i + 1)).val(education.minor);
                 $('#inputEducationSpecialist' + (i + 1)).val(education.specialist);
                 $('#summernote-education-notes' + (i + 1)).summernote('code', education.notes);
                 $('#education-group' + (i + 1)).attr('order', education.order);
+
+                $('.selectpicker').selectpicker('refresh');
 
                 // get resume education JSON
                 var resumeEducation = {
@@ -702,7 +704,7 @@ function loadResumeInit(json, json2, situation) {
                 $('#award-group' + (i + 1)).attr('order', award.order);
 
                 // get resume award JSON
-                var resumeAward = { // **** EDIT ****
+                var resumeAward = {
                     name: award.name,
                     date: award.date,
                     notes: award.notes,
@@ -851,7 +853,7 @@ function loadResumeInit(json, json2, situation) {
                         </select>\
                     </div>\
                     <div class="col-sm-3">\
-                        <input type="start-year" class="form-control" id="inputStartYear' + (i + 1) + '" placeholder="Start Year">\
+                        <input type="start-year" class="form-control" id="inputEducationStartYear' + (i + 1) + '" placeholder="Start Year">\
                     </div>\
                 </div>\
                 <div class="form-group">\
@@ -873,7 +875,7 @@ function loadResumeInit(json, json2, situation) {
                         </select>\
                     </div>\
                     <div class="col-sm-3">\
-                        <input type="end-year" class="form-control" id="inputEndYear' + (i + 1) + '" placeholder="End Year">\
+                        <input type="end-year" class="form-control" id="inputEducationEndYear' + (i + 1) + '" placeholder="End Year">\
                     </div>\
                 </div>\
                 <div class="form-group">\
@@ -907,6 +909,7 @@ function loadResumeInit(json, json2, situation) {
 
         initSummernote('#summernote-education-notes' + (i + 1));
         $('#summernote-education-notes' + (i + 1)).summernote('code', '<ul><li><br></li></ul>');
+        $('.selectpicker').selectpicker('refresh');
     }
 
     function addQualificationGroup() {
@@ -1162,20 +1165,77 @@ function loadResumeInit(json, json2, situation) {
 
     function checkResumeAchievementsTypeChanges(situation) {
         checkResumeEducationsChanges(situation);
-        checkResumeQualificationsChanges(situation);
-        checkResumeAwardsChanges(situation);
+        // checkResumeQualificationsChanges(situation);
+        // checkResumeAwardsChanges(situation);
     }
 
     function checkResumeEducationsChanges(situation) {
-        // **** EDIT ****
+        var $this = $('#educations .education-group');
+        var educationsArray = [];
+        
+        $.each($this, function(i, education) {
+            var data = {
+                school: $('#inputEducationSchool' + (i + 1)).val(),
+                startMonth: $('#inputEducationStartMonth' + (i + 1)).find('option:selected').text(),
+                startYear: $('#inputEducationStartYear' + (i + 1)).val(),
+                endMonth: $('#inputEducationEndMonth' + (i + 1)).find('option:selected').text(),
+                endYear: $('#inputEducationEndYear' + (i + 1)).val(),
+                major: $('#inputEducationMajor' + (i + 1)).val(),
+                minor: $('#inputEducationMinor' + (i + 1)).val(),
+                specialist: $('#inputEducationSpecialist' + (i + 1)).val(),
+                notes: $('#summernote-education-notes' + (i + 1)).summernote('code'),
+                order: parseInt($('#education-group' + (i + 1)).attr('order'))
+            };
+            
+            educationsArray.push(data);
+        });
+
+        var newJSONData = JSON.stringify(educationsArray);
+        var oldJSONData = $('#educations').data('JSONData');
+
+        updateResume(11, newJSONData, oldJSONData, situation);
     }
 
     function checkResumeQualificationsChanges(situation) {
-        // **** EDIT ****
+        var $this = $('#qualifications .qualification-group');
+        var qualificationsArray = [];
+        
+        $.each($this, function(i, qualification) {
+            var data = {
+                name: $('#inputQualificationName' + (i + 1)).val(),
+                date: $('#inputQualificationDate' + (i + 1)).val(),
+                notes: $('#summernote-qualification-notes' + (i + 1)).summernote('code'),
+                order: parseInt($('#qualification-group' + (i + 1)).attr('order'))
+            };
+            
+            qualificationsArray.push(data);
+        });
+
+        var newJSONData = JSON.stringify(qualificationsArray);
+        var oldJSONData = $('#qualifications').data('JSONData');
+
+        updateResume(12, newJSONData, oldJSONData, situation);
     }
 
     function checkResumeAwardsChanges(situation) {
-        // **** EDIT ****
+        var $this = $('#awards .award-group');
+        var awardsArray = [];
+        
+        $.each($this, function(i, award) {
+            var data = {
+                name: $('#inputAwardName' + (i + 1)).val(),
+                date: $('#inputAwardDate' + (i + 1)).val(),
+                notes: $('#summernote-award-notes' + (i + 1)).summernote('code'),
+                order: parseInt($('#award-group' + (i + 1)).attr('order'))
+            };
+            
+            awardsArray.push(data);
+        });
+
+        var newJSONData = JSON.stringify(awardsArray);
+        var oldJSONData = $('#awards').data('JSONData');
+
+        updateResume(13, newJSONData, oldJSONData, situation);
     }
 
 
@@ -1320,15 +1380,63 @@ function loadResumeInit(json, json2, situation) {
             case 10: // portfolios
                 break;
             case 11: // educations
-                console.log('11: educations');
+                var educationsArray = [];
+                
+                $.each(json.achievements.educations, function(i, education) {
+                    var data = {
+                        school: education.school,
+                        startMonth: education.startMonth,
+                        startYear: education.startYear,
+                        endMonth: education.endMonth,
+                        endYear: education.endYear,
+                        major: education.major,
+                        minor: education.minor,
+                        specialist: education.specialist,
+                        notes: education.notes,
+                        order: education.order
+                    };
 
+                    educationsArray.push(data);
+                });
+
+                var JSONData = JSON.stringify(educationsArray);
+                $('#educations').data('JSONData', JSONData);
+                
                 break;
             case 12: // qualifications
-                console.log('12: qualifications');
+                var qualificationsArray = [];
+                
+                $.each(json.achievements.qualifications, function(i, qualification) {
+                    var data = {
+                        name: qualification.name,
+                        date: qualification.date,
+                        notes: qualification.notes,
+                        order: qualification.order
+                    };
+
+                    qualificationsArray.push(data);
+                });
+
+                var JSONData = JSON.stringify(qualificationsArray);
+                $('#qualifications').data('JSONData', JSONData);
 
                 break;
             case 13: // awards
-                console.log('13: awards');
+                var awardsArray = [];
+                
+                $.each(json.achievements.awards, function(i, award) {
+                    var data = {
+                        name: award.name,
+                        date: award.date,
+                        notes: award.notes,
+                        order: award.order
+                    };
+
+                    awardsArray.push(data);
+                });
+
+                var JSONData = JSON.stringify(awardsArray);
+                $('#awards').data('JSONData', JSONData);
 
                 break;
             default:

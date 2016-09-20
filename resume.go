@@ -88,9 +88,9 @@ type Skill struct {
 type Education struct {
 	School     string `json:"school"`
 	StartMonth string `json:"startMonth"`
-	StartYear  int    `json:"startYear"`
+	StartYear  string `json:"startYear"`
 	EndMonth   string `json:"endMonth"`
-	EndYear    int    `json:"endYear"`
+	EndYear    string `json:"endYear"`
 	Major      string `json:"major"`
 	Minor      string `json:"minor"`
 	Specialist string `json:"specialist"`
