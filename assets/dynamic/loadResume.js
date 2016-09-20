@@ -193,7 +193,7 @@ function loadResumeInit(json, json2, situation) {
         $('#experience .container').append(newButtonHTML);
         $('#skills .container').append(newButtonHTML);
         $('#educations').append(newButtonHTML);
-        // $('#qualifications').append(newButtonHTML);
+        $('#qualifications').append(newButtonHTML);
         // $('#awards').append(newButtonHTML);
         $('#contact .form-horizontal').append(userResumeContactHTML);
 
@@ -547,11 +547,27 @@ function loadResumeInit(json, json2, situation) {
 
                 // set resume education
                 $('#inputEducationSchool' + (i + 1)).val(education.school);
+                $('#inputEducationStartMonth' + (i + 1)).val(education.startMonth); // **** EDIT ****
+                $('#inputEducationStartYear' + (i + 1)).val(education.startYear);
+                $('#inputEducationEndMonth' + (i + 1)).val(education.endMonth); // **** EDIT ****
+                $('#inputEducationEndYear' + (i + 1)).val(education.endYear);
+                $('#inputEducationMajor' + (i + 1)).val(education.major);
+                $('#inputEducationMinor' + (i + 1)).val(education.minor);
+                $('#inputEducationSpecialist' + (i + 1)).val(education.specialist);
+                $('#summernote-education-notes' + (i + 1)).summernote('code', education.notes);
                 $('#education-group' + (i + 1)).attr('order', education.order);
 
                 // get resume education JSON
                 var resumeEducation = {
                     school: education.school,
+                    startMonth: education.startMonth,
+                    startYear: education.startYear,
+                    endMonth: education.endMonth,
+                    endYear: education.endYear,
+                    major: education.major,
+                    minor: education.minor,
+                    specialist: education.specialist,
+                    notes: education.notes,
                     order: education.order
                 };
 
@@ -564,6 +580,14 @@ function loadResumeInit(json, json2, situation) {
             // get resume education JSON
             var resumeEducation = {
                 school: '',
+                startMonth: 'January',
+                startYear: '',
+                endMonth: 'January',
+                endYear: '',
+                major: '',
+                minor: '',
+                specialist: '',
+                notes: '<ul><li><br></li></ul>',
                 order: 0
             };
 
@@ -575,7 +599,71 @@ function loadResumeInit(json, json2, situation) {
     }
 
     function initResumeQualificationsData(json) {
+        var $qualifications = $('#qualifications');
+        var qualificationsArray = [];
 
+        if (json != null && json.length > 0) { // not undefined or empty
+            $.each(json, function(i, qualification) {
+                var userResumeQualificationHTML = '\
+                    <div id="qualification-group' + (i + 1) + '" class="group qualification-group">\
+                        <div class="button-group">\
+                            <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputQualificationName' + (i + 1) + '" class="col-sm-3 control-label">Qualification</label>\
+                            <div class="col-sm-9">\
+                                <input type="qualification-name" class="form-control" id="inputQualificationName' + (i + 1) + '" placeholder="Qualification">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputQualificationDate' + (i + 1) + '" class="col-sm-3 control-label">Date</label>\
+                            <div class="col-sm-9">\
+                                <input type="qualification-date" class="form-control" id="inputQualificationDate' + (i + 1) + '" placeholder="Date">\
+                            </div>\
+                        </div>\
+                        <div class="form-group">\
+                            <label for="inputQualificationNotes' + (i + 1) + '" class="col-sm-3 control-label">Notes</label>\
+                            <div class="col-sm-9">\
+                                <div id="summernote-qualification-notes' + (i + 1) + '" class="summernote"></div>\
+                            </div>\
+                        </div>\
+                    </div>';
+
+                $qualifications.append(userResumeQualificationHTML);
+
+                initSummernote('#summernote-qualification-notes' + (i + 1));
+
+                // set resume qualification
+                $('#inputQualificationName' + (i + 1)).val(qualification.name);
+                $('#inputQualificationDate' + (i + 1)).val(qualification.date);
+                $('summernote-qualification-notes' + (i + 1)).summernote('code', qualification.notes);
+                $('#qualification-group' + (i + 1)).attr('order', qualification.order);
+
+                // get resume qualification JSON
+                var resumeQualification = {
+                    school: education.school,
+                    order: education.order
+                };
+
+                qualificationsArray.push(resumeQualification);
+            });
+        }
+        else {
+            addQualificationGroup();
+
+            // get resume qualification JSON
+            var resumeQualification = {
+                name: '',
+                date: '',
+                notes: '<ul><li><br></li></ul>',
+                order: 0
+            };
+
+            qualificationsArray.push(resumeQualification);
+        }
+        
+        var resumeQualificationsJSON = JSON.stringify(qualificationsArray);
+        $qualifications.data('JSONData', resumeQualificationsJSON);
     }
 
     function initResumeAwardsData(json) {
@@ -762,7 +850,38 @@ function loadResumeInit(json, json2, situation) {
     }
 
     function addQualificationGroup() {
-        // **** EDIT ****
+        var i = $('.qualification-group').length;
+        
+        var userResumeQualificationHTML = '\
+            <div id="qualification-group' + (i + 1) + '" class="group qualification-group">\
+                <div class="button-group">\
+                    <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputQualificationName' + (i + 1) + '" class="col-sm-3 control-label">Qualification</label>\
+                    <div class="col-sm-9">\
+                        <input type="qualification-name" class="form-control" id="inputQualificationName' + (i + 1) + '" placeholder="Qualification">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputQualificationDate' + (i + 1) + '" class="col-sm-3 control-label">Date</label>\
+                    <div class="col-sm-9">\
+                        <input type="qualification-date" class="form-control" id="inputQualificationDate' + (i + 1) + '" placeholder="Date">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputQualificationNotes' + (i + 1) + '" class="col-sm-3 control-label">Notes</label>\
+                    <div class="col-sm-9">\
+                        <div id="summernote-qualification-notes' + (i + 1) + '" class="summernote"></div>\
+                    </div>\
+                </div>\
+            </div>';
+
+        $('#qualifications').append(userResumeQualificationHTML);
+        $('.qualification-group').last().attr('order', i);
+
+        initSummernote('#summernote-qualification-notes' + (i + 1));
+        $('#summernote-qualification-notes' + (i + 1)).summernote('code', '<ul><li><br></li></ul>');
     }
 
     function addAwardGroup() {
@@ -845,6 +964,23 @@ function loadResumeInit(json, json2, situation) {
             $.fn.fullpage.reBuild();
             $('.education-group').last().addClass('last');
         });
+
+        $('#qualifications').on('click', 'button.new', function() {
+            $('.qualification-group').last().removeClass('last');
+
+            addQualificationGroup();
+            $.fn.fullpage.reBuild();
+            $('.qualification-group').last().addClass('last');
+        });
+
+        $('#awards').on('click', 'button.new', function() {
+            $('.award-group').last().removeClass('last');
+
+            addAwardGroup();
+            $.fn.fullpage.reBuild();
+            $('.award-group').last().addClass('last');
+        });
+
     }
 
 

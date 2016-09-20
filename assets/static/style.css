@@ -828,6 +828,9 @@ section {
 #achievements {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/04.jpg");
 }
+    #achievements .form-horizontal {
+        position: relative;
+    }
     #achievements .card {
         position: relative;
         background-color: rgba(138, 219, 255, .9);
