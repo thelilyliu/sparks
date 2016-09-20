@@ -638,7 +638,7 @@ function loadResumeInit(json, json2, situation) {
                     name: qualification.name,
                     date: qualification.date,
                     notes: qualification.notes,
-                    order: education.order
+                    order: qualification.order
                 };
 
                 qualificationsArray.push(resumeQualification);
@@ -1165,8 +1165,8 @@ function loadResumeInit(json, json2, situation) {
 
     function checkResumeAchievementsTypeChanges(situation) {
         checkResumeEducationsChanges(situation);
-        // checkResumeQualificationsChanges(situation);
-        // checkResumeAwardsChanges(situation);
+        checkResumeQualificationsChanges(situation);
+        checkResumeAwardsChanges(situation);
     }
 
     function checkResumeEducationsChanges(situation) {
