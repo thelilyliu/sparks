@@ -66,9 +66,21 @@ function loadResumeInit(json, json2, situation) {
                 <section id="achievements">\
                     <div class="container">\
                         <h1>Achievements</h1>\
-                        <form id="educations" class="form-horizontal"></form>\
-                        <form id="qualifications" class="form-horizontal"></form>\
-                        <form id="awards" class="form-horizontal"></form>\
+                        <form id="educations" class="form-horizontal">\
+                            <div class="subtitle">\
+                                <h2>Education</h2>\
+                            </div>\
+                        </form>\
+                        <form id="qualifications" class="form-horizontal">\
+                            <div class="subtitle">\
+                                <h2>Qualifications</h2>\
+                            </div>\
+                        </form>\
+                        <form id="awards" class="form-horizontal">\
+                            <div class="subtitle">\
+                                <h2>Awards</h2>\
+                            </div>\
+                        </form>\
                     </div>\
                 </section>\
                 <section id="contact">\
@@ -184,9 +196,9 @@ function loadResumeInit(json, json2, situation) {
         $('#profile .form-horizontal').append(userResumeProfileHTML);
         $('#experience .container').append(newButtonHTML);
         $('#skills .container').append(newButtonHTML);
-        $('#educations').append(newButtonHTML);
-        $('#qualifications').append(newButtonHTML);
-        $('#awards').append(newButtonHTML);
+        $('#educations .subtitle').append(newButtonHTML);
+        $('#qualifications .subtitle').append(newButtonHTML);
+        $('#awards .subtitle').append(newButtonHTML);
         $('#contact .form-horizontal').append(userResumeContactHTML);
 
         $('#navbar-top-layer-2 .back').attr('link', '/user/resumes');

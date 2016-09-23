@@ -293,6 +293,8 @@ func updateRSkills(resumeID, userID string, skills *[]Skill) error {
 
 func updateRPortfolios() {
 
+	// **** EDIT ****
+
 }
 
 func updateREducations(resumeID, userID string, educations *[]Education) error {

@@ -829,8 +829,27 @@ section {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/04.jpg");
 }
     #achievements .form-horizontal {
+        margin-bottom: 60px;
+    }
+    #achievements .subtitle {
         position: relative;
     }
+        #achievements .subtitle h2 {
+            padding-bottom: 4px;
+            border-bottom: 2px #fff solid;
+            margin-bottom: 20px;
+        }
+        #achievements .subtitle button.new {
+            position: absolute;
+            background-color: transparent;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            font-size: 30px;
+            box-shadow: none;
+            right: 0;
+            bottom: 10px;
+        }
     #achievements .card {
         position: relative;
         background-color: rgba(138, 219, 255, .9);
