@@ -1103,31 +1103,6 @@ function loadResumeInit(json, json2, situation) {
         updateResume(2, newJSONData, oldJSONData, situation);
     }
 
-    function checkResumeContactTypeChanges(situation) {
-        var data = {
-            firstName: $('#inputFirstName').text(),
-            lastName: $('#inputLastName').text(),
-            biography: $('#summernote-biography').summernote('code'),
-            homePhone: $('#inputHomePhone').val(),
-            mobilePhone: $('#inputMobilePhone').val(),
-            workPhone: $('#inputWorkPhone').val(),
-            // extension
-            location: $('#inputLocation').val(),
-            email: $('#inputEmail').val(),
-            website: $('#inputWebsite').val()
-            // facebook
-            // twitter
-            // linkedIn
-            // profilePic
-            // background
-        };
-
-        var newJSONData = JSON.stringify(data);
-        var oldJSONData = $('#contact .form-horizontal').data('JSONData');
-
-        updateResume(7, newJSONData, oldJSONData, situation);
-    }
-
     function checkResumeExperienceTypeChanges(situation) {
         var $this = $('#experience .experience-group');
         var experiencesArray = [];
@@ -1179,6 +1154,31 @@ function loadResumeInit(json, json2, situation) {
         checkResumeEducationsChanges(situation);
         checkResumeQualificationsChanges(situation);
         checkResumeAwardsChanges(situation);
+    }
+
+    function checkResumeContactTypeChanges(situation) {
+        var data = {
+            firstName: $('#inputFirstName').text(),
+            lastName: $('#inputLastName').text(),
+            biography: $('#summernote-biography').summernote('code'),
+            homePhone: $('#inputHomePhone').val(),
+            mobilePhone: $('#inputMobilePhone').val(),
+            workPhone: $('#inputWorkPhone').val(),
+            // extension
+            location: $('#inputLocation').val(),
+            email: $('#inputEmail').val(),
+            website: $('#inputWebsite').val()
+            // facebook
+            // twitter
+            // linkedIn
+            // profilePic
+            // background
+        };
+
+        var newJSONData = JSON.stringify(data);
+        var oldJSONData = $('#contact .form-horizontal').data('JSONData');
+
+        updateResume(7, newJSONData, oldJSONData, situation);
     }
 
     function checkResumeEducationsChanges(situation) {

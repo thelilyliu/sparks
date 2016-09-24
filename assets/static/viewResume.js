@@ -95,7 +95,9 @@ function viewResumeInit() {
     }
 
     function initResumeAchievementsData(json) {
-        // **** EDIT ****
+        initResumeEducations(json.educations);
+        initResumeQualifications(json.qualifications);
+        initResumeAwards(json.awards);
     }
 
     function initResumeContactData(json) {
@@ -142,6 +144,88 @@ function viewResumeInit() {
             */
         
         $('#contact .container').append(resumeContactHTML);
+    }
+
+    function initResumeEducations(json) {
+        // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
+        json.sort(function(a, b) {
+            return a.order - b.order;
+        });
+
+        var $this = $('#educations');
+
+        $.each(json, function(i, education) {
+            var resumeEducationHTML = '\
+                <div class="card-wrapper">\
+                    <div class="card">\
+                        <div class="card-header">\
+                            <h3 class="school">' + education.school + '</h3>\
+                            <div class="start-date">\
+                                <span class="month">' + education.startMonth + '</span>\
+                                <span class="year">' + education.startYear + '</span>\
+                            </div>\
+                            <div class="end-date">\
+                                <span class="month">' + education.endMonth + '</span>\
+                                <span class="year">' + education.endYear + '</span>\
+                            </div>\
+                            <div class="major">' + education.major + '</div>\
+                            <div class="minor">' + education.minor + '</div>\
+                            <div class="specialist">' + education.specialist + '</div>\
+                            <div class="notes">' + education.notes + '</div>\
+                        </div>\
+                    </div>\
+                </div>';
+
+            $this.append(resumeEducationHTML);
+        });
+    }
+
+    function initResumeQualifications(json) {
+        // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
+        json.sort(function(a, b) {
+            return a.order - b.order;
+        });
+
+        var $this = $('#qualifications');
+
+        $.each(json, function(i, qualification) {
+            var resumeQualificationHTML = '\
+                <div class="card-wrapper">\
+                    <div class="card">\
+                        <div class="card-header">\
+                            <h3 class="name">' + qualification.name + '</h3>\
+                            <div class="date">' + qualification.date + '</div>\
+                            <div class="notes">' + qualification.notes + '</div>\
+                        </div>\
+                    </div>\
+                </div>';
+
+            $this.append(resumeQualificationHTML);
+        });
+    }
+
+    function initResumeAwards(json) {
+        // http://stackoverflow.com/questions/979256/sorting-an-array-of-javascript-objects
+        json.sort(function(a, b) {
+            return a.order - b.order;
+        });
+
+        var $this = $('#awards');
+
+        $.each(json, function(i, award) {
+            var resumeAwardHTML = '\
+                <div class="card-wrapper">\
+                    <div class="card">\
+                        <div class="card-header">\
+                            <h3 class="name">' + award.name + '</h3>\
+                            <div class="date">' + award.date + '</div>\
+                            <div class="notes">' + award.notes + '</div>\
+                        </div>\
+                    </div>\
+                </div>';
+
+            $this.append(resumeAwardHTML);
+        });
     }
     
     function eventHandlerResume() {

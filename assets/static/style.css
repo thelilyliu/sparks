@@ -852,8 +852,12 @@ section {
         }
     #achievements .card {
         position: relative;
+        margin-bottom: 20px;
         background-color: rgba(138, 219, 255, .9);
     }
+        #achievements .card p {
+            margin-bottom: 0;
+        }
 
 /*
   ========================================
