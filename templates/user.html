@@ -48,6 +48,7 @@
                 page('/user/portfolios', loadDashboardPortfolios);
                 page('/user/settings', loadSettings);
                 page('/user/resume/:resumeID', loadResume);
+                page('/user/portfolio/:portfolioID', loadPortfolio);
                 page('*', notFound);
                 page();
             });
@@ -353,7 +354,12 @@
             }
             
             function loadPortfolio(ctx) {
-                // **** EDIT ****
+                globalPortfolioID = ctx.params.portfolioID;
+                initialization('uPortfolio');
+                
+                if (!$('html').hasClass('fp-enabled')) {
+                    loadURL(ctx.pathname, 'loadPortfolio', globalPortfolioID);
+                }
             }
             
             function logoutJSON() {

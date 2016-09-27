@@ -125,7 +125,6 @@ func loadResumeDB(resume *Resume, selector *bson.M) error {
 
 	// retrieve one document with resumeID as selector
 	err := collection.Find(selector).One(resume)
-	logErrorMessage(err)
 
 	return err
 }
@@ -152,7 +151,6 @@ func insertResumeDB(userID string) (string, error) {
 
 	// insert resume
 	err := collection.Insert(resume)
-	logErrorMessage(err)
 
 	return resume.ResumeID, err
 }

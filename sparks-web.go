@@ -104,6 +104,8 @@ func main() {
 	// view
 	router.Get("/user/resume/-1", viewUser)
 	router.Get("/user/resume/:resumeID", viewUser)
+	router.Get("/user/portfolio/-1", viewUser)
+	router.Get("/user/portfolio/:portfolioID", viewUser)
 	router.Get("/user/resumes", viewUser)
 	router.Get("/user/portfolios", viewUser)
 	router.Get("/user/settings", viewUser)
@@ -814,13 +816,109 @@ func deleteResumeJSON(w http.ResponseWriter, r *http.Request) {
 func loadPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 
 	// **** EDIT ****
+	returnCode := 0
 
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		portfolio := new(Portfolio)
+		portfolioID := vestigo.Param(r, "portfolioID")
+		userID := uID.(string)
+
+		if portfolioID != "-1" { // existing portfolio
+			selector := bson.M{"portfolioid": portfolioID, "userid": userID}
+
+			if err = loadPortfolioDB(portfolio, &selector); err != nil {
+				returnCode = 1
+			}
+		} else { // new portfolio
+			portfolio.PortfolioID = "-1"
+			portfolio.Title = "Untitled Portfolio"
+		}
+
+		if returnCode == 0 {
+			if err = json.NewEncoder(w).Encode(portfolio); err != nil {
+				returnCode = 2
+			}
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Portfolio could not be loaded at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
+	}
 }
 
 func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
 
-	// **** EDIT ****
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		categoryInt := 0
+		portfolio := new(Portfolio)
+		portfolio.UserID = uID.(string)
+		user := new(User)
+		user.UserID = uID.(string)
 
+		categoryStr := vestigo.Param(r, "category")
+		/*
+		   1 = settings
+		   2 = profileType
+		   3 = experienceType
+		   4 = skillsType
+		   5 = portfolioType
+		   6 = otherInfoType
+		   7 = contactInfoType
+		*/
+
+		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
+			returnCode = 1
+		}
+
+		if returnCode == 0 {
+			if resume.ResumeID, err = insertPortfolioDB(portfolio.UserID); err != nil { // Step 1
+				returnCode = 2
+			}
+		}
+
+		if returnCode == 0 {
+			if err = insertUPortfolio(portfolio.UserID, portfolio.PortfolioID); err != nil { // Step 2
+				returnCode = 3
+			}
+		}
+
+		if returnCode == 0 {
+			if err = updatePortfolio(categoryInt, portfolio, r); err != nil { // Step 3
+				returnCode = 4
+			}
+		}
+
+		if returnCode == 0 {
+			if err = loadSettingsDB(user); err != nil { // Step 4
+				returnCode = 5
+			}
+		}
+
+		/*
+		   if returnCode == 0 {
+		       if err = updateRContactTypeName(user.UserID, user.FirstName, user.LastName); err != nil { // Step 5
+		           returnCode = 6
+		       }
+		   }
+		*/
+
+		if returnCode == 0 {
+			if err = json.NewEncoder(w).Encode(resume); err != nil {
+				returnCode = 7
+			}
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Portfolio could not be inserted at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
+	}
 }
 
 func updatePortfolioJSON(w http.ResponseWriter, r *http.Request) {
@@ -830,9 +928,35 @@ func updatePortfolioJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func deletePortfolioJSON(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
 
-	// **** EDIT ****
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		userID := uID.(string)
+		portfolioID := vestigo.Param(r, "portfolioID")
 
+		if err := deleteUPortfolio(userID, portfolioID); err != nil { // part 1: delete user portfolio info
+			returnCode = 1
+		}
+
+		if returnCode == 0 {
+			if err := deletePortfolioDB(portfolioID, userID); err != nil { // part 2: delete portfolio
+				returnCode = 2
+			}
+		}
+
+		if returnCode == 0 {
+			if err := json.NewEncoder(w).Encode(""); err != nil {
+				returnCode = 3
+			}
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Portfolio could not be deleted at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
+	}
 }
 
 /*
