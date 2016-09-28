@@ -1004,8 +1004,6 @@ function loadResumeInit(json, json2, situation) {
             window.open($(this).attr('link'), '_blank');
         });
 
-        // $('.sortable').sortable(); // **** So it needs amendment. ****
-
         $('#fullpage').on('click', 'button.move', function() {
             var $this = $(this);
             var $item = $this.closest('.group');

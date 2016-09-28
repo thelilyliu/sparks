@@ -873,9 +873,10 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
 			returnCode = 1
 		}
+		log.Println(categoryInt)
 
 		if returnCode == 0 {
-			if resume.ResumeID, err = insertPortfolioDB(portfolio.UserID); err != nil { // Step 1
+			if portfolio.PortfolioID, err = insertPortfolioDB(portfolio.UserID); err != nil { // Step 1
 				returnCode = 2
 			}
 		}
@@ -886,11 +887,13 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		if returnCode == 0 {
-			if err = updatePortfolio(categoryInt, portfolio, r); err != nil { // Step 3
-				returnCode = 4
+		/*
+			if returnCode == 0 {
+				if err = updatePortfolio(categoryInt, portfolio, r); err != nil { // Step 3
+					returnCode = 4
+				}
 			}
-		}
+		*/
 
 		if returnCode == 0 {
 			if err = loadSettingsDB(user); err != nil { // Step 4
@@ -907,7 +910,7 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		*/
 
 		if returnCode == 0 {
-			if err = json.NewEncoder(w).Encode(resume); err != nil {
+			if err = json.NewEncoder(w).Encode(portfolio); err != nil {
 				returnCode = 7
 			}
 		}

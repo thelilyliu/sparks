@@ -66,19 +66,19 @@ function loadDashboardResumesInit(json, json2, situation) {
                     </div>\
                 </div>';
 
-                setTimeout(function() {
-                    var $resume = $(resumeHTML);
+            setTimeout(function() {
+                var $resume = $(resumeHTML);
 
-                    var $grid = $('.grid').imagesLoaded().done(function() {
-                        $grid.append($resume) // append items to grid
-                            .masonry('appended', $resume) // add and lay out newly appended items
-                            .masonry('layout');
+                var $grid = $('.grid').imagesLoaded().done(function() {
+                    $grid.append($resume) // append items to grid
+                        .masonry('appended', $resume) // add and lay out newly appended items
+                        .masonry('layout');
 
-                        $grid.find('.card').last()
-                            .data('resumeID', resume.resumeID)
-                            .data('link', '/user/resume/' + resume.resumeID + '#section1');
-                    });
-                }, 100);
+                    $grid.find('.card').last()
+                        .data('resumeID', resume.resumeID)
+                        .data('link', '/user/resume/' + resume.resumeID + '#section1');
+                });
+            }, 100);
         });
     }
     
