@@ -6,6 +6,7 @@ function loadPortfolioInit(json, json2, situation) {
             initPortfolioData(json[0]);
             initPortfolioContent(json[0].content);
 
+            initializeFullPagePost();
             eventHandlerPortfolio();
             setupAutosaveTimer(situation);
         }
@@ -27,10 +28,9 @@ function loadPortfolioInit(json, json2, situation) {
     
     function constructPortfolioHTML() {
         var userPortfolioHTML = '\
-            <div id="main-container" class="edit">\
+            <div id="fullpage" class="edit">\
                 <section id="portfolio">\
                     <div class="container">\
-                        <h1>Portfolio</h1>\
                         <form class="form-horizontal row"></form>\
                     </div>\
                 </section>\
@@ -83,6 +83,11 @@ function loadPortfolioInit(json, json2, situation) {
         
         $('#navbar-top-layer-2').on('click', '.preview', function() {
             window.open($(this).attr('link'), '_blank');
+        });
+
+        // http://summernote.org/deep-dive/#onchange
+        $('#fullpage').on('summernote.change', function() {
+            $.fn.fullpage.reBuild();
         });
     }
 

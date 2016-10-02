@@ -102,6 +102,29 @@
                     sectionSelector: 'section'
                 });
             }
+
+            function initializeFullPagePost() {
+                // https://github.com/alvarotrigo/fullPage.js
+                $('#fullpage').fullpage({
+                    // Navigation
+                    // anchors: ['section1'],
+                    navigation: false,
+
+                    // Scrolling
+                    scrollOverflow: true,
+                    scrollOverflowOptions: {
+                        scrollbars: true,
+                        mouseWheel: true,
+                        hideScrollbars: false,
+                        fadeScrollbars: false,
+                        disableMouse: true
+                    },
+                    
+                    paddingTop: 50,
+                    recordHistory: false,
+                    sectionSelector: 'section'
+                });
+            }
             
             function setScreenSize() {
                 var size = '';
