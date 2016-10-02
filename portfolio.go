@@ -17,7 +17,7 @@ type Portfolio struct {
 	ThemeID     string      `json:"themeID"`
 	ThemeName   string      `json:"themeName"`
 	Content     string      `json:"content"`
-	Components  []Component `json:"components"`
+	Components  []Component `json:"components"` // not used right now
 	Background  Image       `json:"background"`
 }
 

@@ -917,3 +917,8 @@ section {
 #portfolio {
     background-color: rgb(224, 224, 224);
 }
+    #portfolio img {
+        display: block;
+        max-width: 100%;
+        height: auto !important;
+    }

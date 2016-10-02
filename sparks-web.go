@@ -916,10 +916,6 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		   1 = settings
 		   2 = profileType
 		   3 = experienceType
-		   4 = skillsType
-		   5 = portfolioType
-		   6 = otherInfoType
-		   7 = contactInfoType
 		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
@@ -943,22 +939,6 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 				returnCode = 4
 			}
 		}
-
-		/*
-			if returnCode == 0 {
-				if err = loadSettingsDB(user); err != nil { // Step 4
-					returnCode = 5
-				}
-			}
-
-			if returnCode == 0 {
-			    if err = updateRContactTypeName(user.UserID, user.FirstName, user.LastName); err != nil { // Step 5
-			        returnCode = 6
-			    }
-			}
-		*/
-
-		log.Println(portfolio.Content)
 
 		if returnCode == 0 {
 			if err = json.NewEncoder(w).Encode(portfolio); err != nil {
@@ -1053,24 +1033,6 @@ func updatePortfolio(categoryInt int, portfolio *Portfolio, r *http.Request) err
 		logErrorMessage(err)
 
 		portfolio.Content = content
-	case 8:
-		/*
-			var experiences []Experience
-			var byteSlice []byte
-
-			// https://golang.org/pkg/io/ioutil/#ReadAll
-			byteSlice, err = ioutil.ReadAll(r.Body)
-			logErrorMessage(err)
-
-			// https://golang.org/pkg/encoding/json/#Unmarshal
-			err = json.Unmarshal(byteSlice, &experiences)
-			logErrorMessage(err)
-
-			err = updateRExperiences(resume.ResumeID, resume.UserID, &experiences)
-			logErrorMessage(err)
-
-			resume.Experience.Experiences = experiences
-		*/
 	default:
 		log.Println("No category selected. Portfolio not updated.")
 	}
