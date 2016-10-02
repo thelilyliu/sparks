@@ -237,7 +237,16 @@ function initSummernotePost(selector) {
         lang: 'en-US',
         minHeight: 200,
         dialogsInBody: true,
-        disableDragAndDrop: true
+        disableDragAndDrop: true,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline']],
+            ['fontsize', ['fontname', 'fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['misc', ['undo', 'redo', 'codeview']]
+        ]
     });
 }
 

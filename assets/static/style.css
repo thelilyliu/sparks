@@ -82,6 +82,12 @@ p {
     margin: 0;
     margin-bottom: 18px;
 }
+b, strong {
+    font-weight: 700;
+}
+i, em {
+    font-style: italic;
+}
 
 /*
   ========================================
@@ -667,10 +673,16 @@ section {
 }
     #login .container {
         width: 50%;
+        margin-top: 100px;
     }
-@media (max-width: 991px) {
+@media (max-width: 767px) {
     #login .container {
         width: 100%;
+    }
+}
+@media (max-width: 991px) {
+    #login .container {
+        width: 75%;
     }
 }
 
@@ -691,6 +703,10 @@ section {
 #portfolios {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/02.jpg");
 }
+    #portfolios .card {
+        padding: 0;
+        background-color: #80DED9;
+    }
 
 #settings {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/03.jpg");
@@ -813,7 +829,6 @@ section {
 
 #portfolio {
     background-image: linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)), url("/images/blurred-backgrounds/03.jpg");
-    padding-top: 50px;
 }
     #portfolio .group {
         position: relative;
@@ -921,4 +936,10 @@ section {
         display: block;
         max-width: 100%;
         height: auto !important;
+    }
+    #portfolio .content {
+        color: #000;
+        background-color: #fff;
+        padding: 50px;
+        border-radius: 10px;
     }
