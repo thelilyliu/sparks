@@ -45,6 +45,7 @@ func loadPortfolioDB(portfolio *Portfolio, selector *bson.M) error {
 
 	// retrieve one document with portfolioID as selector
 	err := collection.Find(selector).One(portfolio)
+	logErrorMessage(err)
 
 	return err
 }

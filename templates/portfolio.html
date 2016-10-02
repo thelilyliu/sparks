@@ -1,0 +1,51 @@
+{{define "my-template"}}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    {{template "head" .}}
+    
+    <body id="portfolio" data-spy="scroll" data-target="#myScrollspy">
+        
+        <div id="main-container" class="view">
+            
+            <section id="content">
+                <div class="container"></div>
+            </section>
+            
+        </div>
+        
+        {{template "script" .}}
+        
+        <script src="../assets/static/viewPortfolio.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                eventHandler();
+                
+                page('/portfolio/:portfolioID', viewPortfolio);
+                page('*', notFound);
+                page();
+            });
+            
+            function eventHandler() {
+                
+            }
+            
+            function notFound() {
+                console.log('not found');
+            }
+            
+            function viewPortfolio(ctx) {
+                globalPortfolioID = ctx.params.portfolioID;
+                
+                viewPortfolioInit();
+            }
+        </script>
+        
+    </body>
+
+</html>
+
+{{end}}

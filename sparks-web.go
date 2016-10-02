@@ -72,8 +72,9 @@ func main() {
 		fileServerSandbox.ServeHTTP(w, r)
 	})
 
-	// resume
+	// published
 	router.Get("/viewResumeJSON/:resumeID", viewResumeJSON)
+	router.Get("/viewPortfolioJSON/:portfolioID", viewPortfolioJSON)
 
 	// login & logout
 	router.Post("/checkLoginInfoJSON", checkLoginInfoJSON)
@@ -111,6 +112,7 @@ func main() {
 	router.Get("/user/settings", viewUser)
 	router.Get("/login", viewLogin)
 	router.Get("/resume/:resumeID", viewResume)
+	router.Get("/portfolio/:portfolioID", viewPortfolio)
 	router.Get("/", viewIndex)
 
 	log.Println("Listening...")
@@ -121,7 +123,7 @@ func main() {
 
 /*
   ========================================
-  View
+  View Admin
   ========================================
 */
 
@@ -174,6 +176,32 @@ func viewResume(w http.ResponseWriter, r *http.Request) {
 	// error handling
 	if returnCode != 0 {
 		handleError(returnCode, errorStatusCode, "Resume page could not be loaded at this time.", w)
+	}
+}
+
+func viewPortfolio(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
+
+	setHeader(w)
+	var homepage Page // placeholder, not used right now
+
+	layout := path.Join("templates", "portfolio.html")
+	content := path.Join("templates", "content.html")
+
+	tmpl, err := template.ParseFiles(layout, content)
+	if err != nil {
+		returnCode = 1
+	}
+
+	if returnCode == 0 {
+		if err := tmpl.ExecuteTemplate(w, "my-template", homepage); err != nil {
+			returnCode = 2
+		}
+	}
+
+	// error handling
+	if returnCode != 0 {
+		handleError(returnCode, errorStatusCode, "Portfolio page could not be loaded at this time.", w)
 	}
 }
 
@@ -235,7 +263,7 @@ func viewUser(w http.ResponseWriter, r *http.Request) {
 
 /*
   ========================================
-  Resume
+  View
   ========================================
 */
 
@@ -260,6 +288,30 @@ func viewResumeJSON(w http.ResponseWriter, r *http.Request) {
 	// error handling
 	if returnCode != 0 {
 		handleError(returnCode, errorStatusCode, "Resume could not be loaded at this time.", w)
+	}
+}
+
+func viewPortfolioJSON(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
+
+	portfolio := new(Portfolio)
+	portfolioID := vestigo.Param(r, "portfolioID")
+
+	selector := bson.M{"portfolioid": portfolioID}
+
+	if err := loadPortfolioDB(portfolio, &selector); err != nil {
+		returnCode = 1
+	}
+
+	if returnCode == 0 {
+		if err := json.NewEncoder(w).Encode(portfolio); err != nil {
+			returnCode = 2
+		}
+	}
+
+	// error handling
+	if returnCode != 0 {
+		handleError(returnCode, errorStatusCode, "Portfolio could not be loaded at this time.", w)
 	}
 }
 
