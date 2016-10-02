@@ -4,7 +4,8 @@ function loadPortfolioInit(json, json2, situation) {
 
         if (!jQuery.isEmptyObject(json)) { // JSON is not empty
             initPortfolioData(json[0]);
-            initPortfolioComponents(json[0].components);
+            // initPortfolioComponents(json[0].components);
+            initPortfolioContent(json[0].content);
 
             eventHandlerPortfolio();
             setupAutosaveTimer(situation);
@@ -53,6 +54,7 @@ function loadPortfolioInit(json, json2, situation) {
         // title + intro
     }
     
+    /*
     function initPortfolioComponents(json) {
         console.log('components');
         
@@ -134,7 +136,7 @@ function loadPortfolioInit(json, json2, situation) {
             $this.find('.group').last().addClass('last');
         }
         else {
-            var category = 2;
+            var category = 1;
 
             switch (category) {
                 case 1:
@@ -171,13 +173,48 @@ function loadPortfolioInit(json, json2, situation) {
         var portfolioComponentsJSON = JSON.stringify(componentsArray);
         $this.data('JSONData', portfolioComponentsJSON);
     }
-    
+    */
+
+    function initPortfolioContent(json) {
+        var $this = $('#portfolio .form-horizontal');
+        var content = '';
+        
+        if (json != null && json.length > 0) { // not undefined or empty
+            var userPortfolioTextHTML = '\
+                <div id="text-group" class="group text-group col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">\
+                    <div class="button-group">\
+                        <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
+                        <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
+                        <button type="button" class="move down default" aria-label="Down"><i class="fa fa-chevron-down"></i></button>\
+                    </div>\
+                    <div class="form-group">\
+                        <div class="col-sm-12">\
+                            <div id="summernote-text" class="summernote"></div>\
+                        </div>\
+                    </div>\
+                </div>';
+
+            $this.append(userPortfolioTextHTML);
+            initSummernotePost('#summernote-text');
+
+            // set portfolio components
+            $('#summernote-text').summernote('code', json);
+            content = json;
+        }
+        else {
+            addTextGroup();
+        }
+        
+        var portfolioComponentsJSON = JSON.stringify(content);
+        $this.data('JSONData', portfolioComponentsJSON);
+    }
+
     
     function addTextGroup() {
         var i = $('.group').length;
         
         var userPortfolioTextHTML = '\
-            <div id="text-group' + (i + 1) + '" class="group text-group col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">\
+            <div id="text-group" class="group text-group col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">\
                 <div class="button-group">\
                     <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
                     <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
@@ -185,16 +222,16 @@ function loadPortfolioInit(json, json2, situation) {
                 </div>\
                 <div class="form-group">\
                     <div class="col-sm-12">\
-                        <div id="summernote-text' + (i + 1) + '" class="summernote"></div>\
+                        <div id="summernote-text" class="summernote"></div>\
                     </div>\
                 </div>\
             </div>';
 
         $('#portfolio .form-horizontal').append(userPortfolioTextHTML);
-        $('#text-group' + (i + 1)).attr('order', i);
+        $('#text-group').attr('order', i);
 
-        initSummernote('#summernote-text' + (i + 1));
-        $('#summernote-text' + (i + 1)).summernote('code', '<p></p>');
+        initSummernotePost('#summernote-text');
+        // $('#summernote-text' + (i + 1)).summernote('code', '<p></p>');
     }
 
     function addImageGroup() {
@@ -286,7 +323,9 @@ function loadPortfolioInit(json, json2, situation) {
     function checkPortfolioComponentsChanges(situation) {
         var $this = $('#portfolio .group');
         var componentsArray = [];
+        var content = '';
         
+        /*
         $.each($this, function(i, component) {
             var data = {};
 
@@ -310,11 +349,14 @@ function loadPortfolioInit(json, json2, situation) {
             
             componentsArray.push(data);
         });
+        */
 
-        var newJSONData = JSON.stringify(componentsArray);
+        content = $('#summernote-text').summernote('code');
+
+        var newJSONData = JSON.stringify(content);
         var oldJSONData = $('#portfolio .form-horizontal').data('JSONData');
 
-        updatePortfolio(8, newJSONData, oldJSONData, situation);
+        updatePortfolio(2, newJSONData, oldJSONData, situation);
     }
 
 
@@ -324,11 +366,11 @@ function loadPortfolioInit(json, json2, situation) {
             console.log('After: ' + newJSONData);
 
             if (globalPortfolioID != '-1') { // existing post
-                //updatePortfolioJSON(category, newJSONData, situation);
+                updatePortfolioJSON(category, newJSONData, situation);
             }
             else if (!$('body').hasClass('processing')) { // new post
-                //$('body').addClass('processing');
-                //insertPortfolioJSON(category, newJSONData);
+                $('body').addClass('processing');
+                insertPortfolioJSON(category, newJSONData);
             }
         }
     }
@@ -342,12 +384,14 @@ function loadPortfolioInit(json, json2, situation) {
             dataType: 'json',
             cache: false
         }).done(function(json, textStatus, jqXHr) {
+            console.log('done insert 1');
             setPortfolioData(category, json);
             globalPortfolioID = json.portfolioID;
             
             // https://developer.mozilla.org/en-US/docs/Web/API/History_API#The_pushState()_method
             history.replaceState({}, document.title, '/user/portfolio/' + globalPortfolioID);
             $('#navbar-top-layer-2 .preview').attr('link', '/portfolio/' + globalPortfolioID);
+            console.log('done insert 2');
         }).fail(function(jqXHr, textStatus, errorThrown) {
             handleAjaxError(jqXHr, textStatus);
         }).always(function(json) {
@@ -377,16 +421,17 @@ function loadPortfolioInit(json, json2, situation) {
         switch (category) {
             case 1: // settings
                 break;
-            case 2: // profileType
+            case 2: // text
                 var data = {
-                    headline: json.profile.headline,
-                    subtitle: json.profile.subtitle,
-                    summary: json.profile.summary
-                    // background: json.profile.background
+                    category: 1,
+                    content: json.content,
+                    order: json.order
                 };
 
-                var JSONData = JSON.stringify(data);
-                $('#profile .form-horizontal').data('JSONData', JSONData);
+                var content = json.content;
+
+                var JSONData = JSON.stringify(content);
+                $('#portfolio .form-horizontal').data('JSONData', JSONData);
 
                 break;
             case 8: // experiences

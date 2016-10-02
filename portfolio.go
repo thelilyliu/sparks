@@ -16,6 +16,7 @@ type Portfolio struct {
 	LinkURL     string      `json:"linkURL"`
 	ThemeID     string      `json:"themeID"`
 	ThemeName   string      `json:"themeName"`
+	Content     string      `json:"content"`
 	Components  []Component `json:"components"`
 	Background  Image       `json:"background"`
 }
@@ -80,16 +81,36 @@ func insertPortfolioDB(userID string) (string, error) {
   ========================================
 */
 
-func updatePortfolioDB(portfolioID string, change *bson.M) error {
+func updatePortfolioDB(selector, update *bson.M) error {
 	// create new MongoDB session
 	collection, session := mongoDBInitialization("portfolio")
 	defer session.Close()
 
-	// find document and update fields
-	selector := bson.M{"portfolioid": portfolioID}
-	update := bson.M{"$set": change}
-
 	err := collection.Update(selector, update)
+
+	return err
+}
+
+func updatePSettings(portfolioID, userID string, portfolio *Portfolio) error {
+	change := bson.M{"title": portfolio.Title, "titleurl": portfolio.TitleURL, "linkurl": portfolio.LinkURL}
+
+	// find document and update fields
+	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	err := updatePortfolioDB(&selector, &update)
+
+	return err
+}
+
+func updatePContent(portfolioID, userID, content string) error {
+	change := bson.M{"content": content}
+
+	// find document and update fields
+	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	err := updatePortfolioDB(&selector, &update)
 
 	return err
 }

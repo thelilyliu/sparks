@@ -873,7 +873,6 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
 			returnCode = 1
 		}
-		log.Println(categoryInt)
 
 		if returnCode == 0 {
 			if portfolio.PortfolioID, err = insertPortfolioDB(portfolio.UserID); err != nil { // Step 1
@@ -887,27 +886,27 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		/*
-			if returnCode == 0 {
-				if err = updatePortfolio(categoryInt, portfolio, r); err != nil { // Step 3
-					returnCode = 4
-				}
-			}
-		*/
-
 		if returnCode == 0 {
-			if err = loadSettingsDB(user); err != nil { // Step 4
-				returnCode = 5
+			if err = updatePortfolio(categoryInt, portfolio, r); err != nil { // Step 3
+				returnCode = 4
 			}
 		}
 
 		/*
-		   if returnCode == 0 {
-		       if err = updateRContactTypeName(user.UserID, user.FirstName, user.LastName); err != nil { // Step 5
-		           returnCode = 6
-		       }
-		   }
+			if returnCode == 0 {
+				if err = loadSettingsDB(user); err != nil { // Step 4
+					returnCode = 5
+				}
+			}
+
+			if returnCode == 0 {
+			    if err = updateRContactTypeName(user.UserID, user.FirstName, user.LastName); err != nil { // Step 5
+			        returnCode = 6
+			    }
+			}
 		*/
+
+		log.Println(portfolio.Content)
 
 		if returnCode == 0 {
 			if err = json.NewEncoder(w).Encode(portfolio); err != nil {
@@ -925,9 +924,106 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func updatePortfolioJSON(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
 
-	// **** EDIT ****
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		categoryInt := 0
+		portfolio := new(Portfolio)
+		portfolio.UserID = uID.(string)
 
+		categoryStr := vestigo.Param(r, "category")
+		/*
+		   1 = settings
+		   2
+		*/
+
+		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
+			returnCode = 1
+		}
+
+		if returnCode == 0 {
+			portfolio.PortfolioID = vestigo.Param(r, "portfolioID")
+
+			if err = updatePortfolio(categoryInt, portfolio, r); err != nil {
+				returnCode = 2
+			}
+		}
+
+		if returnCode == 0 {
+			if err = json.NewEncoder(w).Encode(portfolio); err != nil {
+				returnCode = 3
+			}
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Portfolio could not be updated at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
+	}
+}
+
+func updatePortfolio(categoryInt int, portfolio *Portfolio, r *http.Request) error {
+	var err error
+
+	switch categoryInt {
+	case 1:
+		// part 1: update portfolio settings
+
+		err = json.NewDecoder(r.Body).Decode(portfolio)
+		logErrorMessage(err)
+
+		portfolio.TitleURL = getTitleURL(portfolio.Title)
+		portfolio.LinkURL = getLinkURL(portfolio.Title)
+
+		err = updatePSettings(portfolio.PortfolioID, portfolio.UserID, portfolio)
+		logErrorMessage(err)
+
+		// part 2: update user portfolio
+
+		basicPortfolio := new(BasicPortfolio)
+
+		basicPortfolio.PortfolioID = portfolio.PortfolioID
+		basicPortfolio.Title = portfolio.Title
+
+		err = updateUPortfolio(portfolio.UserID, basicPortfolio)
+		logErrorMessage(err)
+	case 2:
+		var content string
+
+		err = json.NewDecoder(r.Body).Decode(&content)
+		logErrorMessage(err)
+
+		// portfolio.Background = new(Image)
+
+		err = updatePContent(portfolio.PortfolioID, portfolio.UserID, content)
+		logErrorMessage(err)
+
+		portfolio.Content = content
+	case 8:
+		/*
+			var experiences []Experience
+			var byteSlice []byte
+
+			// https://golang.org/pkg/io/ioutil/#ReadAll
+			byteSlice, err = ioutil.ReadAll(r.Body)
+			logErrorMessage(err)
+
+			// https://golang.org/pkg/encoding/json/#Unmarshal
+			err = json.Unmarshal(byteSlice, &experiences)
+			logErrorMessage(err)
+
+			err = updateRExperiences(resume.ResumeID, resume.UserID, &experiences)
+			logErrorMessage(err)
+
+			resume.Experience.Experiences = experiences
+		*/
+	default:
+		log.Println("No category selected. Portfolio not updated.")
+	}
+
+	return err
 }
 
 func deletePortfolioJSON(w http.ResponseWriter, r *http.Request) {

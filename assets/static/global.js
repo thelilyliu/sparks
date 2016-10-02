@@ -227,7 +227,17 @@ function initSummernote(selector) {
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['insert', ['codeview']]
-        ]  
+        ]
+    });
+}
+
+function initSummernotePost(selector) {
+    // http://summernote.org/deep-dive/
+    $(selector).summernote({
+        lang: 'en-US',
+        minHeight: 200,
+        dialogsInBody: true,
+        disableDragAndDrop: true
     });
 }
 
