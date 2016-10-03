@@ -226,7 +226,6 @@ function initSummernote(selector) {
             ['style', ['bold', 'italic', 'underline']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['codeview']]
         ]
     });
 }
@@ -240,12 +239,11 @@ function initSummernotePost(selector) {
         disableDragAndDrop: true,
         toolbar: [
             ['style', ['bold', 'italic', 'underline']],
-            ['fontsize', ['fontname', 'fontsize']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['misc', ['undo', 'redo', 'codeview']]
+            ['fontsize', ['fontsize']],
+            ['insert', ['picture', 'link', 'video']],
+            ['misc', ['undo', 'redo']]
         ]
     });
 }

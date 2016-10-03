@@ -44,7 +44,7 @@ function loadDashboardResumesInit(json, json2, situation) {
                     <div class="card">\
                         <div class="card-cover">\
                             <div class="img-wrapper">\
-                                <img src="/images/BNUELLTI5U.jpg">\
+                                <img src="/images/WWAKZZJFU0.jpg">\
                             </div>\
                             <div class="card-actions fill-div">\
                                 <div class="date">\
