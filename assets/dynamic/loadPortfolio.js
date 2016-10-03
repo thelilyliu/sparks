@@ -4,6 +4,7 @@ function loadPortfolioInit(json, json2, situation) {
 
         if (!jQuery.isEmptyObject(json)) { // JSON is not empty
             initPortfolioData(json[0]);
+            initPortfolioHeader(json[0]);
             initPortfolioContent(json[0].content);
 
             initializeFullPagePost();
@@ -15,12 +16,14 @@ function loadPortfolioInit(json, json2, situation) {
         }
     }
     else { // autosave
+        checkPortfolioHeaderChanges(situation);
         checkPortfolioContentChanges(situation);
     }
     
     
     function setupAutosaveTimer(situation) {
         var timerID = setInterval(function() {
+            checkPortfolioHeaderChanges(situation);
             checkPortfolioContentChanges(situation);
         }, 5000);
         $('body').data('autosave-timer', timerID);
@@ -31,6 +34,7 @@ function loadPortfolioInit(json, json2, situation) {
             <div id="fullpage" class="edit">\
                 <section id="portfolio">\
                     <div class="container">\
+                        <h1>Portfolio</h1>\
                         <form class="form-horizontal row"></form>\
                     </div>\
                 </section>\
@@ -45,19 +49,50 @@ function loadPortfolioInit(json, json2, situation) {
         $('#navbar-top-layer-2 .preview').attr('link', '/portfolio/' + globalPortfolioID);
     }
     
-    
+
     function initPortfolioData(json) {
         $('#navbar-top-layer-2 .title a').text(json.title)
             .attr('href', '/user/portfolio/' + globalPortfolioID);
+    }
 
-        // title + intro
+    function initPortfolioHeader(json) {
+        var userPortfolioHeaderHTML = '\
+            <div id="header" class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">\
+                <div class="form-group">\
+                    <label for="inputHeadline" class="col-sm-3 control-label">Headline</label>\
+                    <div class="col-sm-9">\
+                        <input type="headline" class="form-control" id="inputHeadline" placeholder="Headline">\
+                    </div>\
+                </div>\
+                <div class="form-group">\
+                    <label for="inputIntro" class="col-sm-3 control-label">Intro</label>\
+                    <div class="col-sm-9">\
+                        <textarea type="intro" class="form-control" id="inputIntro" placeholder="Intro" rows=3></textarea>\
+                    </div>\
+                </div>\
+            </div>';
+
+        $('#portfolio .form-horizontal').append(userPortfolioHeaderHTML);
+
+        // set portfolio header
+        $('#inputHeadline').val(json.headline);
+        $('#inputIntro').val(json.intro);
+        // background image
+
+        // get portfolio header JSON
+        var portfolioHeader = {
+            headline: json.headline,
+            intro: json.intro
+            // background: json.background
+        };
+        
+        var portfolioHeaderJSON = JSON.stringify(portfolioHeader);
+        $('#portfolio #header').data('JSONData', portfolioHeaderJSON);
     }
 
     function initPortfolioContent(json) {
-        var $this = $('#portfolio .form-horizontal');
-
-        var userPortfolioTextHTML = '\
-            <div id="text-group" class="group text-group col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">\
+        var userPortfolioContentHTML = '\
+            <div id="content" class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">\
                 <div class="form-group">\
                     <div class="col-sm-12">\
                         <div id="summernote-text" class="summernote"></div>\
@@ -65,14 +100,14 @@ function loadPortfolioInit(json, json2, situation) {
                 </div>\
             </div>';
 
-        $this.append(userPortfolioTextHTML);
+        $('#portfolio .form-horizontal').append(userPortfolioContentHTML);
         initSummernotePost('#summernote-text');
 
         // set portfolio components
         $('#summernote-text').summernote('code', json);
         
-        var portfolioComponentsJSON = JSON.stringify(json);
-        $this.data('JSONData', portfolioComponentsJSON);
+        var portfolioContentJSON = JSON.stringify(json);
+        $('#portfolio #content').data('JSONData', portfolioContentJSON);
     }
     
 
@@ -91,14 +126,26 @@ function loadPortfolioInit(json, json2, situation) {
         });
     }
 
+    function checkPortfolioHeaderChanges(situation) {
+        var header = {
+            headline: $('#inputHeadline').val(),
+            intro: $('#inputIntro').val()
+            // background
+        };
+
+        var newJSONData = JSON.stringify(header);
+        var oldJSONData = $('#portfolio #header').data('JSONData');
+
+        updatePortfolio(2, newJSONData, oldJSONData, situation);
+    }
+
     function checkPortfolioContentChanges(situation) {
-        var $this = $('#portfolio .group');
         var content = $('#summernote-text').summernote('code');
 
         var newJSONData = JSON.stringify(content);
-        var oldJSONData = $('#portfolio .form-horizontal').data('JSONData');
+        var oldJSONData = $('#portfolio #content').data('JSONData');
 
-        updatePortfolio(2, newJSONData, oldJSONData, situation);
+        updatePortfolio(3, newJSONData, oldJSONData, situation);
     }
 
 
@@ -161,9 +208,20 @@ function loadPortfolioInit(json, json2, situation) {
         switch (category) {
             case 1: // settings
                 break;
-            case 2: // content
+            case 2: // header
+                var data = {
+                    headline: json.headline,
+                    intro: json.intro
+                    // background: json.background
+                };
+
+                var JSONData = JSON.stringify(data);
+                $('#portfolio #header').data('JSONData', JSONData);
+
+                break;
+            case 3: // content
                 var JSONData = JSON.stringify(json.content);
-                $('#portfolio .form-horizontal').data('JSONData', JSONData);
+                $('#portfolio #content').data('JSONData', JSONData);
 
                 break;
             default:

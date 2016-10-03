@@ -929,17 +929,20 @@ section {
   ========================================
 */
 
-#portfolio {
-    background-color: rgb(224, 224, 224);
+#portfolio img {
+    display: block;
+    max-width: 100%;
+    height: auto !important;
 }
-    #portfolio img {
-        display: block;
-        max-width: 100%;
-        height: auto !important;
-    }
-    #portfolio .content {
-        color: #000;
-        background-color: #fff;
-        padding: 50px;
-        border-radius: 10px;
-    }
+#portfolio h1 {
+    margin-bottom: 30px;
+}
+.edit #content {
+    margin-top: 30px;
+}
+#portfolio .view #content {
+    padding: 50px;
+    border-radius: 10px;
+    color: #000;
+    background-color: #fff;
+}

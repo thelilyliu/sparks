@@ -965,8 +965,9 @@ func updatePortfolioJSON(w http.ResponseWriter, r *http.Request) {
 
 		categoryStr := vestigo.Param(r, "category")
 		/*
-		   1 = settings
-		   2
+				   1 = settings
+				   2 = header
+		           3 = content
 		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
@@ -1022,12 +1023,18 @@ func updatePortfolio(categoryInt int, portfolio *Portfolio, r *http.Request) err
 		err = updateUPortfolio(portfolio.UserID, basicPortfolio)
 		logErrorMessage(err)
 	case 2:
+		err = json.NewDecoder(r.Body).Decode(portfolio)
+		logErrorMessage(err)
+
+		// portfolio.Background = new(Image)
+
+		err = updatePHeader(portfolio)
+		logErrorMessage(err)
+	case 3:
 		var content string
 
 		err = json.NewDecoder(r.Body).Decode(&content)
 		logErrorMessage(err)
-
-		// portfolio.Background = new(Image)
 
 		err = updatePContent(portfolio.PortfolioID, portfolio.UserID, content)
 		logErrorMessage(err)

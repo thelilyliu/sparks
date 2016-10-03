@@ -11,6 +11,7 @@ type Portfolio struct {
 	UserID      string      `json:"userID"`
 	Date        string      `json:"date"`
 	Title       string      `json:"title"`
+	Headline    string      `json:"headline"`
 	Intro       string      `json:"intro"`
 	TitleURL    string      `json:"titleURL"`
 	LinkURL     string      `json:"linkURL"`
@@ -97,6 +98,18 @@ func updatePSettings(portfolioID, userID string, portfolio *Portfolio) error {
 
 	// find document and update fields
 	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	err := updatePortfolioDB(&selector, &update)
+
+	return err
+}
+
+func updatePHeader(portfolio *Portfolio) error {
+	change := bson.M{"headline": portfolio.Headline, "intro": portfolio.Intro}
+
+	// find document and update fields
+	selector := bson.M{"portfolioid": portfolio.PortfolioID, "userid": portfolio.UserID}
 	update := bson.M{"$set": &change}
 
 	err := updatePortfolioDB(&selector, &update)
