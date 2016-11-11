@@ -111,6 +111,7 @@ section .container {
 @media (max-width: 767px) {
     section .container {
         padding: 50px 0;
+        margin: 0 15px;
     }
 }
 @media (min-width: 992px) {
@@ -496,6 +497,12 @@ button.new {
     background: #fff;
 }
 
+@media (max-width: 767px) {
+    #fp-nav {
+        display: none;
+    }
+}
+
 /*
   ========================================
   11. Grids
@@ -540,7 +547,7 @@ section {
     }
     section h1 {
         font-size: 40px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         color: #fff;
     }
 
@@ -805,19 +812,19 @@ section {
     #skills .card {
         height: 100px;
     }
-    #skills .level-1 {
+    #skills .card-0 {
         background-color: rgba(110, 211, 207, .9);
     }
-    #skills .level-2 {
+    #skills .card-1 {
         background-color: rgba(187, 196, 239, .9);
     }
-    #skills .level-3 {
+    #skills .card-2 {
         background-color: rgba(144, 104, 190, .9);
     }
-    #skills .level-4 {
+    #skills .card-3 {
         background-color: rgba(98, 188, 250, .9);
     }
-    #skills .level-5 {
+    #skills .card-4 {
         background-color: rgba(101, 52, 255, .9);
     }
 
@@ -861,7 +868,7 @@ section {
         #achievements .subtitle h2 {
             padding-bottom: 4px;
             border-bottom: 2px #fff solid;
-            margin-bottom: 20px;
+            margin: 0 15px 20px;
         }
         #achievements .subtitle button.new {
             position: absolute;

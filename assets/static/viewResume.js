@@ -73,8 +73,8 @@ function viewResumeInit() {
 
         $.each(json.skills, function(i, skill) {
             var resumeSkillHTML = '\
-                <div class="card-wrapper">\
-                    <div class="card">\
+                <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
+                    <div class="card card-' + (i % 5) + '">\
                         <div class="card-header">\
                             <h3 class="skill-name">' + skill.name + '</h3>\
                             <div class="skill-level"></div>\
@@ -115,23 +115,26 @@ function viewResumeInit() {
                         <div class="location">' + json.location + '</div>\
                         <div class="website"><a href="http://' + json.website + '" target="_blank">' + json.website + '</a></div>\
                     </div>\
-                    <div class="links">\
-                        <span class="fa-stack fa-lg facebook">\
-                            <i class="fa fa-circle fa-stack-2x"></i>\
-                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>\
-                        </span>\
-                        <span class="fa-stack fa-lg twitter">\
-                            <i class="fa fa-circle fa-stack-2x"></i>\
-                            <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>\
-                        </span>\
-                        <span class="fa-stack fa-lg linkedin">\
-                            <i class="fa fa-circle fa-stack-2x"></i>\
-                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>\
-                        </span>\
-                    </div>\
                 </div>\
             </div>';
             
+            /*
+            <div class="links">\
+                <span class="fa-stack fa-lg facebook">\
+                    <i class="fa fa-circle fa-stack-2x"></i>\
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>\
+                </span>\
+                <span class="fa-stack fa-lg twitter">\
+                    <i class="fa fa-circle fa-stack-2x"></i>\
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>\
+                </span>\
+                <span class="fa-stack fa-lg linkedin">\
+                    <i class="fa fa-circle fa-stack-2x"></i>\
+                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>\
+                </span>\
+            </div>\
+            */
+
             /*
             <div class="card-wrapper col-xs-12 col-sm-6 col-lg-4">\
                 <a href="https://www.facebook.com/" class="card-link" target="_blank">\
@@ -156,18 +159,19 @@ function viewResumeInit() {
 
         $.each(json, function(i, education) {
             var resumeEducationHTML = '\
-                <div class="card-wrapper">\
+                <div class="card-wrapper col-xs-12 col-md-6">\
                     <div class="card">\
                         <div class="card-header">\
                             <h3 class="school">' + education.school + '</h3>\
-                            <div class="start-date">\
+                            <span class="start-date">\
                                 <span class="month">' + education.startMonth + '</span>\
                                 <span class="year">' + education.startYear + '</span>\
-                            </div>\
-                            <div class="end-date">\
+                            </span>\
+                            <span>&mdash;</span>\
+                            <span class="end-date">\
                                 <span class="month">' + education.endMonth + '</span>\
                                 <span class="year">' + education.endYear + '</span>\
-                            </div>\
+                            </span>\
                             <div class="major">' + education.major + '</div>\
                             <div class="minor">' + education.minor + '</div>\
                             <div class="specialist">' + education.specialist + '</div>\
@@ -190,7 +194,7 @@ function viewResumeInit() {
 
         $.each(json, function(i, qualification) {
             var resumeQualificationHTML = '\
-                <div class="card-wrapper">\
+                <div class="card-wrapper col-xs-12 col-md-6">\
                     <div class="card">\
                         <div class="card-header">\
                             <h3 class="name">' + qualification.name + '</h3>\
@@ -214,7 +218,7 @@ function viewResumeInit() {
 
         $.each(json, function(i, award) {
             var resumeAwardHTML = '\
-                <div class="card-wrapper">\
+                <div class="card-wrapper col-xs-12 col-md-6">\
                     <div class="card">\
                         <div class="card-header">\
                             <h3 class="name">' + award.name + '</h3>\
