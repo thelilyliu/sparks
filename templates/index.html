@@ -1,0 +1,128 @@
+{{define "my-template"}}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    
+    {{template "head" .}}
+    
+    <body id="resume" data-spy="scroll" data-target="#myScrollspy">
+        
+        <div id="fullpage" class="view">
+            
+            <section id="profile">
+                <div class="container">
+                    <div class="jumbo absolute-center vertical-align"></div>
+                </div>
+            </section>
+            
+            <section id="experience">
+                <div class="container">
+                    <h1>Experience</h1>
+                    <div class="grid">
+                        <div class="grid-sizer"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills">
+                <div class="container">
+                    <h1>Skills</h1>
+                    <div class="row"></div>
+                </div>
+            </section>
+
+            <section id="achievements">
+                <div class="container">
+                    <h1>Achievements</h1>
+                    <div id="educations" class="row">
+                        <div class="subtitle">
+                            <h2>Education</h2>
+                        </div>
+                    </div>
+                    <div id="qualifications" class="row">
+                        <div class="subtitle">
+                            <h2>Qualifications</h2>
+                        </div>
+                    </div>
+                    <div id="awards" class="row">
+                        <div class="subtitle">
+                            <h2>Awards</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="contact">
+                <div class="container">
+                    <h1>Contact</h1>
+                    <div class="row"></div>
+                </div>
+            </section>
+            
+        </div>
+        
+        {{template "script" .}}
+        
+        <script src="../assets/static/viewResume.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                window.location.href = '/resume/57bf2f221ef0d58d53000001';
+
+                /*
+                eventHandler();
+                
+                page('/resume/:resumeID', viewResume);
+                page('*', notFound);
+                page();
+                */
+            });
+            
+            function initializeFullPage() {
+                // https://github.com/alvarotrigo/fullPage.js
+                $('#fullpage').fullpage({
+                    // Navigation
+                    anchors: ['section1', 'section2', 'section3', 'section4', 'section5'],
+                    navigation: true,
+                    navigationPosition: 'right',
+                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Achievements', 'Contact'],
+
+                    // Scrolling
+                    scrollOverflow: true,
+                    scrollOverflowOptions: {
+                        scrollbars: true,
+                        mouseWheel: true,
+                        hideScrollbars: false,
+                        fadeScrollbars: false,
+                        disableMouse: true
+                    },
+                    
+                    // paddingTop: 50,
+                    recordHistory: false,
+                    sectionSelector: 'section'
+                });
+            }
+            
+            function eventHandler() {
+                
+            }
+            
+            function notFound() {
+                console.log('not found');
+            }
+            
+            function viewResume(ctx) {
+                globalResumeID = ctx.params.resumeID;
+                
+                if (!$('html').hasClass('fp-enabled')) {
+                    viewResumeInit();
+                }
+            }
+        </script>
+        
+    </body>
+
+</html>
+
+{{end}}

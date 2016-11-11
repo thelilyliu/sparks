@@ -965,9 +965,9 @@ func updatePortfolioJSON(w http.ResponseWriter, r *http.Request) {
 
 		categoryStr := vestigo.Param(r, "category")
 		/*
-				   1 = settings
-				   2 = header
-		           3 = content
+					   1 = settings
+					   2 = header
+			           3 = content
 		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
