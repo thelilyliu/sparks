@@ -609,9 +609,11 @@ section {
     position: relative;
     z-index: 1;
     display: inline-block;
+    text-align: center;
     padding: 5px;
+    padding-top: 3px;
     margin-left: 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     width: 30px;
     height: 30px;
     background-color: #fff;
@@ -868,7 +870,7 @@ section {
         #achievements .subtitle h2 {
             padding-bottom: 4px;
             border-bottom: 2px #fff solid;
-            margin: 0 15px 20px;
+            margin-bottom: 20px;
         }
         #achievements .subtitle button.new {
             position: absolute;

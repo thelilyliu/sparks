@@ -29,7 +29,7 @@
             </ul>
             
             <div class="sidebar-footer text-center">
-                <div class="logo">Sparks</div>
+                <div class="logo">Spark Up</div>
                 <div class="copyright">&copy; <a href="https://twitter.com/thelilyliu" target="_blank">Lily Liu</a> 2016</div>
             </div>
         </nav>
@@ -190,6 +190,10 @@
                     case '12':
                         month = 'December';
                         break;
+                }
+
+                if (day < 10) {
+                    day = day.substr(1, 1);
                 }
 
                 return month + ' ' + day + ', ' + year;

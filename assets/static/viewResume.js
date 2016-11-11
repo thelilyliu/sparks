@@ -8,7 +8,7 @@ function viewResumeInit() {
     }).done(function(json, textStatus, jqXHr) {
         if (!jQuery.isEmptyObject(json)) { // JSON is not empty
             initMasonry();
-
+            
             initResumeProfileData(json.profile);
             initResumeExperienceData(json.experience);
             initResumeSkillsData(json.skills);
