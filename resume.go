@@ -124,9 +124,7 @@ func loadResumeDB(resume *Resume, selector *bson.M) error {
 	defer session.Close()
 
 	// retrieve one document with resumeID as selector
-	err := collection.Find(selector).One(resume)
-
-	return err
+	return collection.Find(selector).One(resume)
 }
 
 /*
@@ -166,9 +164,7 @@ func updateResumeDB(selector, update *bson.M) error {
 	collection, session := mongoDBInitialization("resume")
 	defer session.Close()
 
-	err := collection.Update(selector, update)
-
-	return err
+	return collection.Update(selector, update)
 }
 
 func updateAllResumeDB(selector, update *bson.M) error {
@@ -188,9 +184,7 @@ func updateRSettings(resumeID, userID string, resume *Resume) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRProfileType(resumeID, userID string, profile *ProfileType) error {
@@ -200,9 +194,7 @@ func updateRProfileType(resumeID, userID string, profile *ProfileType) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRExperienceType(resumeID, userID string, experience *ExperienceType) error {
@@ -212,9 +204,7 @@ func updateRExperienceType(resumeID, userID string, experience *ExperienceType) 
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRSkillsType(resumeID, userID string, skills *SkillsType) error {
@@ -224,9 +214,7 @@ func updateRSkillsType(resumeID, userID string, skills *SkillsType) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRPortfolioType() {
@@ -248,9 +236,7 @@ func updateRContactType(resumeID, userID string, contact *ContactType) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRContactTypeName(userID, firstName, lastName string) error {
@@ -260,9 +246,7 @@ func updateRContactTypeName(userID, firstName, lastName string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateAllResumeDB(&selector, &update)
-
-	return err
+	return updateAllResumeDB(&selector, &update)
 }
 
 func updateRExperiences(resumeID, userID string, experiences *[]Experience) error {
@@ -272,9 +256,7 @@ func updateRExperiences(resumeID, userID string, experiences *[]Experience) erro
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRSkills(resumeID, userID string, skills *[]Skill) error {
@@ -284,9 +266,7 @@ func updateRSkills(resumeID, userID string, skills *[]Skill) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRPortfolios() {
@@ -302,9 +282,7 @@ func updateREducations(resumeID, userID string, educations *[]Education) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRQualifications(resumeID, userID string, qualifications *[]Qualification) error {
@@ -314,9 +292,7 @@ func updateRQualifications(resumeID, userID string, qualifications *[]Qualificat
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 func updateRAwards(resumeID, userID string, awards *[]Award) error {
@@ -326,9 +302,7 @@ func updateRAwards(resumeID, userID string, awards *[]Award) error {
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updateResumeDB(&selector, &update)
-
-	return err
+	return updateResumeDB(&selector, &update)
 }
 
 /*
@@ -344,7 +318,6 @@ func deleteResumeDB(resumeID, userID string) error {
 
 	// find document and delete resume
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
-	err := collection.Remove(selector)
 
-	return err
+	return collection.Remove(selector)
 }

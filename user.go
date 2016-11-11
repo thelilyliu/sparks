@@ -46,9 +46,7 @@ func loadDashboardResumesDB(user *User) error {
 	selector := bson.M{"userid": user.UserID}
 	projection := bson.M{"resumeinfo": 1}
 
-	err := collection.Find(selector).Select(projection).One(user)
-
-	return err
+	return collection.Find(selector).Select(projection).One(user)
 }
 
 func loadDashboardPortfoliosDB(user *User) error {
@@ -60,9 +58,7 @@ func loadDashboardPortfoliosDB(user *User) error {
 	selector := bson.M{"userid": user.UserID}
 	projection := bson.M{"portfolioinfo": 1}
 
-	err := collection.Find(selector).Select(projection).One(user)
-
-	return err
+	return collection.Find(selector).Select(projection).One(user)
 }
 
 func loadSettingsDB(user *User) error {
@@ -74,9 +70,7 @@ func loadSettingsDB(user *User) error {
 	selector := bson.M{"userid": user.UserID}
 	projection := bson.M{"resumeinfo": 0, "portfolioinfo": 0}
 
-	err := collection.Find(selector).Select(projection).One(user)
-
-	return err
+	return collection.Find(selector).Select(projection).One(user)
 }
 
 /*
@@ -114,9 +108,7 @@ func insertUResume(userID, resumeID string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$addToSet": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }
 
 func insertUPortfolio(userID, portfolioID string) error {
@@ -127,9 +119,7 @@ func insertUPortfolio(userID, portfolioID string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$addToSet": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }
 
 /*
@@ -143,9 +133,7 @@ func updateUserDB(selector, update *bson.M) error {
 	collection, session := mongoDBInitialization("user")
 	defer session.Close()
 
-	err := collection.Update(selector, update)
-
-	return err
+	return collection.Update(selector, update)
 }
 
 func updateUSettings(user *User) error {
@@ -155,9 +143,7 @@ func updateUSettings(user *User) error {
 	selector := bson.M{"userid": user.UserID}
 	update := bson.M{"$set": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }
 
 func updateUResume(userID string, basicResume *BasicResume) error {
@@ -167,9 +153,7 @@ func updateUResume(userID string, basicResume *BasicResume) error {
 	selector := bson.M{"userid": userID, "resumeinfo": bson.M{"$elemMatch": bson.M{"resumeid": basicResume.ResumeID}}}
 	update := bson.M{"$set": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }
 
 func updateUPortfolio(userID string, basicPortfolio *BasicPortfolio) error {
@@ -179,9 +163,7 @@ func updateUPortfolio(userID string, basicPortfolio *BasicPortfolio) error {
 	selector := bson.M{"userid": userID, "portfolioinfo": bson.M{"$elemMatch": bson.M{"portfolioid": basicPortfolio.PortfolioID}}}
 	update := bson.M{"$set": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }
 
 /*
@@ -197,9 +179,7 @@ func deleteUResume(userID, resumeID string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$pull": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }
 
 func deleteUPortfolio(userID, portfolioID string) error {
@@ -209,7 +189,5 @@ func deleteUPortfolio(userID, portfolioID string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$pull": &change}
 
-	err := updateUserDB(&selector, &update)
-
-	return err
+	return updateUserDB(&selector, &update)
 }

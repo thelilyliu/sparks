@@ -391,6 +391,7 @@ func writeSession(key string, value interface{}, w http.ResponseWriter, r *http.
 
 	session.Options.MaxAge = 3600 // one hour
 	session.Values[key] = value
+
 	err = session.Save(r, w)
 
 	return err
@@ -400,6 +401,7 @@ func deleteSession(w http.ResponseWriter, r *http.Request) error {
 	session, err := store.Get(r, "user-session")
 
 	session.Options.MaxAge = -1 // delete now
+
 	err = session.Save(r, w)
 
 	return err

@@ -45,10 +45,7 @@ func loadPortfolioDB(portfolio *Portfolio, selector *bson.M) error {
 	defer session.Close()
 
 	// retrieve one document with portfolioID as selector
-	err := collection.Find(selector).One(portfolio)
-	logErrorMessage(err)
-
-	return err
+	return collection.Find(selector).One(portfolio)
 }
 
 /*
@@ -88,9 +85,7 @@ func updatePortfolioDB(selector, update *bson.M) error {
 	collection, session := mongoDBInitialization("portfolio")
 	defer session.Close()
 
-	err := collection.Update(selector, update)
-
-	return err
+	return collection.Update(selector, update)
 }
 
 func updatePSettings(portfolioID, userID string, portfolio *Portfolio) error {
@@ -100,9 +95,7 @@ func updatePSettings(portfolioID, userID string, portfolio *Portfolio) error {
 	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updatePortfolioDB(&selector, &update)
-
-	return err
+	return updatePortfolioDB(&selector, &update)
 }
 
 func updatePHeader(portfolio *Portfolio) error {
@@ -112,9 +105,7 @@ func updatePHeader(portfolio *Portfolio) error {
 	selector := bson.M{"portfolioid": portfolio.PortfolioID, "userid": portfolio.UserID}
 	update := bson.M{"$set": &change}
 
-	err := updatePortfolioDB(&selector, &update)
-
-	return err
+	return updatePortfolioDB(&selector, &update)
 }
 
 func updatePContent(portfolioID, userID, content string) error {
@@ -124,9 +115,7 @@ func updatePContent(portfolioID, userID, content string) error {
 	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
 	update := bson.M{"$set": &change}
 
-	err := updatePortfolioDB(&selector, &update)
-
-	return err
+	return updatePortfolioDB(&selector, &update)
 }
 
 /*
@@ -142,7 +131,6 @@ func deletePortfolioDB(portfolioID, userID string) error {
 
 	// find document and delete resume
 	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
-	err := collection.Remove(selector)
 
-	return err
+	return collection.Remove(selector)
 }
