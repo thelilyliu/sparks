@@ -115,11 +115,17 @@ function loadResumeInit(json, json2, situation) {
             \
             <div class="form-group">\
                 <label for="inputProfileBackground" class="col-sm-3 control-label">Background</label>\
-                <div class="col-sm-9">\
-                    <label class="file">\
-                        <input type="file" id="inputProfileBackground">\
-                        <span class="file-custom"></span>\
+                <div class="col-sm-3">\
+                    <label class="file" id="inputProfileBackground">\
+                        <input type="file" id="upload-file" accept="image/*">\
+                        <button class="btn btn-default upload">Upload</button>\
+                        <button class="btn btn-default save">Save</button>\
                     </label>\
+                </div>\
+                <div class="col-sm-6">\
+                    <div class="thumbnail">\
+                        <img id="profileBackground" src="/images/I77JDV8AZQ.jpg" class="img-responsive">\
+                    </div>\
                 </div>\
             </div>';
         
@@ -204,6 +210,21 @@ function loadResumeInit(json, json2, situation) {
         $('#navbar-top-layer-2 .back').attr('link', '/user/resumes');
         $('#navbar-top-layer-2 .preview').attr('link', '/resume/' + globalResumeID);
     }
+
+    function readURL(input) {
+        if (input.files && input.files.length) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                $('#profileBackground').prop('src', e.target.result);
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            $('#profileBackground').prop('src', '');
+        }
+    }
     
     
     function initResumeData(json) {
@@ -213,20 +234,18 @@ function loadResumeInit(json, json2, situation) {
     
     function initResumeProfileTypeData(json) {
         initSummernote('#summernote-summary');
-        initSummernote('#summernote-biography');
 
         // set resume profile
         $('#inputHeadline').val(json.headline);
         $('#inputSubtitle').val(json.subtitle);
         $('#summernote-summary').summernote('code', json.summary);
-        // json.background
+        $('#profileBackground').prop('src', json.background.substr(1));
 
         // get resume profile JSON
         var resumeProfile = {
             headline: json.headline,
             subtitle: json.subtitle,
             summary: json.summary
-            // background: json.background
         };
 
         var resumeProfileJSON = JSON.stringify(resumeProfile);
@@ -417,6 +436,8 @@ function loadResumeInit(json, json2, situation) {
 
     function initResumeContactTypeData(json) {
         var $this = $('#contact .form-horizontal');
+
+        initSummernote('#summernote-biography');
 
         // set resume contact
         $this.find('#inputFirstName').text(json.firstName);
@@ -995,7 +1016,81 @@ function loadResumeInit(json, json2, situation) {
     }
     
 
+    function uploadImage(input, category) {
+        var xhr = new XMLHttpRequest();
+        var url = '/uploadImage/' + category + '/' + globalResumeID;
+        var fd = new FormData();
+        
+        // $('.submit').button('loading');
+        
+        fd.append('uploadFile', input.files[0]);       
+        xhr.open('POST', url, true);
+        
+        xhr.onreadystatechange = function() {
+            $('.submit').button('reset');
+            
+            if (xhr.readyState == 4 && xhr.status == 200) { // file upload success
+                var responseText = xhr.responseText;
+                var responseTextLength = responseText.length;
+                var fileName;
+                
+                if (responseText.charAt(responseTextLength - 2) == 'u') { // get second last character
+                    fileName = responseText.substring(0, responseTextLength - 4);
+                }
+                else {
+                    fileName = responseText.substring(0, responseTextLength - 5);
+                }
+                
+                if (xhr.responseText != 'fail') { // successful upload
+                    var imgSrc = '/dynamic/images/' + fileName;
+
+                    /*
+                    $('.cover-photo').css('background', 'url("' + imgSrc + '")')
+                            .css('background-size', 'cover')
+                            .css('background-attachment', 'fixed');
+                            
+                    var imageWrapperHTML = '\
+                        <div class="image-wrapper">\
+                            <img>\
+                            <button class="delete">\
+                                <span class="fa fa-trash-o fa-lg"></span>\
+                            </button>\
+                        </div>';
+                    
+                    $('.content section .edit-bar').before(imageWrapperHTML);
+                    $('.image-wrapper').last().find('img').prop('src', imgSrc);
+                    */
+                }
+                else { // unsuccessful upload
+                    alert(xhr.responseText);
+                }
+            }
+        };
+        
+        xhr.send(fd);
+    }
+
+
     function eventHandlerResume() {
+        $('#profile').on('change', '#upload-file', function() {
+            readURL(this);
+        });
+
+        $('#profile').on('click', '#inputProfileBackground button.upload', function(e) {
+            e.preventDefault();
+        });
+
+        $('#profile').on('click', '#inputProfileBackground button.save', function(e) {
+            e.preventDefault();
+
+            var input = document.querySelector('#upload-file');
+            var category = 1;
+            
+            if (input.files && input.files.length) {
+                uploadImage(input, category);
+            }
+        });
+
         $('#navbar-top-layer-2').on('click', '.back', function() {
             page($(this).attr('link'));
         });
@@ -1088,11 +1183,12 @@ function loadResumeInit(json, json2, situation) {
 
 
     function checkResumeProfileTypeChanges(situation) {
+        // var fullSrc = $('#profileBackground').prop('src').split('/images/');
+
         var data = {
             headline: $('#inputHeadline').val(),
             subtitle: $('#inputSubtitle').val(),
             summary: $('#summernote-summary').summernote('code')
-            // background
         };
 
         var newJSONData = JSON.stringify(data);
@@ -1313,7 +1409,6 @@ function loadResumeInit(json, json2, situation) {
                     headline: json.profile.headline,
                     subtitle: json.profile.subtitle,
                     summary: json.profile.summary
-                    // background: json.profile.background
                 };
 
                 var JSONData = JSON.stringify(data);

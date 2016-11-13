@@ -32,6 +32,8 @@ function viewResumeInit() {
             <div class="content">' + json.summary + '</div>';
         
         $('#profile .jumbo').append(resumeProfileHTML);
+        $('#profile').css('background-image', 'url("' + json.background.substr(1) + '")')
+                .css('background-size', 'cover');
     }
     
     function initResumeExperienceData(json) {

@@ -176,10 +176,12 @@ ul.default {
   ========================================
 */
 
+button.btn-default,
 button.default {
     border: none;
     outline: none;
 }
+button.btn-default:focus,
 button.default:focus { 
     outline: none;
 }
@@ -210,6 +212,13 @@ button.new {
 }
 #new-resume {
     position: fixed;
+}
+
+#upload-file {
+    position: absolute;
+    opacity: 0;
+    width: 67.83px;
+    height: 32px;
 }
 
 .button-group {
@@ -744,6 +753,9 @@ section {
     #profile .subtitle {
         margin-bottom: 20px;
         text-align: center;
+    }
+    #profileBackground {
+        max-height: 300px;
     }
 
 @media (max-width: 767px) {

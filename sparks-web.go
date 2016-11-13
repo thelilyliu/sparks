@@ -3,14 +3,18 @@ package main
 import (
 	"encoding/json"
 	"html/template"
+	"image"
+	"image/jpeg"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/disintegration/imaging"
 	"github.com/gorilla/context"
 	"github.com/gorilla/sessions"
 	"github.com/husobee/vestigo"
@@ -90,6 +94,9 @@ func main() {
 	router.Post("/insertResumeJSON/:category", insertResumeJSON)
 	router.Post("/updateResumeJSON/:category/:resumeID", updateResumeJSON)
 	router.Delete("/deleteResumeJSON/:resumeID", deleteResumeJSON)
+
+	// image
+	router.Post("/uploadImage/:category/:resumeID", uploadImage)
 
 	// portfolio
 	router.Get("/loadPortfolioJSON/:portfolioID", loadPortfolioJSON)
@@ -859,6 +866,99 @@ func deleteResumeJSON(w http.ResponseWriter, r *http.Request) {
 	} else {
 		handleError(3, 403, "Session expired. Please sign in again.", w)
 	}
+}
+
+/*
+  ========================================
+  Image
+  ========================================
+*/
+
+func uploadImage(w http.ResponseWriter, r *http.Request) {
+	categoryInt := 0
+	categoryStr := vestigo.Param(r, "category")
+
+	/*
+		1 = profile
+		2 = experience
+		3 = skills
+		4 = portfolio
+		5 = achievements
+		6 = contact
+	*/
+
+	categoryInt, err := strconv.Atoi(categoryStr)
+	if err != nil {
+		log.Println("upload image error 1:", err)
+	}
+
+	resumeID := vestigo.Param(r, "resumeID")
+	fileName := "./images/" + time.Now().Format("20060102150405") + ".jpg"
+
+	err = processImage(r, categoryInt, resumeID, fileName) // save image in folder
+	if err != nil {
+		log.Println("upload image error 2:", err)
+	}
+
+	w.Write([]byte(fileName))
+}
+
+func processImage(r *http.Request, categoryInt int, resumeID, fileName string) error {
+	file, _, err := r.FormFile("uploadFile")
+	defer file.Close()
+	if err != nil {
+		log.Println("error 1:", err)
+	}
+
+	originalImage, _, err := image.Decode(file) // decode file
+	if err != nil {
+		log.Println("error 2:", err)
+	}
+
+	switch categoryInt {
+	case 1: // profile
+		imageLarge := imaging.Resize(originalImage, 1200, 0, imaging.Linear) // resize image to width = 1200px
+
+		change := bson.M{"profile.background": fileName}
+		err = updateBackground(resumeID, &change) // save image in database
+		if err != nil {
+			log.Println("error 3:", err)
+		}
+
+		/*
+			// https://golang.org/pkg/os/#OpenFile
+			file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666) // open file
+			defer file.Close()
+			if err != nil {
+				log.Println("error 4:", err)
+			}
+		*/
+
+		file, err := os.Create(fileName)
+		defer file.Close()
+		if err != nil {
+			log.Println("error 4:", err)
+		}
+
+		err = jpeg.Encode(file, imageLarge, &jpeg.Options{90}) // encode image
+		if err != nil {
+			log.Println("error 5:", err)
+		}
+	case 2: // experience
+		break
+	case 3: // skills
+		break
+	case 4: // portfolio
+		break
+	case 5: // achievements
+		break
+	case 6: // contact
+		break
+	default:
+		log.Println("Process upload file category not matched.")
+	}
+
+	return err
 }
 
 /*

@@ -28,7 +28,7 @@ type ProfileType struct {
 	Headline   string `json:"headline"`
 	Subtitle   string `json:"subtitle"`
 	Summary    string `json:"summary"`
-	Background Image  `json:"background"`
+	Background string `json:"background"`
 }
 
 type ExperienceType struct {
@@ -304,6 +304,24 @@ func updateRAwards(resumeID, userID string, awards *[]Award) error {
 
 	return updateResumeDB(&selector, &update)
 }
+
+func updateBackground(resumeID string, change *bson.M) error {
+	// find document and update fields
+	selector := bson.M{"resumeid": resumeID}
+	update := bson.M{"$set": &change}
+
+	return updateResumeDB(&selector, &update)
+}
+
+/*
+func updateBackground(resumeID, userID string, change *bson.M) error {
+	// find document and update fields
+	selector := bson.M{"resumeid": resumeID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	return updateResumeDB(&selector, &update)
+}
+*/
 
 /*
   ========================================
