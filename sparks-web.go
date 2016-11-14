@@ -1311,15 +1311,9 @@ func deleteUserJSON(w http.ResponseWriter, r *http.Request) {
 
 /*
   ========================================
-  Error
+  Error Handling
   ========================================
 */
-
-func logErrorMessage(err error) {
-	if err != nil {
-		log.Println(err)
-	}
-}
 
 func handleError(returnCode, statusCode int, message string, w http.ResponseWriter) {
 	error := new(Error)
