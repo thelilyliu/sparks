@@ -677,14 +677,16 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 	case 1:
 		// part 1: update resume settings
 
-		err = json.NewDecoder(r.Body).Decode(resume)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(resume); err != nil {
+			log.Println("update resume error 1.1:", err)
+		}
 
 		resume.TitleURL = getTitleURL(resume.Title)
 		resume.LinkURL = getLinkURL(resume.Title)
 
-		err = updateRSettings(resume.ResumeID, resume.UserID, resume)
-		logErrorMessage(err)
+		if err := updateRSettings(resume.ResumeID, resume.UserID, resume); err != nil {
+			log.Println("update resume error 1.2:", err)
+		}
 
 		// part 2: update user resume
 
@@ -693,42 +695,49 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		basicResume.ResumeID = resume.ResumeID
 		basicResume.Title = resume.Title
 
-		err = updateUResume(resume.UserID, basicResume)
-		logErrorMessage(err)
+		if err := updateUResume(resume.UserID, basicResume); err != nil {
+			log.Println("update resume error 1.3:", err)
+		}
 	case 2:
 		profile := new(ProfileType)
 
-		err = json.NewDecoder(r.Body).Decode(profile)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(profile); err != nil {
+			log.Println("update resume error 2.1:", err)
+		}
 
 		// profile.Background = new(Image)
 
-		err = updateRProfileType(resume.ResumeID, resume.UserID, profile)
-		logErrorMessage(err)
+		if err := updateRProfileType(resume.ResumeID, resume.UserID, profile); err != nil {
+			log.Println("update resume error 2.2:", err)
+		}
 
 		resume.Profile = *profile
 	case 3:
 		experience := new(ExperienceType)
 
-		err = json.NewDecoder(r.Body).Decode(experience)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(experience); err != nil {
+			log.Println("update resume error 3.1:", err)
+		}
 
 		// experience.Background = new(Image)
 
-		err = updateRExperienceType(resume.ResumeID, resume.UserID, experience)
-		logErrorMessage(err)
+		if err := updateRExperienceType(resume.ResumeID, resume.UserID, experience); err != nil {
+			log.Println("update resume error 3.2:", err)
+		}
 
 		resume.Experience = *experience
 	case 4:
 		skills := new(SkillsType)
 
-		err = json.NewDecoder(r.Body).Decode(skills)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(skills); err != nil {
+			log.Println("update resume error 4.1:", err)
+		}
 
 		// skills.Background = new(Image)
 
-		err = updateRSkillsType(resume.ResumeID, resume.UserID, skills)
-		logErrorMessage(err)
+		if err := updateRSkillsType(resume.ResumeID, resume.UserID, skills); err != nil {
+			log.Println("update resume error 4.2:", err)
+		}
 
 		resume.Skills = *skills
 	case 5:
@@ -738,13 +747,15 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 	case 7:
 		contact := new(ContactType)
 
-		err = json.NewDecoder(r.Body).Decode(contact)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(contact); err != nil {
+			log.Println("update resume error 7.1:", err)
+		}
 
 		// contactInfo.Background = new(Image)
 
-		err = updateRContactType(resume.ResumeID, resume.UserID, contact)
-		logErrorMessage(err)
+		if err := updateRContactType(resume.ResumeID, resume.UserID, contact); err != nil {
+			log.Println("update resume error 7.2:", err)
+		}
 
 		resume.Contact = *contact
 	case 8:
@@ -752,15 +763,18 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		var byteSlice []byte
 
 		// https://golang.org/pkg/io/ioutil/#ReadAll
-		byteSlice, err = ioutil.ReadAll(r.Body)
-		logErrorMessage(err)
+		if byteSlice, err = ioutil.ReadAll(r.Body); err != nil {
+			log.Println("update resume error 8.1:", err)
+		}
 
 		// https://golang.org/pkg/encoding/json/#Unmarshal
-		err = json.Unmarshal(byteSlice, &experiences)
-		logErrorMessage(err)
+		if err := json.Unmarshal(byteSlice, &experiences); err != nil {
+			log.Println("update resume error 8.2:", err)
+		}
 
-		err = updateRExperiences(resume.ResumeID, resume.UserID, &experiences)
-		logErrorMessage(err)
+		if err := updateRExperiences(resume.ResumeID, resume.UserID, &experiences); err != nil {
+			log.Println("update resume error 8.3:", err)
+		}
 
 		resume.Experience.Experiences = experiences
 	case 9:
@@ -768,15 +782,18 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		var byteSlice []byte
 
 		// https://golang.org/pkg/io/ioutil/#ReadAll
-		byteSlice, err = ioutil.ReadAll(r.Body)
-		logErrorMessage(err)
+		if byteSlice, err = ioutil.ReadAll(r.Body); err != nil {
+			log.Println("update resume error 9.1:", err)
+		}
 
 		// https://golang.org/pkg/encoding/json/#Unmarshal
-		err = json.Unmarshal(byteSlice, &skills)
-		logErrorMessage(err)
+		if err := json.Unmarshal(byteSlice, &skills); err != nil {
+			log.Println("update resume error 9.2:", err)
+		}
 
-		err = updateRSkills(resume.ResumeID, resume.UserID, &skills)
-		logErrorMessage(err)
+		if err := updateRSkills(resume.ResumeID, resume.UserID, &skills); err != nil {
+			log.Println("update resume error 9.3:", err)
+		}
 
 		resume.Skills.Skills = skills
 	case 10:
@@ -786,15 +803,18 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		var byteSlice []byte
 
 		// https://golang.org/pkg/io/ioutil/#ReadAll
-		byteSlice, err = ioutil.ReadAll(r.Body)
-		logErrorMessage(err)
+		if byteSlice, err = ioutil.ReadAll(r.Body); err != nil {
+			log.Println("update resume error 11.1:", err)
+		}
 
 		// https://golang.org/pkg/encoding/json/#Unmarshal
-		err = json.Unmarshal(byteSlice, &educations)
-		logErrorMessage(err)
+		if err := json.Unmarshal(byteSlice, &educations); err != nil {
+			log.Println("update resume error 11.2:", err)
+		}
 
-		err = updateREducations(resume.ResumeID, resume.UserID, &educations)
-		logErrorMessage(err)
+		if err := updateREducations(resume.ResumeID, resume.UserID, &educations); err != nil {
+			log.Println("update resume error 11.3:", err)
+		}
 
 		resume.Achievements.Educations = educations
 	case 12:
@@ -802,15 +822,18 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		var byteSlice []byte
 
 		// https://golang.org/pkg/io/ioutil/#ReadAll
-		byteSlice, err = ioutil.ReadAll(r.Body)
-		logErrorMessage(err)
+		if byteSlice, err = ioutil.ReadAll(r.Body); err != nil {
+			log.Println("update resume error 12.1:", err)
+		}
 
 		// https://golang.org/pkg/encoding/json/#Unmarshal
-		err = json.Unmarshal(byteSlice, &qualifications)
-		logErrorMessage(err)
+		if err := json.Unmarshal(byteSlice, &qualifications); err != nil {
+			log.Println("update resume error 12.2:", err)
+		}
 
-		err = updateRQualifications(resume.ResumeID, resume.UserID, &qualifications)
-		logErrorMessage(err)
+		if err := updateRQualifications(resume.ResumeID, resume.UserID, &qualifications); err != nil {
+			log.Println("update resume error 12.3:", err)
+		}
 
 		resume.Achievements.Qualifications = qualifications
 	case 13:
@@ -818,15 +841,18 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		var byteSlice []byte
 
 		// https://golang.org/pkg/io/ioutil/#ReadAll
-		byteSlice, err = ioutil.ReadAll(r.Body)
-		logErrorMessage(err)
+		if byteSlice, err = ioutil.ReadAll(r.Body); err != nil {
+			log.Println("update resume error 13.1:", err)
+		}
 
 		// https://golang.org/pkg/encoding/json/#Unmarshal
-		err = json.Unmarshal(byteSlice, &awards)
-		logErrorMessage(err)
+		if err := json.Unmarshal(byteSlice, &awards); err != nil {
+			log.Println("update resume error 13.2:", err)
+		}
 
-		err = updateRAwards(resume.ResumeID, resume.UserID, &awards)
-		logErrorMessage(err)
+		if err := updateRAwards(resume.ResumeID, resume.UserID, &awards); err != nil {
+			log.Println("update resume error 13.3:", err)
+		}
 
 		resume.Achievements.Awards = awards
 	default:
@@ -875,44 +901,63 @@ func deleteResumeJSON(w http.ResponseWriter, r *http.Request) {
 */
 
 func uploadImage(w http.ResponseWriter, r *http.Request) {
-	categoryInt := 0
-	categoryStr := vestigo.Param(r, "category")
+	returnCode := 0
 
-	/*
-		1 = profile
-		2 = experience
-		3 = skills
-		4 = portfolio
-		5 = achievements
-		6 = contact
-	*/
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		categoryInt := 0
+		categoryStr := vestigo.Param(r, "category")
 
-	categoryInt, err := strconv.Atoi(categoryStr)
-	if err != nil {
-		log.Println("upload image error 1:", err)
+		resumeID := vestigo.Param(r, "resumeID")
+		fileName := "./images/" + time.Now().Format("20060102150405") + ".jpg"
+
+		/*
+			1 = profile
+			2 = experience
+			3 = skills
+			4 = portfolio
+			5 = achievements
+			6 = contact
+		*/
+
+		categoryInt, err := strconv.Atoi(categoryStr)
+		if err != nil {
+			returnCode = 1
+		}
+
+		if returnCode == 0 {
+			if err := processImage(r, categoryInt, resumeID, fileName); err != nil { // save image in folder
+				returnCode = 2
+			}
+		}
+
+		if returnCode == 0 {
+			if err := json.NewEncoder(w).Encode(fileName); err != nil {
+				returnCode = 3
+			}
+			// w.Write([]byte(fileName))
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Image could not be uploaded at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
 	}
-
-	resumeID := vestigo.Param(r, "resumeID")
-	fileName := "./images/" + time.Now().Format("20060102150405") + ".jpg"
-
-	err = processImage(r, categoryInt, resumeID, fileName) // save image in folder
-	if err != nil {
-		log.Println("upload image error 2:", err)
-	}
-
-	w.Write([]byte(fileName))
 }
 
 func processImage(r *http.Request, categoryInt int, resumeID, fileName string) error {
+	var err error
+
 	file, _, err := r.FormFile("uploadFile")
 	defer file.Close()
 	if err != nil {
-		log.Println("error 1:", err)
+		log.Println("process image error 1:", err)
 	}
 
 	originalImage, _, err := image.Decode(file) // decode file
 	if err != nil {
-		log.Println("error 2:", err)
+		log.Println("process image error 2:", err)
 	}
 
 	switch categoryInt {
@@ -933,13 +978,13 @@ func processImage(r *http.Request, categoryInt int, resumeID, fileName string) e
 		file, err := os.Create(fileName)
 		defer file.Close()
 		if err != nil {
-			log.Println("error 3:", err)
+			log.Println("process image error 3:", err)
 		}
 
 		// Step 3: Compress image.
 		err = jpeg.Encode(file, imageLarge, &jpeg.Options{90})
 		if err != nil {
-			log.Println("error 4:", err)
+			log.Println("process image error 4:", err)
 		}
 
 		// Step 4: Get image file name from database.
@@ -947,20 +992,20 @@ func processImage(r *http.Request, categoryInt int, resumeID, fileName string) e
 		selector := bson.M{"profile.background": 1}
 		err = getFileName(resumeID, &selector, resume)
 		if err != nil {
-			log.Println("error 5:", err)
+			log.Println("process image error 5:", err)
 		}
 
 		// Step 5: Save image file name in database.
 		change := bson.M{"profile.background": fileName}
 		err = updateBackground(resumeID, &change)
 		if err != nil {
-			log.Println("error 6:", err)
+			log.Println("process image error 6:", err)
 		}
 
 		// Step 6: Delete old image from directory.
 		err = os.Remove(resume.Profile.Background)
 		if err != nil {
-			log.Println("error 7:", err)
+			log.Println("process image error 7:", err)
 		}
 	case 2: // experience
 	case 3: // skills
@@ -1119,14 +1164,16 @@ func updatePortfolio(categoryInt int, portfolio *Portfolio, r *http.Request) err
 	case 1:
 		// part 1: update portfolio settings
 
-		err = json.NewDecoder(r.Body).Decode(portfolio)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(portfolio); err != nil {
+			log.Println("update portfolio error 1.1:", err)
+		}
 
 		portfolio.TitleURL = getTitleURL(portfolio.Title)
 		portfolio.LinkURL = getLinkURL(portfolio.Title)
 
-		err = updatePSettings(portfolio.PortfolioID, portfolio.UserID, portfolio)
-		logErrorMessage(err)
+		if err := updatePSettings(portfolio.PortfolioID, portfolio.UserID, portfolio); err != nil {
+			log.Println("update portfolio error 1.2:", err)
+		}
 
 		// part 2: update user portfolio
 
@@ -1135,24 +1182,29 @@ func updatePortfolio(categoryInt int, portfolio *Portfolio, r *http.Request) err
 		basicPortfolio.PortfolioID = portfolio.PortfolioID
 		basicPortfolio.Title = portfolio.Title
 
-		err = updateUPortfolio(portfolio.UserID, basicPortfolio)
-		logErrorMessage(err)
+		if err := updateUPortfolio(portfolio.UserID, basicPortfolio); err != nil {
+			log.Println("update portfolio error 1.3:", err)
+		}
 	case 2:
-		err = json.NewDecoder(r.Body).Decode(portfolio)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(portfolio); err != nil {
+			log.Println("update portfolio error 2.1:", err)
+		}
 
 		// portfolio.Background = new(Image)
 
-		err = updatePHeader(portfolio)
-		logErrorMessage(err)
+		if err := updatePHeader(portfolio); err != nil {
+			log.Println("update portfolio error 2.2:", err)
+		}
 	case 3:
 		var content string
 
-		err = json.NewDecoder(r.Body).Decode(&content)
-		logErrorMessage(err)
+		if err := json.NewDecoder(r.Body).Decode(&content); err != nil {
+			log.Println("update portfolio error 3.1:", err)
+		}
 
-		err = updatePContent(portfolio.PortfolioID, portfolio.UserID, content)
-		logErrorMessage(err)
+		if err := updatePContent(portfolio.PortfolioID, portfolio.UserID, content); err != nil {
+			log.Println("update portfolio error 3.2:", err)
+		}
 
 		portfolio.Content = content
 	default:
@@ -1204,9 +1256,13 @@ func insertUserJSON(w http.ResponseWriter, r *http.Request) {
 	// **** EDIT ****
 
 	userID, err := insertUserDB()
+	if err != nil {
+		log.Println("insert user json error 1:", err)
+	}
 
-	err = json.NewEncoder(w).Encode(userID)
-	logErrorMessage(err)
+	if err := json.NewEncoder(w).Encode(userID); err != nil {
+		log.Println("insert user json error 2:", err)
+	}
 }
 
 func updateUserJSON(w http.ResponseWriter, r *http.Request) {
