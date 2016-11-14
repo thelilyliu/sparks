@@ -313,6 +313,15 @@ func updateBackground(resumeID string, change *bson.M) error {
 	return updateResumeDB(&selector, &update)
 }
 
+func getFileName(resumeID string, selector *bson.M, resume *Resume) error {
+	// create new MongoDB session
+	collection, session := mongoDBInitialization("resume")
+	defer session.Close()
+
+	// retrieve one document and return file name
+	return collection.Find(bson.M{"resumeid": resumeID}).Select(selector).One(resume)
+}
+
 /*
 func updateBackground(resumeID, userID string, change *bson.M) error {
 	// find document and update fields

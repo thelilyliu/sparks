@@ -118,7 +118,7 @@ function loadResumeInit(json, json2, situation) {
                 <div class="col-sm-3">\
                     <label class="file" id="inputProfileBackground">\
                         <input type="file" id="upload-file" accept="image/*">\
-                        <button class="btn btn-default upload">Upload</button>\
+                        <button class="btn btn-default upload"><span>Upload</span></button>\
                         <button class="btn btn-default save">Save</button>\
                     </label>\
                 </div>\
@@ -1021,8 +1021,6 @@ function loadResumeInit(json, json2, situation) {
         var url = '/uploadImage/' + category + '/' + globalResumeID;
         var fd = new FormData();
         
-        // $('.submit').button('loading');
-        
         fd.append('uploadFile', input.files[0]);       
         xhr.open('POST', url, true);
         
@@ -1030,36 +1028,8 @@ function loadResumeInit(json, json2, situation) {
             $('.submit').button('reset');
             
             if (xhr.readyState == 4 && xhr.status == 200) { // file upload success
-                var responseText = xhr.responseText;
-                var responseTextLength = responseText.length;
-                var fileName;
-                
-                if (responseText.charAt(responseTextLength - 2) == 'u') { // get second last character
-                    fileName = responseText.substring(0, responseTextLength - 4);
-                }
-                else {
-                    fileName = responseText.substring(0, responseTextLength - 5);
-                }
-                
                 if (xhr.responseText != 'fail') { // successful upload
-                    var imgSrc = '/dynamic/images/' + fileName;
-
-                    /*
-                    $('.cover-photo').css('background', 'url("' + imgSrc + '")')
-                            .css('background-size', 'cover')
-                            .css('background-attachment', 'fixed');
-                            
-                    var imageWrapperHTML = '\
-                        <div class="image-wrapper">\
-                            <img>\
-                            <button class="delete">\
-                                <span class="fa fa-trash-o fa-lg"></span>\
-                            </button>\
-                        </div>';
-                    
-                    $('.content section .edit-bar').before(imageWrapperHTML);
-                    $('.image-wrapper').last().find('img').prop('src', imgSrc);
-                    */
+                    console.log('upload image success');
                 }
                 else { // unsuccessful upload
                     alert(xhr.responseText);
@@ -1183,8 +1153,6 @@ function loadResumeInit(json, json2, situation) {
 
 
     function checkResumeProfileTypeChanges(situation) {
-        // var fullSrc = $('#profileBackground').prop('src').split('/images/');
-
         var data = {
             headline: $('#inputHeadline').val(),
             subtitle: $('#inputSubtitle').val(),

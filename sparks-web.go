@@ -917,43 +917,56 @@ func processImage(r *http.Request, categoryInt int, resumeID, fileName string) e
 
 	switch categoryInt {
 	case 1: // profile
-		imageLarge := imaging.Resize(originalImage, 1200, 0, imaging.Linear) // resize image to width = 1200px
-
-		change := bson.M{"profile.background": fileName}
-		err = updateBackground(resumeID, &change) // save image in database
-		if err != nil {
-			log.Println("error 3:", err)
-		}
+		// Step 1: Resize image to width = 1200 px.
+		imageLarge := imaging.Resize(originalImage, 1200, 0, imaging.Linear)
 
 		/*
 			// https://golang.org/pkg/os/#OpenFile
 			file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666) // open file
 			defer file.Close()
 			if err != nil {
-				log.Println("error 4:", err)
+				log.Println("error 3:", err)
 			}
 		*/
 
+		// Step 2: Save image in directory.
 		file, err := os.Create(fileName)
 		defer file.Close()
+		if err != nil {
+			log.Println("error 3:", err)
+		}
+
+		// Step 3: Compress image.
+		err = jpeg.Encode(file, imageLarge, &jpeg.Options{90})
 		if err != nil {
 			log.Println("error 4:", err)
 		}
 
-		err = jpeg.Encode(file, imageLarge, &jpeg.Options{90}) // encode image
+		// Step 4: Get image file name from database.
+		resume := new(Resume)
+		selector := bson.M{"profile.background": 1}
+		err = getFileName(resumeID, &selector, resume)
 		if err != nil {
 			log.Println("error 5:", err)
 		}
+
+		// Step 5: Save image file name in database.
+		change := bson.M{"profile.background": fileName}
+		err = updateBackground(resumeID, &change)
+		if err != nil {
+			log.Println("error 6:", err)
+		}
+
+		// Step 6: Delete old image from directory.
+		err = os.Remove(resume.Profile.Background)
+		if err != nil {
+			log.Println("error 7:", err)
+		}
 	case 2: // experience
-		break
 	case 3: // skills
-		break
 	case 4: // portfolio
-		break
 	case 5: // achievements
-		break
 	case 6: // contact
-		break
 	default:
 		log.Println("Process upload file category not matched.")
 	}

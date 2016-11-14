@@ -219,6 +219,7 @@ button.new {
     opacity: 0;
     width: 67.83px;
     height: 32px;
+    cursor: pointer;
 }
 
 .button-group {
