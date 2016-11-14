@@ -248,6 +248,47 @@ function initSummernotePost(selector) {
     });
 }
 
+function setScreenSize() {
+    var size = '';
+
+    if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) {
+        size = 'extra-small';
+    }
+    else if (window.matchMedia && window.matchMedia('(max-width: 991px)').matches) {
+        size = 'small';
+    }
+    else if (window.matchMedia && window.matchMedia('(max-width: 1199px)').matches) {
+        size = 'medium';
+    }
+    else {
+        size = 'large';
+    }
+    
+    $('body').attr('size', size);
+}
+
+function getImageSize() {
+    var imageSize = '';
+    var pageSize = $('body').attr('size');
+
+    switch(pageSize) {
+        case 'extra-small':
+        case 'small':
+            imageSize = 'small';
+            break;
+
+        case 'medium':
+        case 'large':
+            imageSize = 'large';
+            break;
+
+        default:
+            console.log('Error: get image size page size not matched.');
+    }
+
+    return imageSize;
+}
+
 function clearContainer() {
     var page = $('body').data('page');
     

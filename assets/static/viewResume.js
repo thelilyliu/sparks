@@ -30,9 +30,11 @@ function viewResumeInit() {
             <h1 class="title">' + json.headline + '</h1>\
             <h3 class="subtitle">' + json.subtitle + '</h3>\
             <div class="content">' + json.summary + '</div>';
+
+        var imageURL = '/images/profile/' + getImageSize() + '/' + json.background;
         
         $('#profile .jumbo').append(resumeProfileHTML);
-        $('#profile').css('background-image', 'url("' + json.background.substr(1) + '")')
+        $('#profile').css('background-image', 'url("' + imageURL + '")')
                 .css('background-size', 'cover');
     }
     

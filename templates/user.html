@@ -126,25 +126,6 @@
                 });
             }
             
-            function setScreenSize() {
-                var size = '';
-
-                if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) {
-                    size = 'extra-small';
-                }
-                else if (window.matchMedia && window.matchMedia('(max-width: 991px)').matches) {
-                    size = 'small';
-                }
-                else if (window.matchMedia && window.matchMedia('(max-width: 1199px)').matches) {
-                    size = 'medium';
-                }
-                else {
-                    size = 'large';
-                }
-                
-                $('body').attr('size', size);
-            }
-            
             function getFormattedDate(date) {
                 // original format: yyyy-mm-dd
                 // new format: month dd, yyyy

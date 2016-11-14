@@ -12,6 +12,7 @@ function loadResumeInit(json, json2, situation) {
 
             initializeFullPage();
             eventHandlerResume();
+            eventHandlerImage();
             setupAutosaveTimer(situation);
         }
         else { // error
@@ -113,18 +114,22 @@ function loadResumeInit(json, json2, situation) {
                 </div>\
             </div>\
             \
-            <div class="form-group">\
+            <div class="form-group image-processing">\
                 <label for="inputProfileBackground" class="col-sm-3 control-label">Background</label>\
                 <div class="col-sm-3">\
                     <label class="file" id="inputProfileBackground">\
-                        <input type="file" id="upload-file" accept="image/*">\
-                        <button class="btn btn-default upload"><span>Upload</span></button>\
-                        <button class="btn btn-default save">Save</button>\
+                        <input type="file" id="upload-profile" class="upload" accept="image/*">\
+                        <button class="btn btn-default upload">\
+                            <i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload\
+                        </button>\
+                        <button class="btn btn-default save">\
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Save\
+                        </button>\
                     </label>\
                 </div>\
                 <div class="col-sm-6">\
                     <div class="thumbnail">\
-                        <img id="profileBackground" src="/images/I77JDV8AZQ.jpg" class="img-responsive">\
+                        <img id="profileBackground" class="img-responsive">\
                     </div>\
                 </div>\
             </div>';
@@ -235,11 +240,13 @@ function loadResumeInit(json, json2, situation) {
     function initResumeProfileTypeData(json) {
         initSummernote('#summernote-summary');
 
+        var imageURL = '/images/profile/' + getImageSize() + '/' + json.background;
+
         // set resume profile
         $('#inputHeadline').val(json.headline);
         $('#inputSubtitle').val(json.subtitle);
         $('#summernote-summary').summernote('code', json.summary);
-        $('#profileBackground').prop('src', json.background.substr(1));
+        $('#profileBackground').prop('src', imageURL);
 
         // get resume profile JSON
         var resumeProfile = {
@@ -1025,8 +1032,6 @@ function loadResumeInit(json, json2, situation) {
         xhr.open('POST', url, true);
         
         xhr.onreadystatechange = function() {
-            $('.submit').button('reset');
-            
             if (xhr.readyState == 4 && xhr.status == 200) { // file upload success
                 if (xhr.responseText != 'fail') { // successful upload
                     console.log('upload image success');
@@ -1042,25 +1047,6 @@ function loadResumeInit(json, json2, situation) {
 
 
     function eventHandlerResume() {
-        $('#profile').on('change', '#upload-file', function() {
-            readURL(this);
-        });
-
-        $('#profile').on('click', '#inputProfileBackground button.upload', function(e) {
-            e.preventDefault();
-        });
-
-        $('#profile').on('click', '#inputProfileBackground button.save', function(e) {
-            e.preventDefault();
-
-            var input = document.querySelector('#upload-file');
-            var category = 1;
-            
-            if (input.files && input.files.length) {
-                uploadImage(input, category);
-            }
-        });
-
         $('#navbar-top-layer-2').on('click', '.back', function() {
             page($(this).attr('link'));
         });
@@ -1148,6 +1134,45 @@ function loadResumeInit(json, json2, situation) {
             addAwardGroup();
             $.fn.fullpage.reBuild();
             $('.award-group').last().addClass('last');
+        });
+    }
+
+    function eventHandlerImage() {
+        $('#fullpage').on('change', '.image-processing input.upload', function() {
+            readURL(this);
+        });
+
+        $('#fullpage').on('click', '.image-processing button.save', function(e) {
+            e.preventDefault();
+
+            var input;
+            var $section = $(this).closest('section');
+            var categoryStr = $section.attr('data-anchor').substr(7);
+            var categoryInt = parseInt(categoryStr);
+
+            switch(categoryInt) {
+                case 1:
+                    input = document.querySelector('#upload-profile');
+                    break;
+                case 2:
+                    input = document.querySelector('#upload-experience');
+                    break;
+                case 3:
+                    input = document.querySelector('#upload-skills');
+                    break;
+                case 4:
+                    input = document.querySelector('#upload-achievements');
+                    break;
+                case 5:
+                    input = document.querySelector('#upload-contact');
+                    break;
+                default:
+                    console.log('Error: event handler image category not matched.');
+            }
+            
+            if (input.files && input.files.length) {
+                uploadImage(input, categoryInt);
+            }
         });
     }
 

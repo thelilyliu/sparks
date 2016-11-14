@@ -214,10 +214,15 @@ button.new {
     position: fixed;
 }
 
-#upload-file {
+.image-processing button.upload,
+.image-processing button.save {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.image-processing input.upload {
     position: absolute;
     opacity: 0;
-    width: 67.83px;
+    width: 87.77px;
     height: 32px;
     cursor: pointer;
 }

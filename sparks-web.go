@@ -880,9 +880,7 @@ func deleteResumeJSON(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if returnCode == 0 {
-			if err := json.NewEncoder(w).Encode(""); err != nil {
-				returnCode = 3
-			}
+			w.Write([]byte(resumeID))
 		}
 
 		// error handling
@@ -904,20 +902,10 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 	returnCode := 0
 
 	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
-		categoryInt := 0
 		categoryStr := vestigo.Param(r, "category")
-
 		resumeID := vestigo.Param(r, "resumeID")
-		fileName := "./images/" + time.Now().Format("20060102150405") + ".jpg"
-
-		/*
-			1 = profile
-			2 = experience
-			3 = skills
-			4 = portfolio
-			5 = achievements
-			6 = contact
-		*/
+		userID := uID.(string)
+		var fileName string
 
 		categoryInt, err := strconv.Atoi(categoryStr)
 		if err != nil {
@@ -925,16 +913,13 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if returnCode == 0 {
-			if err := processImage(r, categoryInt, resumeID, fileName); err != nil { // save image in folder
+			if fileName, err = processImage(r, categoryInt, resumeID, userID); err != nil { // save image in folder
 				returnCode = 2
 			}
 		}
 
 		if returnCode == 0 {
-			if err := json.NewEncoder(w).Encode(fileName); err != nil {
-				returnCode = 3
-			}
-			// w.Write([]byte(fileName))
+			w.Write([]byte(fileName))
 		}
 
 		// error handling
@@ -946,8 +931,10 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func processImage(r *http.Request, categoryInt int, resumeID, fileName string) error {
+func processImage(r *http.Request, categoryInt int, resumeID, userID string) (string, error) {
 	var err error
+
+	fileName := time.Now().Format("20060102150405") + ".jpg"
 
 	file, _, err := r.FormFile("uploadFile")
 	defer file.Close()
@@ -962,61 +949,93 @@ func processImage(r *http.Request, categoryInt int, resumeID, fileName string) e
 
 	switch categoryInt {
 	case 1: // profile
-		// Step 1: Resize image to width = 1200 px.
-		imageLarge := imaging.Resize(originalImage, 1200, 0, imaging.Linear)
-
 		/*
-			// https://golang.org/pkg/os/#OpenFile
-			file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666) // open file
-			defer file.Close()
-			if err != nil {
-				log.Println("error 3:", err)
-			}
+		  ========================================
+		  Large Image
+		  ========================================
 		*/
 
+		// Step 1: Resize image to width = 1200 px.
+		largeFilePath := "./images/profile/large/"
+		imageLarge := imaging.Resize(originalImage, 1200, 0, imaging.Linear)
+
 		// Step 2: Save image in directory.
-		file, err := os.Create(fileName)
-		defer file.Close()
+		largeFile, err := os.Create(largeFilePath + fileName)
+		defer largeFile.Close()
 		if err != nil {
 			log.Println("process image error 3:", err)
 		}
 
 		// Step 3: Compress image.
-		err = jpeg.Encode(file, imageLarge, &jpeg.Options{90})
+		err = jpeg.Encode(largeFile, imageLarge, &jpeg.Options{90})
 		if err != nil {
 			log.Println("process image error 4:", err)
 		}
 
-		// Step 4: Get image file name from database.
-		resume := new(Resume)
-		selector := bson.M{"profile.background": 1}
-		err = getFileName(resumeID, &selector, resume)
+		/*
+		  ========================================
+		  Small Image
+		  ========================================
+		*/
+
+		// Step 4: Resize image to width = 600 px.
+		smallFilePath := "./images/profile/small/"
+		imageSmall := imaging.Resize(originalImage, 600, 0, imaging.Linear)
+
+		// Step 5: Save image in directory.
+		smallFile, err := os.Create(smallFilePath + fileName)
+		defer smallFile.Close()
 		if err != nil {
 			log.Println("process image error 5:", err)
 		}
 
-		// Step 5: Save image file name in database.
-		change := bson.M{"profile.background": fileName}
-		err = updateBackground(resumeID, &change)
+		// Step 6: Compress image.
+		err = jpeg.Encode(smallFile, imageSmall, &jpeg.Options{90})
 		if err != nil {
 			log.Println("process image error 6:", err)
 		}
 
-		// Step 6: Delete old image from directory.
-		err = os.Remove(resume.Profile.Background)
+		/*
+		  ========================================
+		  Update Database
+		  ========================================
+		*/
+
+		// Step 7: Get image file name from database.
+		resume := new(Resume)
+		selector := bson.M{"profile.background": 1}
+		err = getFileName(resumeID, userID, &selector, resume)
 		if err != nil {
 			log.Println("process image error 7:", err)
 		}
+
+		// Step 8: Save image file name in database.
+		change := bson.M{"profile.background": fileName}
+		err = updateBackground(resumeID, userID, &change)
+		if err != nil {
+			log.Println("process image error 8:", err)
+		}
+
+		// Step 9: Delete old large image from directory.
+		err = os.Remove(largeFilePath + resume.Profile.Background)
+		if err != nil {
+			log.Println("process image error 9:", err)
+		}
+
+		// Step 10: Delete old small image from directory.
+		err = os.Remove(smallFilePath + resume.Profile.Background)
+		if err != nil {
+			log.Println("process image error 10:", err)
+		}
 	case 2: // experience
 	case 3: // skills
-	case 4: // portfolio
-	case 5: // achievements
-	case 6: // contact
+	case 4: // achievements
+	case 5: // contact
 	default:
 		log.Println("Process upload file category not matched.")
 	}
 
-	return err
+	return fileName, err
 }
 
 /*

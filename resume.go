@@ -127,6 +127,15 @@ func loadResumeDB(resume *Resume, selector *bson.M) error {
 	return collection.Find(selector).One(resume)
 }
 
+func getFileName(resumeID, userID string, selector *bson.M, resume *Resume) error {
+	// create new MongoDB session
+	collection, session := mongoDBInitialization("resume")
+	defer session.Close()
+
+	// retrieve one document and return file name
+	return collection.Find(bson.M{"resumeid": resumeID, "userid": userID}).Select(selector).One(resume)
+}
+
 /*
   ========================================
   Insert
@@ -305,24 +314,6 @@ func updateRAwards(resumeID, userID string, awards *[]Award) error {
 	return updateResumeDB(&selector, &update)
 }
 
-func updateBackground(resumeID string, change *bson.M) error {
-	// find document and update fields
-	selector := bson.M{"resumeid": resumeID}
-	update := bson.M{"$set": &change}
-
-	return updateResumeDB(&selector, &update)
-}
-
-func getFileName(resumeID string, selector *bson.M, resume *Resume) error {
-	// create new MongoDB session
-	collection, session := mongoDBInitialization("resume")
-	defer session.Close()
-
-	// retrieve one document and return file name
-	return collection.Find(bson.M{"resumeid": resumeID}).Select(selector).One(resume)
-}
-
-/*
 func updateBackground(resumeID, userID string, change *bson.M) error {
 	// find document and update fields
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
@@ -330,7 +321,6 @@ func updateBackground(resumeID, userID string, change *bson.M) error {
 
 	return updateResumeDB(&selector, &update)
 }
-*/
 
 /*
   ========================================
