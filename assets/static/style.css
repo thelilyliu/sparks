@@ -312,7 +312,9 @@ button.new {
     border: none;
     margin: 0;
     z-index: 10;
-    background-color: rgba(248, 248, 248, .8); /* **** OPACITY DOESN'T WORK IN DASHBOARD **** */
+    background: linear-gradient(45deg, #7be7d7 1%, #7be7d7 40%, #7be7d7 40%, #86a4e3 100%);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+    /* background-color: rgba(248, 248, 248, .8); */ /* **** OPACITY DOESN'T WORK IN DASHBOARD **** */
 }
 .navbar-top li {
     position: absolute;
@@ -321,10 +323,12 @@ button.new {
     padding: 7px;
 }
 .navbar-top a {
-    color: #335ace;
+    /* color: #335ace; */
+    color: #fff;
 }
 .navbar-top a:hover {
-    color: #2d50b7;
+    /* color: #2d50b7; */
+    color: rgb(244, 244, 244);
 }
     .navbar-top li.first {
         width: 40px;

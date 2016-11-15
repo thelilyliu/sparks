@@ -65,20 +65,24 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
                         </div>\
                     </div>\
                 </div>';
+            
+            // append item to masonry grid after image is loaded
+            // http://masonry.desandro.com/methods.html#appended
+            // http://masonry.desandro.com/layout.html#imagesloaded
 
-            setTimeout(function() {
-                var $portfolio = $(portfolioHTML);
+            var $portfolio = $(portfolioHTML);
+            var $grid = $('.grid');
 
-                var $grid = $('.grid').imagesLoaded().done(function() {
-                    $grid.append($portfolio) // append items to grid
-                        .masonry('appended', $portfolio) // add and lay out newly appended items
-                        .masonry('layout');
+            $grid.append($portfolio) // append items to grid
+                .masonry('appended', $portfolio) // add and lay out newly appended items
 
-                    $grid.find('.card').last()
-                        .data('portfolioID', portfolio.portfolioID)
-                        .data('link', '/user/portfolio/' + portfolio.portfolioID);
-                });
-            }, 100);
+            $grid.imagesLoaded().progress(function() {
+                $grid.masonry('layout');
+            });
+
+            $grid.find('.card').last()
+                .data('portfolioID', portfolio.portfolioID)
+                .data('link', '/user/portfolio/' + portfolio.portfolioID);
         });
     }
 

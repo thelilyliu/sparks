@@ -66,19 +66,23 @@ function loadDashboardResumesInit(json, json2, situation) {
                     </div>\
                 </div>';
 
-            setTimeout(function() {
-                var $resume = $(resumeHTML);
+            // append item to masonry grid after image is loaded
+            // http://masonry.desandro.com/methods.html#appended
+            // http://masonry.desandro.com/layout.html#imagesloaded
 
-                var $grid = $('.grid').imagesLoaded().done(function() {
-                    $grid.append($resume) // append items to grid
-                        .masonry('appended', $resume) // add and lay out newly appended items
-                        .masonry('layout');
+            var $resume = $(resumeHTML);
+            var $grid = $('.grid');
 
-                    $grid.find('.card').last()
-                        .data('resumeID', resume.resumeID)
-                        .data('link', '/user/resume/' + resume.resumeID + '#section1');
-                });
-            }, 100);
+            $grid.append($resume) // append items to grid
+                .masonry('appended', $resume) // add and lay out newly appended items
+
+            $grid.imagesLoaded().progress(function() {
+                $grid.masonry('layout');
+            });
+
+            $grid.find('.card').last()
+                .data('resumeID', resume.resumeID)
+                .data('link', '/user/resume/' + resume.resumeID + '#section1');
         });
     }
     
