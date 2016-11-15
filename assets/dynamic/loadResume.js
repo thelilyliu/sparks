@@ -1034,10 +1034,24 @@ function loadResumeInit(json, json2, situation) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) { // file upload success
                 if (xhr.responseText != 'fail') { // successful upload
-                    console.log('upload image success');
+                    // http://hoxxep.github.io/snarl/
+                    Snarl.addNotification({
+                        text: 'Image successfully saved!',
+                        icon: '<i class="fa fa-thumbs-o-up"></i>',
+                        timeout: 5000
+                    });
                 }
                 else { // unsuccessful upload
-                    alert(xhr.responseText);
+                    // http://hoxxep.github.io/snarl/
+                    var noTimeoutNotification = null;
+
+                    if (Snarl.isDismissed(noTimeoutNotification)) {
+                        noTimeoutNotification = Snarl.addNotification({
+                            text: 'Image could not be saved at this time. Please try again later.',
+                            icon: '<i class="fa fa-exclamation-circle"></i>',
+                            timeout: null
+                        });
+                    }
                 }
             }
         };

@@ -199,12 +199,17 @@ function handleAjaxError(jqXHr, textStatus) {
 }
 
 function displayAlertMessage(message) {
-    var alertMessageHTML = '\
-        <div class="alert alert-warning alert-dismissible fade in" role="alert">\
-            <button type="button" class="close default" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + message + '\
-        </div>';
-    
-    $('body').append(alertMessageHTML);
+    // http://hoxxep.github.io/snarl/
+    var noTimeoutNotification = null;
+
+    if (Snarl.isDismissed(noTimeoutNotification)) {
+        noTimeoutNotification = Snarl.addNotification({
+            title: 'Error',
+            text: message,
+            icon: '<i class="fa fa-exclamation-circle"></i>',
+            timeout: null
+        });
+    }
 }
 
 function initMasonry() {
