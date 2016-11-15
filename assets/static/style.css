@@ -60,6 +60,7 @@ body {
     font-weight: 400;
 }
 h1 {
+    font-family: "Montserrat";
     text-align: center;
     margin: 0;
 }
@@ -87,6 +88,10 @@ b, strong {
 }
 i, em {
     font-style: italic;
+}
+.logo {
+    font-family: "Montserrat";
+    font-weight: 700;
 }
 
 /*
@@ -210,7 +215,8 @@ button.new {
     background-color: #9ad3de;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
-#new-resume {
+#new-resume,
+#new-portfolio {
     position: fixed;
 }
 
@@ -314,7 +320,6 @@ button.new {
     z-index: 10;
     background: linear-gradient(45deg, #7be7d7 1%, #7be7d7 40%, #7be7d7 40%, #86a4e3 100%);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-    /* background-color: rgba(248, 248, 248, .8); */ /* **** OPACITY DOESN'T WORK IN DASHBOARD **** */
 }
 .navbar-top li {
     position: absolute;
@@ -323,11 +328,9 @@ button.new {
     padding: 7px;
 }
 .navbar-top a {
-    /* color: #335ace; */
     color: #fff;
 }
 .navbar-top a:hover {
-    /* color: #2d50b7; */
     color: rgb(244, 244, 244);
 }
     .navbar-top li.first {
@@ -339,6 +342,8 @@ button.new {
         left: 50px;
         right: 50px;
         overflow: hidden;
+        font-family: "Montserrat";
+        font-weight: 700;
     }
     .navbar-top li.third {
         width: 40px;
@@ -398,14 +403,15 @@ button.new {
 }
 #sidebar-wrapper .sidebar-footer .logo {
     font-size: 22px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 #sidebar-wrapper .sidebar-footer .copyright {
     font-size: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 #sidebar-wrapper .sidebar-footer .copyright a {
-    color: #7999ff;
+    color: #86a4e3;
+    border-bottom: dotted 1px;
 }
 
 @media (max-width: 991px) {
@@ -725,7 +731,7 @@ section {
 }
     #resumes .card {
         padding: 0;
-        background-color: #80DED9;
+        background-color: #7be7d7;
     }
 
 #portfolios {
@@ -733,7 +739,7 @@ section {
 }
     #portfolios .card {
         padding: 0;
-        background-color: #80DED9;
+        background-color: #86a4e3;
     }
 
 #settings {
