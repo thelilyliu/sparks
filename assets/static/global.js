@@ -248,6 +248,11 @@ function initSummernotePost(selector) {
     });
 }
 
+function initWaves() {
+    Waves.attach('.button', ['waves-button', 'waves-float']);
+    Waves.init();
+}
+
 function setScreenSize() {
     var size = '';
 
