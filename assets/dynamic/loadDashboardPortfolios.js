@@ -112,7 +112,10 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
         $('#portfolios').on('click', '.share', function(e) {
             e.stopPropagation();
             
-            alert('Sharing is caring.');
+            var path = 'http://sparkup.ca/portfolio/';
+            var portfolioID = $(this).closest('.card').data('portfolioID');
+
+            alert('Link for Sharing\n' + path + portfolioID);
         });
 
         $('#portfolios').on('click', '.delete', function(e) {

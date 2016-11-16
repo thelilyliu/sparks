@@ -212,12 +212,15 @@ button.new {
     right: 50px;
     bottom: 50px;
     font-size: 50px;
-    background-color: #9ad3de;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
-#new-resume,
+#new-resume {
+    position: fixed;
+    background-color: #7be7d7;
+}
 #new-portfolio {
     position: fixed;
+    background-color: #86a4e3;
 }
 
 .image-processing button.upload,
@@ -331,7 +334,7 @@ button.new {
     color: #fff;
 }
 .navbar-top a:hover {
-    color: rgb(244, 244, 244);
+    color: #F4F4F4;
 }
     .navbar-top li.first {
         width: 40px;
@@ -439,10 +442,13 @@ button.new {
     #sidebar-wrapper .sidebar-header i {
         display: inline-block;
         position: relative;
-        margin: 25px;
-        font-size: 50px;
+        margin: 35px 25px;
+        font-size: 30px;
         color: #fff;
         cursor: pointer;
+    }
+    #sidebar-wrapper .sidebar-header i:hover {
+        color: #F4F4F4;
     }
     .sidebar-backdrop {
         position: fixed;

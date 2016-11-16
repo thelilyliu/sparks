@@ -216,7 +216,6 @@ function initMasonry() {
     $('.grid').masonry({
         itemSelector: '.grid-item',
         columnWidth: '.grid-sizer',
-        stagger: 1000,
         percentPosition: true
     });
 }
