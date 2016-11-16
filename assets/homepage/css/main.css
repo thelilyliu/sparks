@@ -2709,9 +2709,9 @@
 		.main.style2 {
 			background-color: #333;
 			color: rgba(255, 255, 255, 0.75);
-			background-attachment: fixed,							fixed;
-			background-image: url("images/overlay1.png"), url("../../images/header.jpg");
-			background-size: auto,							cover;
+			background-attachment: fixed, fixed;
+			background-image: url("/assets/images/overlay1.png"), url("/assets/images/header.jpg");
+			background-size: auto, cover;
 		}
 
 			.main.style2 a {
@@ -2800,10 +2800,10 @@
 		padding: 9em 0 9em 0 ;
 		background-color: #4686a0;
 		color: rgba(255, 255, 255, 0.75);
-		background-attachment: fixed,							fixed,							fixed;
-		background-image: url("images/overlay2.png"), url("images/overlay3.svg"), linear-gradient(45deg, #9dc66b 5%, #4fa49a 30%, #4361c2);
-		background-position: top left,						center center,					center center;
-		background-size: auto,							cover,							cover;
+		background-attachment: fixed, fixed, fixed;
+		background-image: url("/assets/images/overlay2.png"), url("/assets/images/overlay3.svg"), linear-gradient(45deg, #9dc66b 5%, #4fa49a 30%, #4361c2);
+		background-position: top left, center center, center center;
+		background-size: auto, cover, cover;
 		overflow: hidden;
 		position: relative;
 		text-align: center;
@@ -2987,10 +2987,10 @@
 		padding: 6em 0 6em 0 ;
 		background-color: #4686a0;
 		color: rgba(255, 255, 255, 0.75);
-		background-attachment: fixed,							fixed,							fixed;
-		background-image: url("images/overlay2.png"), url("images/overlay4.svg"), linear-gradient(45deg, #4361c2, #4fa49a 50%, #9dc66b 95%);
-		background-position: top left,						center center,					center center;
-		background-size: auto,							cover,							cover;
+		background-attachment: fixed, fixed, fixed;
+		background-image: url("/assets/images/overlay2.png"), url("/assets/images/overlay4.svg"), linear-gradient(45deg, #4361c2, #4fa49a 50%, #9dc66b 95%);
+		background-position: top left, center center, center center;
+		background-size: auto, cover, cover;
 		text-align: center;
 	}
 
