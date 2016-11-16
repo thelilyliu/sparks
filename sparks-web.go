@@ -141,7 +141,7 @@ func viewIndex(w http.ResponseWriter, r *http.Request) {
 	var homepage Page // placeholder, not used right now
 
 	layout := path.Join("templates", "index.html")
-	content := path.Join("templates", "content.html")
+	content := path.Join("templates", "content-index.html")
 
 	tmpl, err := template.ParseFiles(layout, content)
 	if err != nil {
