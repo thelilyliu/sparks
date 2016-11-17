@@ -214,12 +214,19 @@ button.new {
     font-size: 50px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
 }
-#new-resume {
-    position: fixed;
-    background-color: #7be7d7;
-}
+#new-resume,
 #new-portfolio {
     position: fixed;
+    padding: 0;
+}
+#new-resume.waves:hover,
+#new-portfolio.waves:hover {
+    font-size: 50px;
+}
+#new-resume.waves {
+    background-color: #7be7d7;
+}
+#new-portfolio.waves {
     background-color: #86a4e3;
 }
 
@@ -463,6 +470,13 @@ button.new {
     }
 }
 
+.sidebar-nav .waves {
+    box-shadow: none;
+    padding: 0;
+    line-height: 25px;
+    border-radius: 0;
+    text-align: left;
+}
 .sidebar-nav a {
     color: #555;
 }
@@ -629,6 +643,9 @@ section {
     .card-actions .date {
         margin: 15px;
     }
+    .card-actions .waves:hover {
+        background-color: #fff;
+    }
 .card-action-item-wrapper {
     position: absolute;
     width: 100%;
@@ -642,7 +659,6 @@ section {
     display: inline-block;
     text-align: center;
     padding: 5px;
-    padding-top: 3px;
     margin-left: 10px;
     border-radius: 4px;
     width: 30px;

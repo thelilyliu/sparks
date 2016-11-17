@@ -219,7 +219,7 @@ func viewLogin(w http.ResponseWriter, r *http.Request) {
 	var homepage Page // placeholder, not used right now
 
 	layout := path.Join("templates", "login.html")
-	content := path.Join("templates", "content.html")
+	content := path.Join("templates", "content-login.html")
 
 	tmpl, err := template.ParseFiles(layout, content)
 	if err != nil {

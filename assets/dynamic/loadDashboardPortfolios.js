@@ -24,7 +24,7 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
             </div>';
 
         var portfolioButtonHTML = '\
-            <button id="new-portfolio" type="button" class="default new">\
+            <button id="new-portfolio" type="button" class="default new waves">\
                 <i class="fa fa-plus absolute-center vertical-align"></i>\
             </button>';
 
@@ -51,10 +51,10 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
                                     <h4>' + getFormattedDate(portfolio.date) + '</h4>\
                                 </div>\
                                 <div class="card-action-item-wrapper">\
-                                    <div class="card-action-item share">\
+                                    <div class="card-action-item share waves">\
                                         <i class="fa fa-share-square-o"></i>\
                                     </div>\
-                                    <div class="card-action-item delete">\
+                                    <div class="card-action-item delete waves">\
                                         <i class="fa fa-trash-o"></i>\
                                     </div>\
                                 </div>\
@@ -101,6 +101,9 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
     }
 
     function eventHandlerDashboardPortfolios() {
+        Waves.attach('.waves', ['waves-button', 'waves-float']);
+        Waves.init();
+        
         $('#portfolios').on('click', '.card-cover', function() {
             page($(this).parent().data('link'));
         });

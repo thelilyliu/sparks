@@ -29,16 +29,16 @@
             </div>
             
             <ul class="sidebar-nav nav">
-                <li class="nav-resumes">
+                <li class="nav-resumes waves">
                     <a><i class="fa fa-file-text-o"></i>Resumes</a>
                 </li>
-                <li class="nav-portfolios">
+                <li class="nav-portfolios waves">
                     <a><i class="fa fa-book"></i>Portfolios</a>
                 </li>
-                <li class="nav-settings">
+                <li class="nav-settings waves">
                     <a><i class="fa fa-cog"></i>Settings</a>
                 </li>
-                <li class="nav-logout">
+                <li class="nav-logout waves">
                     <a><i class="fa fa-sign-out"></i>Logout</a>
                 </li>
             </ul>
@@ -212,6 +212,9 @@
             */
             
             function eventHandler() {
+                Waves.attach('.waves', ['waves-button', 'waves-float']);
+                Waves.init();
+
                 $('body').on('click', '[data-uw-action]', function(e) {
                     e.preventDefault();
                     
