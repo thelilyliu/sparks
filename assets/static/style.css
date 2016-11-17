@@ -671,6 +671,12 @@ section {
     cursor: pointer;
     color: #111;
 }
+.card-action-item.share {
+    padding-top: 7px;
+}
+.card-action-item.delete {
+    padding-top: 6px;
+}
 .card-footer {
     padding: 10px;
     cursor: default;

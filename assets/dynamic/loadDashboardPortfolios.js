@@ -51,6 +51,9 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
                                     <h4>' + getFormattedDate(portfolio.date) + '</h4>\
                                 </div>\
                                 <div class="card-action-item-wrapper">\
+                                    <div class="card-action-item preview waves">\
+                                        <i class="fa fa-search"></i>\
+                                    </div>\
                                     <div class="card-action-item share waves">\
                                         <i class="fa fa-share-square-o"></i>\
                                     </div>\
@@ -103,13 +106,24 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
     function eventHandlerDashboardPortfolios() {
         Waves.attach('.waves', ['waves-button', 'waves-float']);
         Waves.init();
-        
+
         $('#portfolios').on('click', '.card-cover', function() {
             page($(this).parent().data('link'));
         });
 
         $('#portfolios').on('click', '#new-portfolio', function() {
             page($(this).data('link'));
+        });
+
+        // card actions
+        
+        $('#portfolios').on('click', '.preview', function(e) {
+            e.stopPropagation();
+
+            var path = 'http://127.0.0.1:4242/portfolio/';
+            var portfolioID = $(this).closest('.card').data('portfolioID');
+
+            window.open(path + portfolioID, '_blank').focus();
         });
         
         $('#portfolios').on('click', '.share', function(e) {

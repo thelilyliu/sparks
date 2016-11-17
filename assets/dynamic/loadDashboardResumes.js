@@ -51,6 +51,9 @@ function loadDashboardResumesInit(json, json2, situation) {
                                     <h4>' + getFormattedDate(resume.date) + '</h4>\
                                 </div>\
                                 <div class="card-action-item-wrapper">\
+                                    <div class="card-action-item preview waves">\
+                                        <i class="fa fa-search"></i>\
+                                    </div>\
                                     <div class="card-action-item share waves">\
                                         <i class="fa fa-share-square-o"></i>\
                                     </div>\
@@ -110,6 +113,17 @@ function loadDashboardResumesInit(json, json2, situation) {
 
         $('#resumes').on('click', '#new-resume', function() {
             page($(this).data('link'));
+        });
+
+        // card actions
+
+        $('#resumes').on('click', '.preview', function(e) {
+            e.stopPropagation();
+
+            var path = 'http://127.0.0.1:4242/resume/';
+            var resumeID = $(this).closest('.card').data('resumeID');
+
+            window.open(path + resumeID, '_blank').focus();
         });
         
         $('#resumes').on('click', '.share', function(e) {
