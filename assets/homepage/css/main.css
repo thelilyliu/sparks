@@ -3419,3 +3419,25 @@
 			}
 
 	}
+
+
+
+
+
+/* Custom */
+
+	/* Fonts */
+
+		body {
+			font-family: "Roboto";
+		}
+
+		h1 {
+			font-family: "Montserrat";
+		}
+
+	/* Links */
+
+		a:hover {
+			text-decoration: none;
+		}

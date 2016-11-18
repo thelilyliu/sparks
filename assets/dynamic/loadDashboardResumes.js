@@ -115,7 +115,11 @@ function loadDashboardResumesInit(json, json2, situation) {
             page($(this).data('link'));
         });
 
-        // card actions
+        /*
+          ====================
+          Card Actions
+          ====================
+        */
 
         $('#resumes').on('click', '.preview', function(e) {
             e.stopPropagation();
@@ -144,6 +148,12 @@ function loadDashboardResumesInit(json, json2, situation) {
                 deleteResumeJSON(resumeID, $this);
             }
         });
+
+        /*
+          ====================
+          Edit Title
+          ====================
+        */
         
         $('#resumes').on('dblclick', '.title', function() {
             var $this = $(this);

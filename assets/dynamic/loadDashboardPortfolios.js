@@ -115,8 +115,12 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
             page($(this).data('link'));
         });
 
-        // card actions
-        
+        /*
+          ====================
+          Card Actions
+          ====================
+        */
+
         $('#portfolios').on('click', '.preview', function(e) {
             e.stopPropagation();
 
@@ -144,6 +148,12 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
                 deletePortfolioJSON(portfolioID, $this);
             }
         });
+
+        /*
+          ====================
+          Edit Title
+          ====================
+        */
         
         $('#portfolios').on('dblclick', '.title', function() {
             var $this = $(this);
