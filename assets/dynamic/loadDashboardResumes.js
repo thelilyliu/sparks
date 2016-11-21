@@ -39,12 +39,14 @@ function loadDashboardResumesInit(json, json2, situation) {
 
     function initDashboardResumesData(json) {
         $.each(json, function(i, resume) {
+            var imageURL = '/images/profile/' + $('body').attr('size') + '/';
+
             var resumeHTML = '\
                 <div class="grid-item card-wrapper">\
                     <div class="card">\
                         <div class="card-cover">\
                             <div class="img-wrapper">\
-                                <img src="/images/WWAKZZJFU0.jpg">\
+                                <img src="' + imageURL + '">\
                             </div>\
                             <div class="card-actions fill-div">\
                                 <div class="date">\

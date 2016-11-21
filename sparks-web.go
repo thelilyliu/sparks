@@ -3,20 +3,15 @@ package main
 import (
 	"encoding/json"
 	"html/template"
-	"image"
-	"image/jpeg"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"path"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/disintegration/imaging"
 	"github.com/gorilla/context"
-	"github.com/gorilla/sessions"
 	"github.com/husobee/vestigo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -34,8 +29,6 @@ const (
 	errorStatusCode = 398
 	serverName      = "GWS"
 )
-
-var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 func main() {
 	router := vestigo.NewRouter()
@@ -95,14 +88,14 @@ func main() {
 	router.Post("/updateResumeJSON/:category/:resumeID", updateResumeJSON)
 	router.Delete("/deleteResumeJSON/:resumeID", deleteResumeJSON)
 
-	// image
-	router.Post("/uploadImage/:category/:resumeID", uploadImage)
-
 	// portfolio
 	router.Get("/loadPortfolioJSON/:portfolioID", loadPortfolioJSON)
 	router.Post("/insertPortfolioJSON/:category", insertPortfolioJSON)
 	router.Post("/updatePortfolioJSON/:category/:portfolioID", updatePortfolioJSON)
 	router.Delete("/deletePortfolioJSON/:portfolioID", deletePortfolioJSON)
+
+	// image
+	router.Post("/uploadImage/:category/:resumeID", uploadImage)
 
 	// user
 	router.Post("/insertUserJSON", insertUserJSON)
@@ -384,36 +377,6 @@ func logoutJSON(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func readSession(key string, w http.ResponseWriter, r *http.Request) (interface{}, error) {
-	session, err := store.Get(r, "user-session")
-
-	session.Options.MaxAge = 3600 // one hour
-	err = session.Save(r, w)
-
-	return session.Values[key], err
-}
-
-func writeSession(key string, value interface{}, w http.ResponseWriter, r *http.Request) error {
-	session, err := store.Get(r, "user-session")
-
-	session.Options.MaxAge = 3600 // one hour
-	session.Values[key] = value
-
-	err = session.Save(r, w)
-
-	return err
-}
-
-func deleteSession(w http.ResponseWriter, r *http.Request) error {
-	session, err := store.Get(r, "user-session")
-
-	session.Options.MaxAge = -1 // delete now
-
-	err = session.Save(r, w)
-
-	return err
-}
-
 /*
   ========================================
   Dashboard
@@ -549,23 +512,6 @@ func insertResumeJSON(w http.ResponseWriter, r *http.Request) {
 		user.UserID = uID.(string)
 
 		categoryStr := vestigo.Param(r, "category")
-		/*
-		   1 = settings
-
-		   2 = profileType
-		   3 = experienceType
-		   4 = skillsType
-		   5 = portfolioType
-		   6 = otherInfoType
-		   7 = contactInfoType
-
-		   8 = experiences
-		   9 = skills
-		   10 = portfolios
-		   11 = educations
-		   12 = qualifications
-		   13 = awards
-		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
 			returnCode = 1
@@ -625,23 +571,6 @@ func updateResumeJSON(w http.ResponseWriter, r *http.Request) {
 		resume.UserID = uID.(string)
 
 		categoryStr := vestigo.Param(r, "category")
-		/*
-		   1 = settings
-
-		   2 = profileType
-		   3 = experienceType
-		   4 = skillsType
-		   5 = portfolioType
-		   6 = otherInfoType
-		   7 = contactInfoType
-
-		   8 = experiences
-		   9 = skills
-		   10 = portfolios
-		   11 = educations
-		   12 = qualifications
-		   13 = awards
-		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
 			returnCode = 1
@@ -705,8 +634,6 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 			log.Println("update resume error 2.1:", err)
 		}
 
-		// profile.Background = new(Image)
-
 		if err := updateRProfileType(resume.ResumeID, resume.UserID, profile); err != nil {
 			log.Println("update resume error 2.2:", err)
 		}
@@ -719,8 +646,6 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 			log.Println("update resume error 3.1:", err)
 		}
 
-		// experience.Background = new(Image)
-
 		if err := updateRExperienceType(resume.ResumeID, resume.UserID, experience); err != nil {
 			log.Println("update resume error 3.2:", err)
 		}
@@ -732,8 +657,6 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		if err := json.NewDecoder(r.Body).Decode(skills); err != nil {
 			log.Println("update resume error 4.1:", err)
 		}
-
-		// skills.Background = new(Image)
 
 		if err := updateRSkillsType(resume.ResumeID, resume.UserID, skills); err != nil {
 			log.Println("update resume error 4.2:", err)
@@ -750,8 +673,6 @@ func updateResume(categoryInt int, resume *Resume, r *http.Request) error {
 		if err := json.NewDecoder(r.Body).Decode(contact); err != nil {
 			log.Println("update resume error 7.1:", err)
 		}
-
-		// contactInfo.Background = new(Image)
 
 		if err := updateRContactType(resume.ResumeID, resume.UserID, contact); err != nil {
 			log.Println("update resume error 7.2:", err)
@@ -894,158 +815,11 @@ func deleteResumeJSON(w http.ResponseWriter, r *http.Request) {
 
 /*
   ========================================
-  Image
-  ========================================
-*/
-
-func uploadImage(w http.ResponseWriter, r *http.Request) {
-	returnCode := 0
-
-	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
-		categoryStr := vestigo.Param(r, "category")
-		resumeID := vestigo.Param(r, "resumeID")
-		userID := uID.(string)
-		var fileName string
-
-		categoryInt, err := strconv.Atoi(categoryStr)
-		if err != nil {
-			returnCode = 1
-		}
-
-		if returnCode == 0 {
-			if fileName, err = processImage(r, categoryInt, resumeID, userID); err != nil { // save image in folder
-				returnCode = 2
-			}
-		}
-
-		if returnCode == 0 {
-			w.Write([]byte(fileName))
-		}
-
-		// error handling
-		if returnCode != 0 {
-			handleError(returnCode, errorStatusCode, "Image could not be uploaded at this time.", w)
-		}
-	} else {
-		handleError(3, 403, "Session expired. Please sign in again.", w)
-	}
-}
-
-func processImage(r *http.Request, categoryInt int, resumeID, userID string) (string, error) {
-	var err error
-
-	fileName := time.Now().Format("20060102150405") + ".jpg"
-
-	file, _, err := r.FormFile("uploadFile")
-	defer file.Close()
-	if err != nil {
-		log.Println("process image error 1:", err)
-	}
-
-	originalImage, _, err := image.Decode(file) // decode file
-	if err != nil {
-		log.Println("process image error 2:", err)
-	}
-
-	switch categoryInt {
-	case 1: // profile
-		/*
-		  ========================================
-		  Large Image
-		  ========================================
-		*/
-
-		// Step 1: Resize image to width = 1200 px.
-		largeFilePath := "./images/profile/large/"
-		imageLarge := imaging.Resize(originalImage, 1200, 0, imaging.Linear)
-
-		// Step 2: Save image in directory.
-		largeFile, err := os.Create(largeFilePath + fileName)
-		defer largeFile.Close()
-		if err != nil {
-			log.Println("process image error 3:", err)
-		}
-
-		// Step 3: Compress image.
-		err = jpeg.Encode(largeFile, imageLarge, &jpeg.Options{90})
-		if err != nil {
-			log.Println("process image error 4:", err)
-		}
-
-		/*
-		  ========================================
-		  Small Image
-		  ========================================
-		*/
-
-		// Step 4: Resize image to width = 600 px.
-		smallFilePath := "./images/profile/small/"
-		imageSmall := imaging.Resize(originalImage, 600, 0, imaging.Linear)
-
-		// Step 5: Save image in directory.
-		smallFile, err := os.Create(smallFilePath + fileName)
-		defer smallFile.Close()
-		if err != nil {
-			log.Println("process image error 5:", err)
-		}
-
-		// Step 6: Compress image.
-		err = jpeg.Encode(smallFile, imageSmall, &jpeg.Options{90})
-		if err != nil {
-			log.Println("process image error 6:", err)
-		}
-
-		/*
-		  ========================================
-		  Update Database
-		  ========================================
-		*/
-
-		// Step 7: Get image file name from database.
-		resume := new(Resume)
-		selector := bson.M{"profile.background": 1}
-		err = getFileName(resumeID, userID, &selector, resume)
-		if err != nil {
-			log.Println("process image error 7:", err)
-		}
-
-		// Step 8: Save image file name in database.
-		change := bson.M{"profile.background": fileName}
-		err = updateBackground(resumeID, userID, &change)
-		if err != nil {
-			log.Println("process image error 8:", err)
-		}
-
-		// Step 9: Delete old large image from directory.
-		err = os.Remove(largeFilePath + resume.Profile.Background)
-		if err != nil {
-			log.Println("process image error 9:", err)
-		}
-
-		// Step 10: Delete old small image from directory.
-		err = os.Remove(smallFilePath + resume.Profile.Background)
-		if err != nil {
-			log.Println("process image error 10:", err)
-		}
-	case 2: // experience
-	case 3: // skills
-	case 4: // achievements
-	case 5: // contact
-	default:
-		log.Println("Process upload file category not matched.")
-	}
-
-	return fileName, err
-}
-
-/*
-  ========================================
   Portfolio
   ========================================
 */
 
 func loadPortfolioJSON(w http.ResponseWriter, r *http.Request) {
-
 	// **** EDIT ****
 	returnCode := 0
 
@@ -1091,11 +865,6 @@ func insertPortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		user.UserID = uID.(string)
 
 		categoryStr := vestigo.Param(r, "category")
-		/*
-		   1 = settings
-		   2 = profileType
-		   3 = experienceType
-		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
 			returnCode = 1
@@ -1143,11 +912,6 @@ func updatePortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		portfolio.UserID = uID.(string)
 
 		categoryStr := vestigo.Param(r, "category")
-		/*
-					   1 = settings
-					   2 = header
-			           3 = content
-		*/
 
 		if categoryInt, err = strconv.Atoi(categoryStr); err != nil {
 			returnCode = 1
@@ -1267,6 +1031,45 @@ func deletePortfolioJSON(w http.ResponseWriter, r *http.Request) {
 
 /*
   ========================================
+  Image
+  ========================================
+*/
+
+func uploadImage(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
+
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		categoryStr := vestigo.Param(r, "category")
+		resumeID := vestigo.Param(r, "resumeID")
+		userID := uID.(string)
+		var fileName string
+
+		categoryInt, err := strconv.Atoi(categoryStr)
+		if err != nil {
+			returnCode = 1
+		}
+
+		if returnCode == 0 {
+			if fileName, err = processImage(r, categoryInt, resumeID, userID); err != nil { // save image in folder
+				returnCode = 2
+			}
+		}
+
+		if returnCode == 0 {
+			w.Write([]byte(fileName))
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Image could not be uploaded at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
+	}
+}
+
+/*
+  ========================================
   User
   ========================================
 */
@@ -1323,9 +1126,7 @@ func updateUserJSON(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteUserJSON(w http.ResponseWriter, r *http.Request) {
-
 	// **** EDIT ****
-
 }
 
 /*

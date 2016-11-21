@@ -19,18 +19,13 @@ type Portfolio struct {
 	ThemeName   string      `json:"themeName"`
 	Content     string      `json:"content"`
 	Components  []Component `json:"components"` // not used right now
-	Background  Image       `json:"background"`
+	Background  string      `json:"background"`
 }
 
 type Component struct {
 	Category int    `json:"category"`
 	Content  string `json:"content"`
 	Order    int    `json:"order"`
-}
-
-type Image struct {
-	ImageLarge string `json:"imageLarge"`
-	ImageSmall string `json:"imageSmall"`
 }
 
 /*

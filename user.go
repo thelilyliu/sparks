@@ -21,14 +21,14 @@ type BasicResume struct {
 	ResumeID string `json:"resumeID"`
 	Date     string `json:"date"`
 	Title    string `json:"title"`
-	Preview  Image  `json:"preview"`
+	Preview  string `json:"preview"`
 }
 
 type BasicPortfolio struct {
 	PortfolioID string `json:"portfolioID"`
 	Date        string `json:"date"`
 	Title       string `json:"title"`
-	Preview     Image  `json:"preview"`
+	Preview     string `json:"preview"`
 }
 
 /*

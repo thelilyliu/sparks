@@ -33,24 +33,24 @@ type ProfileType struct {
 
 type ExperienceType struct {
 	Experiences []Experience `json:"experiences"`
-	Background  Image        `json:"background"`
+	Background  string       `json:"background"`
 }
 
 type SkillsType struct {
 	Skills     []Skill `json:"skills"`
-	Background Image   `json:"background"`
+	Background string  `json:"background"`
 }
 
 type PortfolioType struct {
 	Portfolios []Portfolio `json:"portfolios"`
-	Background Image       `json:"image"`
+	Background string      `json:"image"`
 }
 
 type AchievementsType struct {
 	Educations     []Education     `json:"educations"`
 	Qualifications []Qualification `json:"qualifications"`
 	Awards         []Award         `json:"awards"`
-	Background     Image           `json:"background"`
+	Background     string          `json:"background"`
 }
 
 type ContactType struct {
@@ -67,8 +67,8 @@ type ContactType struct {
 	Facebook    string `json:"facebook"`
 	Twitter     string `json:"twitter"`
 	LinkedIn    string `json:"linkedIn"`
-	ProfilePic  Image  `json:"profilePic"`
-	Background  Image  `json:"background"`
+	ProfilePic  string `json:"profilePic"`
+	Background  string `json:"background"`
 }
 
 type Experience struct {
@@ -227,15 +227,11 @@ func updateRSkillsType(resumeID, userID string, skills *SkillsType) error {
 }
 
 func updateRPortfolioType() {
-
 	// **** EDIT ****
-
 }
 
 func updateRAchievementsType() {
-
 	// **** EDIT ****
-
 }
 
 func updateRContactType(resumeID, userID string, contact *ContactType) error {
@@ -279,9 +275,7 @@ func updateRSkills(resumeID, userID string, skills *[]Skill) error {
 }
 
 func updateRPortfolios() {
-
 	// **** EDIT ****
-
 }
 
 func updateREducations(resumeID, userID string, educations *[]Education) error {
@@ -314,7 +308,7 @@ func updateRAwards(resumeID, userID string, awards *[]Award) error {
 	return updateResumeDB(&selector, &update)
 }
 
-func updateBackground(resumeID, userID string, change *bson.M) error {
+func updateRBackground(resumeID, userID string, change *bson.M) error {
 	// find document and update fields
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}
