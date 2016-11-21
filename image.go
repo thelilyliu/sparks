@@ -97,22 +97,27 @@ func processImage(r *http.Request, categoryInt int, resumeID, userID string) (st
 		}
 
 		// Step 8: Save image file name in resume database.
-		change := bson.M{"profile.background": fileName}
-		err = updateRBackground(resumeID, userID, &change)
+		err = updateRBackground(resumeID, userID, fileName)
 		if err != nil {
 			log.Println("process image error 8:", err)
 		}
 
-		// Step 9: Delete old large image from directory.
-		err = os.Remove(largeFilePath + resume.Profile.Background)
+		// Step 9: Save image file name in user database.
+		err = updateUResumeBackground(resumeID, userID, fileName)
 		if err != nil {
 			log.Println("process image error 9:", err)
 		}
 
-		// Step 10: Delete old small image from directory.
-		err = os.Remove(smallFilePath + resume.Profile.Background)
+		// Step 10: Delete old large image from directory.
+		err = os.Remove(largeFilePath + resume.Profile.Background)
 		if err != nil {
 			log.Println("process image error 10:", err)
+		}
+
+		// Step 11: Delete old small image from directory.
+		err = os.Remove(smallFilePath + resume.Profile.Background)
+		if err != nil {
+			log.Println("process image error 11:", err)
 		}
 	case 2: // experience
 	case 3: // skills

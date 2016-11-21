@@ -308,7 +308,9 @@ func updateRAwards(resumeID, userID string, awards *[]Award) error {
 	return updateResumeDB(&selector, &update)
 }
 
-func updateRBackground(resumeID, userID string, change *bson.M) error {
+func updateRBackground(resumeID, userID, fileName string) error {
+	change := bson.M{"profile.background": fileName}
+
 	// find document and update fields
 	selector := bson.M{"resumeid": resumeID, "userid": userID}
 	update := bson.M{"$set": &change}

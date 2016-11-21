@@ -39,7 +39,7 @@ function loadDashboardResumesInit(json, json2, situation) {
 
     function initDashboardResumesData(json) {
         $.each(json, function(i, resume) {
-            var imageURL = '/images/profile/' + $('body').attr('size') + '/';
+            var imageURL = '/images/profile/' + getImageSize() + '/' + resume.preview;
 
             var resumeHTML = '\
                 <div class="grid-item card-wrapper">\

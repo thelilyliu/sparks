@@ -166,6 +166,16 @@ func updateUPortfolio(userID string, basicPortfolio *BasicPortfolio) error {
 	return updateUserDB(&selector, &update)
 }
 
+func updateUResumeBackground(resumeID, userID, fileName string) error {
+	change := bson.M{"resumeinfo.$.preview": fileName}
+
+	// find document and update fields
+	selector := bson.M{"userid": userID, "resumeinfo": bson.M{"$elemMatch": bson.M{"resumeid": resumeID}}}
+	update := bson.M{"$set": &change}
+
+	return updateUserDB(&selector, &update)
+}
+
 /*
   ========================================
   Delete
