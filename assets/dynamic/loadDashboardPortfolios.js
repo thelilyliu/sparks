@@ -39,12 +39,14 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
 
     function initDashboardPortfoliosData(json) {
         $.each(json, function(i, portfolio) {
+            var imageURL = '/images/portfolio/' + getImageSize() + '/' + portfolio.preview;
+
             var portfolioHTML = '\
                 <div class="grid-item card-wrapper">\
                     <div class="card">\
                         <div class="card-cover">\
                             <div class="img-wrapper">\
-                                <img src="/images/7E6EE0EC76.jpg">\
+                                <img src="' + imageURL + '">\
                             </div>\
                             <div class="card-actions fill-div">\
                                 <div class="date">\

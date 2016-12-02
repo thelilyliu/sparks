@@ -26,9 +26,11 @@ function viewPortfolioInit() {
                 <p>' + json.intro + '</p>\
             </div>';
 
-        // background image
+        var imageURL = '/images/portfolio/' + getImageSize() + '/' + json.background;
 
         $('#main-container .container').append(portfolioHeaderHTML);
+        $('#main-container').css('background-image', 'url("' + imageURL + '")')
+                .css('background-size', 'cover');
     }
     
     function initPortfolioContentData(json) {
