@@ -127,7 +127,7 @@ func loadResumeDB(resume *Resume, selector *bson.M) error {
 	return collection.Find(selector).One(resume)
 }
 
-func getFileName(resumeID, userID string, selector *bson.M, resume *Resume) error {
+func getRFileName(resumeID, userID string, selector *bson.M, resume *Resume) error {
 	// create new MongoDB session
 	collection, session := mongoDBInitialization("resume")
 	defer session.Close()

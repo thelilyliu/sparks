@@ -95,7 +95,8 @@ func main() {
 	router.Delete("/deletePortfolioJSON/:portfolioID", deletePortfolioJSON)
 
 	// image
-	router.Post("/uploadImage/:category/:resumeID", uploadImage)
+	router.Post("/uploadResumeImage/:category/:resumeID", uploadResumeImage)
+	router.Post("/uploadPortfolioImage/:category/:portfolioID", uploadPortfolioImage)
 
 	// user
 	router.Post("/insertUserJSON", insertUserJSON)
@@ -113,7 +114,7 @@ func main() {
 	router.Get("/login", viewLogin)
 	router.Get("/resume/:resumeID", viewResume)
 	router.Get("/portfolio/:portfolioID", viewPortfolio)
-	router.Get("/", viewIndex)
+	router.Get("/", viewLogin)
 
 	log.Println("Listening...")
 	if err := http.ListenAndServe(":4242", context.ClearHandler(router)); err != nil {
@@ -801,7 +802,9 @@ func deleteResumeJSON(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if returnCode == 0 {
-			w.Write([]byte(resumeID))
+			if err = json.NewEncoder(w).Encode(resumeID); err != nil {
+				returnCode = 3
+			}
 		}
 
 		// error handling
@@ -1015,7 +1018,7 @@ func deletePortfolioJSON(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if returnCode == 0 {
-			if err := json.NewEncoder(w).Encode(""); err != nil {
+			if err = json.NewEncoder(w).Encode(portfolioID); err != nil {
 				returnCode = 3
 			}
 		}
@@ -1035,7 +1038,7 @@ func deletePortfolioJSON(w http.ResponseWriter, r *http.Request) {
   ========================================
 */
 
-func uploadImage(w http.ResponseWriter, r *http.Request) {
+func uploadResumeImage(w http.ResponseWriter, r *http.Request) {
 	returnCode := 0
 
 	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
@@ -1050,7 +1053,7 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if returnCode == 0 {
-			if fileName, err = processImage(r, categoryInt, resumeID, userID); err != nil { // save image in folder
+			if fileName, err = processResumeImage(r, categoryInt, resumeID, userID); err != nil { // save image in folder
 				returnCode = 2
 			}
 		}
@@ -1061,7 +1064,40 @@ func uploadImage(w http.ResponseWriter, r *http.Request) {
 
 		// error handling
 		if returnCode != 0 {
-			handleError(returnCode, errorStatusCode, "Image could not be uploaded at this time.", w)
+			handleError(returnCode, errorStatusCode, "Resume image could not be uploaded at this time.", w)
+		}
+	} else {
+		handleError(3, 403, "Session expired. Please sign in again.", w)
+	}
+}
+
+func uploadPortfolioImage(w http.ResponseWriter, r *http.Request) {
+	returnCode := 0
+
+	if uID, err := readSession("userID", w, r); err == nil && uID != nil {
+		categoryStr := vestigo.Param(r, "category")
+		portfolioID := vestigo.Param(r, "portfolioID")
+		userID := uID.(string)
+		var fileName string
+
+		categoryInt, err := strconv.Atoi(categoryStr)
+		if err != nil {
+			returnCode = 1
+		}
+
+		if returnCode == 0 {
+			if fileName, err = processPortfolioImage(r, categoryInt, portfolioID, userID); err != nil { // save image in folder
+				returnCode = 2
+			}
+		}
+
+		if returnCode == 0 {
+			w.Write([]byte(fileName))
+		}
+
+		// error handling
+		if returnCode != 0 {
+			handleError(returnCode, errorStatusCode, "Portfolio image could not be uploaded at this time.", w)
 		}
 	} else {
 		handleError(3, 403, "Session expired. Please sign in again.", w)

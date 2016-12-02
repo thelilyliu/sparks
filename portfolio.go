@@ -1,6 +1,7 @@
 package main
 
 import (
+	// "log"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -41,6 +42,15 @@ func loadPortfolioDB(portfolio *Portfolio, selector *bson.M) error {
 
 	// retrieve one document with portfolioID as selector
 	return collection.Find(selector).One(portfolio)
+}
+
+func getPFileName(portfolioID, userID string, selector *bson.M, portfolio *Portfolio) error {
+	// create new MongoDB session
+	collection, session := mongoDBInitialization("portfolio")
+	defer session.Close()
+
+	// retrieve one document and return file name
+	return collection.Find(bson.M{"portfolioid": portfolioID, "userid": userID}).Select(selector).One(portfolio)
 }
 
 /*
@@ -105,6 +115,16 @@ func updatePHeader(portfolio *Portfolio) error {
 
 func updatePContent(portfolioID, userID, content string) error {
 	change := bson.M{"content": content}
+
+	// find document and update fields
+	selector := bson.M{"portfolioid": portfolioID, "userid": userID}
+	update := bson.M{"$set": &change}
+
+	return updatePortfolioDB(&selector, &update)
+}
+
+func updatePBackground(portfolioID, userID, fileName string) error {
+	change := bson.M{"background": fileName}
 
 	// find document and update fields
 	selector := bson.M{"portfolioid": portfolioID, "userid": userID}

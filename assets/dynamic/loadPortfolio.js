@@ -9,6 +9,7 @@ function loadPortfolioInit(json, json2, situation) {
 
             initializeFullPagePost();
             eventHandlerPortfolio();
+            eventHandlerImage();
             setupAutosaveTimer(situation);
         }
         else { // error
@@ -70,14 +71,35 @@ function loadPortfolioInit(json, json2, situation) {
                         <textarea type="intro" class="form-control" id="inputIntro" placeholder="Intro" rows=3></textarea>\
                     </div>\
                 </div>\
+                <div class="form-group image-processing">\
+                    <label for="inputPortfolioBackground" class="col-sm-3 control-label">Background</label>\
+                    <div class="col-sm-3">\
+                        <label class="file" id="inputPortfolioBackground">\
+                            <input type="file" id="upload-portfolio" class="upload" accept="image/*">\
+                            <button class="btn btn-default upload">\
+                                <i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload\
+                            </button>\
+                            <button class="btn btn-default save">\
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Save\
+                            </button>\
+                        </label>\
+                    </div>\
+                    <div class="col-sm-6">\
+                        <div class="thumbnail">\
+                            <img id="portfolioBackground" class="img-responsive">\
+                        </div>\
+                    </div>\
+                </div>\
             </div>';
 
         $('#portfolio .form-horizontal').append(userPortfolioHeaderHTML);
 
+        var imageURL = '/images/portfolio/' + getImageSize() + '/' + json.background;
+
         // set portfolio header
         $('#inputHeadline').val(json.headline);
         $('#inputIntro').val(json.intro);
-        // background image
+        $('#portfolioBackground').prop('src', imageURL);
 
         // get portfolio header JSON
         var portfolioHeader = {
@@ -111,6 +133,58 @@ function loadPortfolioInit(json, json2, situation) {
     }
     
 
+    function readURL(input) {
+        if (input.files && input.files.length) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                $('#portfolioBackground').prop('src', e.target.result);
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            $('#portfolioBackground').prop('src', '');
+        }
+    }
+
+    function uploadImage(input, category) {
+        var xhr = new XMLHttpRequest();
+        var url = '/uploadPortfolioImage/' + category + '/' + globalPortfolioID;
+        var fd = new FormData();
+        
+        fd.append('uploadFile', input.files[0]);       
+        xhr.open('POST', url, true);
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) { // file upload success
+                if (xhr.responseText != 'fail') { // successful upload
+                    // http://hoxxep.github.io/snarl/
+                    Snarl.addNotification({
+                        text: 'Image successfully saved!',
+                        icon: '<i class="fa fa-thumbs-o-up"></i>',
+                        timeout: 5000
+                    });
+                }
+                else { // unsuccessful upload
+                    // http://hoxxep.github.io/snarl/
+                    var noTimeoutNotification = null;
+
+                    if (Snarl.isDismissed(noTimeoutNotification)) {
+                        noTimeoutNotification = Snarl.addNotification({
+                            text: 'Image could not be saved at this time. Please try again later.',
+                            icon: '<i class="fa fa-exclamation-circle"></i>',
+                            timeout: null
+                        });
+                    }
+                }
+            }
+        };
+        
+        xhr.send(fd);
+    }
+
+
     function eventHandlerPortfolio() {
         $('#navbar-top-layer-2').on('click', '.back', function() {
             page($(this).attr('link'));
@@ -126,11 +200,39 @@ function loadPortfolioInit(json, json2, situation) {
         });
     }
 
+    function eventHandlerImage() {
+        $('#fullpage').on('change', '.image-processing input.upload', function() {
+            readURL(this);
+        });
+
+        $('#fullpage').on('click', '.image-processing button.save', function(e) {
+            e.preventDefault();
+
+            var input;
+            var $section = $(this).closest('section');
+            // var categoryStr = $section.attr('data-anchor').substr(7);
+            // var categoryInt = parseInt(categoryStr);
+            var categoryInt = 1;
+
+            switch(categoryInt) {
+                case 1:
+                    input = document.querySelector('#upload-portfolio');
+                    break;
+                default:
+                    console.log('Error: event handler image category not matched.');
+            }
+            
+            if (input.files && input.files.length) {
+                uploadImage(input, categoryInt);
+            }
+        });
+    }
+
+
     function checkPortfolioHeaderChanges(situation) {
         var header = {
             headline: $('#inputHeadline').val(),
             intro: $('#inputIntro').val()
-            // background
         };
 
         var newJSONData = JSON.stringify(header);
@@ -212,7 +314,6 @@ function loadPortfolioInit(json, json2, situation) {
                 var data = {
                     headline: json.headline,
                     intro: json.intro
-                    // background: json.background
                 };
 
                 var JSONData = JSON.stringify(data);
