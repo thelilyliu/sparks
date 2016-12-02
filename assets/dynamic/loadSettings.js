@@ -35,33 +35,43 @@ function loadSettingsInit(json, json2, situation) {
             </div>';
         
         var settingsHTML = '\
-            <div class="form-group">\
-                <label for="inputFirstName3" class="col-sm-3 control-label">First Name</label>\
-                <div class="col-sm-9">\
-                    <input type="first-name" class="form-control" id="inputFirstName3" placeholder="First Name">\
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">\
+                <div class="form-group">\
+                    <label for="inputFirstName3" class="col-sm-4 control-label">First Name</label>\
+                    <div class="col-sm-8">\
+                        <input type="first-name" class="form-control" id="inputFirstName3" placeholder="First Name">\
+                    </div>\
                 </div>\
             </div>\
             \
-            <div class="form-group">\
-                <label for="inputLastName3" class="col-sm-3 control-label">Last Name</label>\
-                <div class="col-sm-9">\
-                    <input type="last-name" class="form-control" id="inputLastName3" placeholder="Last Name">\
+            <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">\
+                <div class="form-group">\
+                    <label for="inputLastName3" class="col-sm-4 control-label">Last Name</label>\
+                    <div class="col-sm-8">\
+                        <input type="last-name" class="form-control" id="inputLastName3" placeholder="Last Name">\
+                    </div>\
                 </div>\
-            </div>\
-            \
+            </div>';
+
+        /*
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">\
             <div class="form-group">\
                 <label for="inputEmail3" class="col-sm-3 control-label">Email</label>\
                 <div class="col-sm-9">\
                     <input type="email" class="form-control" id="inputEmail3" placeholder="Email">\
                 </div>\
             </div>\
-            \
+        </div>\
+        \
+        <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6">\
             <div class="form-group">\
                 <label for="inputPassword3" class="col-sm-3 control-label">Password</label>\
                 <div class="col-sm-9">\
                     <input type="password" class="form-control" id="inputPassword3" placeholder="Password">\
                 </div>\
-            </div>';
+            </div>\
+        </div>
+        */
 
         $('body').data('page', 'uSettings');
         console.log('page: uSettings');
@@ -76,8 +86,8 @@ function loadSettingsInit(json, json2, situation) {
         // set user settings
         $this.find('#inputFirstName3').val(json.firstName);
         $this.find('#inputLastName3').val(json.lastName);
-        $this.find('#inputEmail3').val(json.email);
-        $this.find('#inputPassword3').val(json.password);
+        // $this.find('#inputEmail3').val(json.email);
+        // $this.find('#inputPassword3').val(json.password);
 
         // get user settings JSON
         $this.data('JSONData', getJSONString());
@@ -116,9 +126,9 @@ function loadSettingsInit(json, json2, situation) {
         
         var data = {
             firstName: $this.find('#inputFirstName3').val(),
-            lastName: $this.find('#inputLastName3').val(),
-            email: $this.find('#inputEmail3').val(),
-            password: $this.find('#inputPassword3').val()
+            lastName: $this.find('#inputLastName3').val()
+            // email: $this.find('#inputEmail3').val(),
+            // password: $this.find('#inputPassword3').val()
         };
         
         return JSON.stringify(data);

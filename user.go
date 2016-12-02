@@ -137,7 +137,8 @@ func updateUserDB(selector, update *bson.M) error {
 }
 
 func updateUSettings(user *User) error {
-	change := bson.M{"email": user.Email, "firstname": user.FirstName, "lastname": user.LastName, "password": user.Password}
+	// change := bson.M{"email": user.Email, "firstname": user.FirstName, "lastname": user.LastName, "password": user.Password}
+	change := bson.M{"firstname": user.FirstName, "lastname": user.LastName}
 
 	// find document and update fields
 	selector := bson.M{"userid": user.UserID}
@@ -171,6 +172,16 @@ func updateUResumeBackground(resumeID, userID, fileName string) error {
 
 	// find document and update fields
 	selector := bson.M{"userid": userID, "resumeinfo": bson.M{"$elemMatch": bson.M{"resumeid": resumeID}}}
+	update := bson.M{"$set": &change}
+
+	return updateUserDB(&selector, &update)
+}
+
+func updateUPortfolioBackground(portfolioID, userID, fileName string) error {
+	change := bson.M{"portfolioinfo.$.preview": fileName}
+
+	// find document and update fields
+	selector := bson.M{"userid": userID, "portfolioinfo": bson.M{"$elemMatch": bson.M{"portfolioid": portfolioID}}}
 	update := bson.M{"$set": &change}
 
 	return updateUserDB(&selector, &update)
