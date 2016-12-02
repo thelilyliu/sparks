@@ -126,7 +126,7 @@ function loadDashboardResumesInit(json, json2, situation) {
         $('#resumes').on('click', '.preview', function(e) {
             e.stopPropagation();
 
-            var path = 'http://127.0.0.1:4242/resume/';
+            var path = 'http://' + window.location.host + '/resume/';
             var resumeID = $(this).closest('.card').data('resumeID');
 
             window.open(path + resumeID, '_blank').focus();
@@ -135,7 +135,7 @@ function loadDashboardResumesInit(json, json2, situation) {
         $('#resumes').on('click', '.share', function(e) {
             e.stopPropagation();
             
-            var path = 'http://127.0.0.1:4242/resume/';
+            var path = 'http://' + window.location.host + '/resume/';
             var resumeID = $(this).closest('.card').data('resumeID');
 
             alert('Link for Sharing\n' + path + resumeID);

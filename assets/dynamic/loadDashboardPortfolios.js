@@ -126,7 +126,7 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
         $('#portfolios').on('click', '.preview', function(e) {
             e.stopPropagation();
 
-            var path = 'http://127.0.0.1:4242/portfolio/';
+            var path = 'http://' + window.location.host + '/portfolio/';
             var portfolioID = $(this).closest('.card').data('portfolioID');
 
             window.open(path + portfolioID, '_blank').focus();
@@ -135,7 +135,7 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
         $('#portfolios').on('click', '.share', function(e) {
             e.stopPropagation();
             
-            var path = 'http://sparkup.ca/portfolio/';
+            var path = 'http://' + window.location.host + '/portfolio/';
             var portfolioID = $(this).closest('.card').data('portfolioID');
 
             alert('Link for Sharing\n' + path + portfolioID);
