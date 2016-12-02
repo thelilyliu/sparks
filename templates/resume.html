@@ -7,6 +7,21 @@
     {{template "head" .}}
     
     <body id="resume" data-spy="scroll" data-target="#myScrollspy">
+
+        <div id="loader-wrap">
+            <div class="loader-circles">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+        </div>
         
         <div id="fullpage" class="view">
             
@@ -32,7 +47,7 @@
                 </div>
             </section>
 
-            <section id="achievements">
+            <!-- <section id="achievements">
                 <div class="container">
                     <h1>Achievements</h1>
                     <div id="educations" class="row">
@@ -51,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
             
             <section id="contact">
                 <div class="container">
@@ -67,6 +82,12 @@
         <script src="../assets/static/viewResume.js" type="text/javascript"></script>
         
         <script type="text/javascript">
+            $(window).load(function () {
+                setTimeout(function() { // page preloader
+                    $('#loader-wrap').fadeOut(1000);
+                }, 1000); // set 1 second delay for old browsers
+            });
+            
             $(document).ready(function() {
                 setScreenSize();
                 eventHandler();
@@ -80,10 +101,12 @@
                 // https://github.com/alvarotrigo/fullPage.js
                 $('#fullpage').fullpage({
                     // Navigation
-                    anchors: ['section1', 'section2', 'section3', 'section4', 'section5'],
+                    // anchors: ['section1', 'section2', 'section3', 'section4', 'section5'],
+                    anchors: ['section1', 'section2', 'section3', 'section4'],
                     navigation: true,
                     navigationPosition: 'right',
-                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Achievements', 'Contact'],
+                    // navigationTooltips: ['Profile', 'Experience', 'Skills', 'Achievements', 'Contact'],
+                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Contact'],
 
                     // Scrolling
                     scrollOverflow: true,
