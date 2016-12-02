@@ -7,7 +7,7 @@ function loadResumeInit(json, json2, situation) {
             initResumeProfileTypeData(json[0].profile);
             initResumeExperienceTypeData(json[0].experience);
             initResumeSkillsTypeData(json[0].skills);
-            initResumeAchievementsTypeData(json[0].achievements);
+            // initResumeAchievementsTypeData(json[0].achievements);
             initResumeContactTypeData(json[0].contact);
 
             initializeFullPage();
@@ -23,7 +23,7 @@ function loadResumeInit(json, json2, situation) {
         checkResumeProfileTypeChanges(situation);
         checkResumeExperienceTypeChanges(situation);
         checkResumeSkillsTypeChanges(situation);
-        checkResumeAchievementsTypeChanges(situation);
+        // checkResumeAchievementsTypeChanges(situation);
         checkResumeContactTypeChanges(situation);
     }
     
@@ -33,7 +33,7 @@ function loadResumeInit(json, json2, situation) {
             checkResumeProfileTypeChanges(situation);
             checkResumeExperienceTypeChanges(situation);
             checkResumeSkillsTypeChanges(situation);
-            checkResumeAchievementsTypeChanges(situation);
+            // checkResumeAchievementsTypeChanges(situation);
             checkResumeContactTypeChanges(situation);
         }, 5000);
         $('body').data('autosave-timer', timerID);
@@ -64,26 +64,6 @@ function loadResumeInit(json, json2, situation) {
                         </form>\
                     </div>\
                 </section>\
-                <section id="achievements">\
-                    <div class="container">\
-                        <h1>Achievements</h1>\
-                        <form id="educations" class="form-horizontal">\
-                            <div class="subtitle">\
-                                <h2>Education</h2>\
-                            </div>\
-                        </form>\
-                        <form id="qualifications" class="form-horizontal">\
-                            <div class="subtitle">\
-                                <h2>Qualifications</h2>\
-                            </div>\
-                        </form>\
-                        <form id="awards" class="form-horizontal">\
-                            <div class="subtitle">\
-                                <h2>Awards</h2>\
-                            </div>\
-                        </form>\
-                    </div>\
-                </section>\
                 <section id="contact">\
                     <div class="container">\
                         <h1>Contact</h1>\
@@ -91,6 +71,29 @@ function loadResumeInit(json, json2, situation) {
                     </div>\
                 </section>\
             </div>';
+
+        /*
+        <section id="achievements">\
+            <div class="container">\
+                <h1>Achievements</h1>\
+                <form id="educations" class="form-horizontal">\
+                    <div class="subtitle">\
+                        <h2>Education</h2>\
+                    </div>\
+                </form>\
+                <form id="qualifications" class="form-horizontal">\
+                    <div class="subtitle">\
+                        <h2>Qualifications</h2>\
+                    </div>\
+                </form>\
+                <form id="awards" class="form-horizontal">\
+                    <div class="subtitle">\
+                        <h2>Awards</h2>\
+                    </div>\
+                </form>\
+            </div>\
+        </section>\
+        */
 
         var userResumeProfileHTML = '\
             <div class="form-group">\
@@ -183,20 +186,22 @@ function loadResumeInit(json, json2, situation) {
                 <div class="col-sm-9">\
                     <input type="website" class="form-control" id="inputWebsite" placeholder="Website">\
                 </div>\
-            </div>\
-            \
-            <div class="form-group">\
-                <label for="inputContactBackground" class="col-sm-3 control-label">Background</label>\
-                <div class="col-sm-9">\
-                    <label class="file">\
-                        <input type="file" id="inputContactBackground">\
-                        <span class="file-custom"></span>\
-                    </label>\
-                </div>\
             </div>';
         
+        /*
+        <div class="form-group">\
+            <label for="inputContactBackground" class="col-sm-3 control-label">Background</label>\
+            <div class="col-sm-9">\
+                <label class="file">\
+                    <input type="file" id="inputContactBackground">\
+                    <span class="file-custom"></span>\
+                </label>\
+            </div>\
+        </div>
+        */
+
         var newButtonHTML = '\
-            <button type="button" class="default new">\
+            <button type="button" class="default new waves">\
                 <i class="fa fa-plus absolute-center vertical-align"></i>\
             </button>';
         
@@ -207,9 +212,9 @@ function loadResumeInit(json, json2, situation) {
         $('#profile .form-horizontal').append(userResumeProfileHTML);
         $('#experience .container').append(newButtonHTML);
         $('#skills .container').append(newButtonHTML);
-        $('#educations .subtitle').append(newButtonHTML);
-        $('#qualifications .subtitle').append(newButtonHTML);
-        $('#awards .subtitle').append(newButtonHTML);
+        // $('#educations .subtitle').append(newButtonHTML);
+        // $('#qualifications .subtitle').append(newButtonHTML);
+        // $('#awards .subtitle').append(newButtonHTML);
         $('#contact .form-horizontal').append(userResumeContactHTML);
 
         $('#navbar-top-layer-2 .back').attr('link', '/user/resumes');
@@ -364,7 +369,7 @@ function loadResumeInit(json, json2, situation) {
             
             $.each(json.skills, function(i, skill) {
                 var userResumeSkillHTML = '\
-                    <li id="skill-group' + (i + 1) + '" class="group brick skill-group ui-state-default">\
+                    <li id="skill-group' + (i + 1) + '" class="col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-2 col-lg-8 group brick skill-group ui-state-default">\
                         <div class="button-group">\
                             <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
                             <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
@@ -822,7 +827,7 @@ function loadResumeInit(json, json2, situation) {
         var i = $('.skill-group').length;
         
         var userResumeSkillHTML = '\
-            <li id="skill-group' + (i + 1) + '" class="group brick skill-group ui-state-default">\
+            <li id="skill-group' + (i + 1) + '" class="col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-2 col-lg-8 group brick skill-group ui-state-default">\
                 <div class="button-group">\
                     <button type="button" class="move up default" aria-label="Up"><i class="fa fa-chevron-up"></i></button>\
                     <button type="button" class="delete default" aria-label="Close"><i class="fa fa-times"></i></button>\
@@ -1025,7 +1030,7 @@ function loadResumeInit(json, json2, situation) {
 
     function uploadImage(input, category) {
         var xhr = new XMLHttpRequest();
-        var url = '/uploadImage/' + category + '/' + globalResumeID;
+        var url = '/uploadResumeImage/' + category + '/' + globalResumeID;
         var fd = new FormData();
         
         fd.append('uploadFile', input.files[0]);       
@@ -1061,6 +1066,9 @@ function loadResumeInit(json, json2, situation) {
 
 
     function eventHandlerResume() {
+        Waves.attach('.waves', ['waves-button', 'waves-float']);
+        Waves.init();
+
         $('#navbar-top-layer-2').on('click', '.back', function() {
             page($(this).attr('link'));
         });
