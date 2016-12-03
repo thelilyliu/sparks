@@ -6,7 +6,7 @@
     
     {{template "head" .}}
     
-    <body data-spy="scroll" data-target="#myScrollspy">
+    <body id="user" data-spy="scroll" data-target="#myScrollspy">
 
         <div id="loader-wrap">
             <div class="loader-circles">
@@ -45,7 +45,7 @@
             
             <div class="sidebar-footer text-center">
                 <div class="logo">Spark Up</div>
-                <div class="copyright">&copy; <a href="https://twitter.com/thelilyliu" target="_blank">Lily Liu</a> 2016</div>
+                <div class="copyright">&copy; <a href="https://github.com/thelilyliu" target="_blank">Lily Liu</a> 2016</div>
             </div>
         </nav>
 
@@ -103,10 +103,12 @@
                 // https://github.com/alvarotrigo/fullPage.js
                 $('#fullpage').fullpage({
                     // Navigation
-                    anchors: ['section1', 'section2', 'section3', 'section4', 'section5'],
+                    // anchors: ['section1', 'section2', 'section3', 'section4', 'section5'],
+                    anchors: ['section1', 'section2', 'section3', 'section4'],
                     navigation: true,
                     navigationPosition: 'right',
-                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Achievements', 'Contact'],
+                    // navigationTooltips: ['Profile', 'Experience', 'Skills', 'Achievements', 'Contact'],
+                    navigationTooltips: ['Profile', 'Experience', 'Skills', 'Contact'],
 
                     // Scrolling
                     scrollOverflow: true,

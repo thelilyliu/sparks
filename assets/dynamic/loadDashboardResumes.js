@@ -54,10 +54,10 @@ function loadDashboardResumesInit(json, json2, situation) {
                                 </div>\
                                 <div class="card-action-item-wrapper">\
                                     <div class="card-action-item preview waves">\
-                                        <i class="fa fa-search"></i>\
+                                        <i class="fa fa-external-link"></i>\
                                     </div>\
                                     <div class="card-action-item share waves">\
-                                        <i class="fa fa-share-square-o"></i>\
+                                        <i class="fa fa-link"></i>\
                                     </div>\
                                     <div class="card-action-item delete waves">\
                                         <i class="fa fa-trash-o"></i>\
