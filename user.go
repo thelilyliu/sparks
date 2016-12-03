@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "log"
+	"log"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -108,7 +108,22 @@ func insertUResume(userID, resumeID string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$addToSet": &change}
 
-	return updateUserDB(&selector, &update)
+	err := updateUserDB(&selector, &update)
+	if err != nil {
+		log.Println("insert u resume error 1:", err)
+	}
+
+	// sort resume info array by date
+	// https://docs.mongodb.com/manual/reference/operator/update/sort/#update-array-using-sort-only
+	var emptyArray []interface{}
+	update = bson.M{"$push": bson.M{"resumeinfo": bson.M{"$each": emptyArray, "$sort": bson.M{"date": -1}}}}
+
+	err = updateUserDB(&selector, &update)
+	if err != nil {
+		log.Println("insert u resume error 2:", err)
+	}
+
+	return err
 }
 
 func insertUPortfolio(userID, portfolioID string) error {
@@ -119,7 +134,22 @@ func insertUPortfolio(userID, portfolioID string) error {
 	selector := bson.M{"userid": userID}
 	update := bson.M{"$addToSet": &change}
 
-	return updateUserDB(&selector, &update)
+	err := updateUserDB(&selector, &update)
+	if err != nil {
+		log.Println("insert u portfolio error 1:", err)
+	}
+
+	// sort portfolio info array by date
+	// https://docs.mongodb.com/manual/reference/operator/update/sort/#update-array-using-sort-only
+	var emptyArray []interface{}
+	update = bson.M{"$push": bson.M{"portfolio": bson.M{"$each": emptyArray, "$sort": bson.M{"date": -1}}}}
+
+	err = updateUserDB(&selector, &update)
+	if err != nil {
+		log.Println("insert u portfolio error 2:", err)
+	}
+
+	return err
 }
 
 /*
