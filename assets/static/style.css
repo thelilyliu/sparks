@@ -696,6 +696,9 @@ section {
 .card-action-item.delete {
     padding-top: 6px;
 }
+.popover-content {
+    word-wrap: break-word;
+}
 .card-footer {
     padding: 10px;
     cursor: default;

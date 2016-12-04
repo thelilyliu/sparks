@@ -56,7 +56,8 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
                                     <div class="card-action-item preview waves">\
                                         <i class="fa fa-external-link"></i>\
                                     </div>\
-                                    <div class="card-action-item share waves">\
+                                    <div class="card-action-item share waves"\
+                                        data-container="body" data-toggle="popover" data-placement="top">\
                                         <i class="fa fa-link"></i>\
                                     </div>\
                                     <div class="card-action-item delete waves">\
@@ -131,14 +132,29 @@ function loadDashboardPortfoliosInit(json, json2, situation) {
 
             window.open(path + portfolioID, '_blank').focus();
         });
-        
+
         $('#portfolios').on('click', '.share', function(e) {
             e.stopPropagation();
-            
-            var path = 'http://' + window.location.host + '/portfolio/';
-            var portfolioID = $(this).closest('.card').data('portfolioID');
 
-            alert('Link for Sharing\n' + path + portfolioID);
+            var $this = $(this);
+            var path = 'http://' + window.location.host + '/portfolio/';
+            var portfolioID = $this.closest('.card').data('portfolioID');
+
+            // alert('Link for Sharing\n' + path + resumeID);
+            $this.popover({
+                title: 'Link for Sharing',
+                content: path + portfolioID
+            });
+            $this.popover('show');
+        });
+
+        // http://stackoverflow.com/questions/11703093/how-to-dismiss-a-twitter-bootstrap-popover-by-clicking-outside
+        $('body').on('click', function(e) {
+            // dismiss popover by clicking outside
+            if ($(e.target).data('toggle') !== 'popover'
+                && $(e.target).parents('.popover.in').length === 0) { 
+                $('[data-toggle="popover"]').popover('hide');
+            }
         });
 
         $('#portfolios').on('click', '.delete', function(e) {
