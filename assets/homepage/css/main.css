@@ -3451,8 +3451,49 @@
 
 	/* Section */
 
+		#one h2 {
+			margin-bottom: 20px;
+		}
+
 		#two li,
 		#three li {
-			font-size: 20px;
 			margin-bottom: 10px;
 		}
+
+	/* Footer */
+
+		#footer {
+			padding: 40px;
+		}
+
+		#footer span {
+			margin-bottom: 10px;
+			color: #ffffff;
+		}
+
+		#footer h3 {
+			font-family: "Montserrat";
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+
+		#footer p {
+			margin-bottom: 10px;
+			color: #ffffff;
+			font-style: italic;
+		}
+
+		#footer h5 {
+			margin-bottom: 0;
+		}
+
+		#footer a {
+			color: #7be7d7;
+			border-bottom: dotted 1px;
+		}
+
+			#footer a:hover {
+				color: #7be7d7;
+				border-bottom: dotted 1px;
+				cursor: pointer;
+			}
