@@ -3434,6 +3434,7 @@
 
 		h1 {
 			font-family: "Montserrat";
+			margin-bottom: 0;
 		}
 
 	/* Links */
@@ -3445,5 +3446,13 @@
 	/* Header */
 
 		#header h1 {
-			margin-bottom: 26px;
+			margin-bottom: 30px;
+		}
+
+	/* Section */
+
+		#two li,
+		#three li {
+			font-size: 20px;
+			margin-bottom: 10px;
 		}
