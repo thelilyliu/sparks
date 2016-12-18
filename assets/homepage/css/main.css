@@ -3441,3 +3441,9 @@
 		a:hover {
 			text-decoration: none;
 		}
+
+	/* Header */
+
+		#header h1 {
+			margin-bottom: 26px;
+		}
