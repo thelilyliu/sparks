@@ -28,7 +28,7 @@ function viewPortfolioInit() {
 
         var imageURL = '/images/portfolio/' + getImageSize() + '/' + json.background;
 
-        $('#main-container .container').append(portfolioHeaderHTML);
+        $('#main-container .container .row').append(portfolioHeaderHTML);
         $('#main-container').css('background-image', 'url("' + imageURL + '")')
                 .css('background-size', 'cover');
     }
@@ -37,7 +37,7 @@ function viewPortfolioInit() {
         var portfolioContentHTML = '\
             <div id="content" class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">' + json + '</div>';
         
-        $('#main-container .container').append(portfolioContentHTML);
+        $('#main-container .container .row').append(portfolioContentHTML);
     }
     
     function eventHandlerPortfolio() {

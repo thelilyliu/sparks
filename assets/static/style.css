@@ -1063,7 +1063,8 @@ section {
     margin-top: 30px;
 }
 #portfolio .view h1 {
-    margin-bottom: 50px;
+    margin: 40px auto;
+    color: #333;
 }
 #portfolio .view #header p {
     margin-bottom: 0;
@@ -1071,6 +1072,17 @@ section {
 .view #content {
     margin-top: 50px;
 }
-#portfolio .view #content {
-    color: #000;
+#portfolio .jumbo {
+    padding: 30px;
+    margin: 0 30px;
+    border-radius: 6px;
+    opacity: 0.9;
+    background-color: rgba(238, 238, 238, .9);
+    color: #333;
+}
+@media (max-width: 767px) {
+    #portfolio .jumbo {
+        padding: 15px;
+        margin: 0 15px;
+    }
 }
