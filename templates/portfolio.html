@@ -41,7 +41,10 @@
         <script type="text/javascript">
             $(window).load(function () {
                 setTimeout(function() { // page preloader
-                    $('#loader-wrap').fadeOut(1000);
+                    $('#loader-wrap').addClass('loaded');
+                    setTimeout(function() {
+                        $('#loader-wrap').css('display', 'none');
+                    }, 1000);
                 }, 1000); // set 1 second delay for old browsers
             });
         
