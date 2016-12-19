@@ -3451,12 +3451,20 @@
 
 	/* Links */
 
-		a:hover {
-			text-decoration: none;
+		a,
+		a:active,
+		a:focus,
+		a:hover,
+		a:visited {
+		    text-decoration: none;
 		}
 
 	/* Header */
 
+		#header {
+			background-image: url("/assets/images/overlay2.png"), url("/assets/images/overlay3.svg"), linear-gradient(45deg, #7be7d7 30%, #86a4e3);
+		}
+		
 		#header h1 {
 			font-weight: 700;
 			margin-bottom: 30px;
@@ -3469,9 +3477,9 @@
 		}
 
 		#two {
-			background-image: url("/assets/images/overlay1.png"), url("/assets/images/footer.jpg");
+			background-image: url("/assets/images/overlay1.png"), url("/assets/images/special.jpg");
 		}
-		
+
 		#two li {
 			margin-bottom: 10px;
 			color: #ffffff;
@@ -3489,6 +3497,7 @@
 
 		#footer {
 			padding: 40px;
+			background-image: url("/assets/images/overlay2.png"), url("/assets/images/overlay4.svg"), linear-gradient(45deg, #86a4e3 30%, #7be7d7);
 		}
 
 		#footer span {
@@ -3505,7 +3514,6 @@
 		#footer p {
 			margin-bottom: 10px;
 			color: #ffffff;
-			font-style: italic;
 		}
 
 		#footer h5 {
@@ -3513,12 +3521,10 @@
 		}
 
 		#footer a {
-			color: #7be7d7;
 			border-bottom: dotted 1px;
 		}
 
 			#footer a:hover {
-				color: #7be7d7;
 				border-bottom: dotted 1px;
 				cursor: pointer;
 			}
