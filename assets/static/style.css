@@ -430,13 +430,31 @@ button.new {
     font-size: 26px;
     margin-bottom: 10px;
 }
+#sidebar-wrapper .sidebar-footer .logo a {
+    color: #000;
+    -webkit-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+       -moz-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        -ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+#sidebar-wrapper .sidebar-footer .logo a:hover {
+    color: #7be7d7;
+}
 #sidebar-wrapper .sidebar-footer .copyright {
     font-size: 18px;
     margin-bottom: 30px;
 }
 #sidebar-wrapper .sidebar-footer .copyright a {
-    color: #86a4e3;
+    color: #7be7d7;
     border-bottom: dotted 1px;
+    border-bottom-color: #7be7d7;
+    -webkit-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+       -moz-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        -ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+            transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+#sidebar-wrapper .sidebar-footer .copyright a:hover {
+    border-bottom-color: transparent !important;
 }
 
 @media (max-width: 991px) {
