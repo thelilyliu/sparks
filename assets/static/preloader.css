@@ -10,7 +10,10 @@
     background: linear-gradient(45deg, #7be7d7 1%, #7be7d7 40%, #7be7d7 40%, #86a4e3 100%);
     z-index: 99999;
     opacity: 1;
-    transition: opacity 1.0s;
+    -webkit-transition: opacity 1.0s;
+       -moz-transition: opacity 1.0s;
+         -o-transition: opacity 1.0s;
+            transition: opacity 1.0s;
 }
 #loader-wrap.loaded {
     opacity: 0;
@@ -22,7 +25,10 @@
     top: 0;
     bottom: 0;
     margin: auto;
-    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
     width: 200px;
     height: 200px;
 }
@@ -103,51 +109,81 @@
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
 @keyframes rotate-circle {
     100% {
-        transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
     }
 }
